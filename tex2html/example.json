@@ -1,0 +1,120 @@
+{
+    "id": "0f6cb511-8681-48e6-baf0-70287c462956",
+    "userId": "si5126lj-s@student.lu.se",
+    "name": "Example workflow -- tex2html",
+    "description": "An example workflow where tex2html is used.",
+    "version": null,
+    "components": [
+      {
+        "id": "4298dc8b-2920-4cf9-af11-402061312ffb",
+        "workflowId": "0f6cb511-8681-48e6-baf0-70287c462956",
+        "name": "Python coder",
+        "className": "PythonCoder",
+        "description": "Performs customized Python code execution. Outputs the value that the Python variable `result` is set to during the execution of the Python code.\nInputs:\n  `Code` (str): A string of the Python code to execute.  If needed, the Python code can be inputted manually by the user.\nOutput (Any): The value of the variable `result` in the Python code after execution.",
+        "group": "CODERS",
+        "inputs": [
+          {
+            "key": "Code",
+            "dataType": "CODE",
+            "value": "tex = \"\"\"{tex}\"\"\"\nresult = {'paper_id': {'tex': tex}}\n",
+            "templateVariables": {
+              "Code.tex": "\\\\begin{theorem} \\\\label{thm:pythagorean_theorem}\nLet $a$ and $b$ be the side lengths of a right triangle (see Definition~\\\\ref{def:right_triangle}), and let $c$ be the length of the hypotenuse. Then\n\\\\begin{equation}\na^2 + b^2 = c^2\n\\\\end{equation}\nThis is called the \\\\texttt{Pythagorean theorem}.\n\\\\end{theorem}"
+            },
+            "componentId": "4298dc8b-2920-4cf9-af11-402061312ffb"
+          }
+        ],
+        "output": {
+          "dataType": "ANY",
+          "value": {
+            "paper_id": {
+              "tex": "\\begin{theorem} \\label{thm:pythagorean_theorem}\nLet $a$ and $b$ be the side lengths of a right triangle (see Definition~\\ref{def:right_triangle}), and let $c$ be the length of the hypotenuse. Then\n\\begin{equation}\na^2 + b^2 = c^2\n\\end{equation}\nThis is called the \\texttt{Pythagorean theorem}.\n\\end{theorem}"
+            }
+          }
+        },
+        "label": "PYTHONCODER-3",
+        "configuration": {
+          "force_run": false,
+          "openai_api_key": "",
+          "openai_api_base": ""
+        },
+        "version": null,
+        "isCustom": false,
+        "isTerminal": false,
+        "position": {
+          "x": 182.11001943864915,
+          "y": 481.7800715316529
+        },
+        "timeout": 600,
+        "componentCode": "python_coder/python_coder/__init__.py",
+        "componentCodeRequirements": [],
+        "componentExamplePath": null,
+        "invalidErrors": []
+      },
+      {
+        "id": "22f9c3a2-c935-411b-8fe1-cbff0fbbb204",
+        "workflowId": "0f6cb511-8681-48e6-baf0-70287c462956",
+        "name": "Latex2HTML",
+        "className": "Tex2HTML",
+        "description": "Converts Latex codes to HTML with Mathjax.\nInput:\n  `papers` (Dict[str, Dict]): A dict where each key is mapped to a dict with the key `tex` mapped to the Latex code to convert.\nOutput (Dict(str, Dict)): The same dict as the one inputted, but in each child dict, a new key `html` mapped to a string with the HTML that the corresponding Latex has been converted to.\n",
+        "group": "DATA_EXTRACTION",
+        "inputs": [
+          {
+            "key": "papers",
+            "dataType": "JSON",
+            "value": {
+              "paper_id": {
+                "tex": "\\begin{theorem} \\label{thm:pythagorean_theorem}\nLet $a$ and $b$ be the side lengths of a right triangle (see Definition~\\ref{def:right_triangle}), and let $c$ be the length of the hypotenuse. Then\n\\begin{equation}\na^2 + b^2 = c^2\n\\end{equation}\nThis is called the \\texttt{Pythagorean theorem}.\n\\end{theorem}"
+              }
+            },
+            "templateVariables": {},
+            "componentId": "22f9c3a2-c935-411b-8fe1-cbff0fbbb204"
+          }
+        ],
+        "output": {
+          "dataType": "JSON",
+          "value": {
+            "paper_id": {
+              "tex": "\\begin{theorem} \\label{thm:pythagorean_theorem}\nLet $a$ and $b$ be the side lengths of a right triangle (see Definition~\\ref{def:right_triangle}), and let $c$ be the length of the hypotenuse. Then\n\\begin{equation}\na^2 + b^2 = c^2\n\\end{equation}\nThis is called the \\texttt{Pythagorean theorem}.\n\\end{theorem}",
+              "html": "Let $a$ and $b$ be the side lengths of a right triangle (see Definition $\\ref{def:right_triangle}$), and let $c$ be the length of the hypotenuse. Then\n\\begin{equation}\na^2 + b^2 = c^2\n\\end{equation}\nThis is called the $\\texttt{Pythagorean theorem}$."
+            }
+          }
+        },
+        "label": "TEX2HTML-4",
+        "configuration": {
+          "force_run": false
+        },
+        "version": null,
+        "isCustom": false,
+        "isTerminal": true,
+        "position": {
+          "x": 651.5061812094602,
+          "y": 458.09055196919996
+        },
+        "timeout": 600,
+        "componentCode": "tex2html/tex2html/__init__.py",
+        "componentCodeRequirements": [
+          "langchain_openai",
+          "langchain",
+          "regex"
+        ],
+        "componentExamplePath": "tex2html/tex2html/example.json",
+        "invalidErrors": []
+      }
+    ],
+    "dependencies": [
+      {
+        "componentInputKey": "papers",
+        "sourceLabel": "PYTHONCODER-3",
+        "targetLabel": "TEX2HTML-4",
+        "templateVariableKey": null
+      }
+    ],
+    "timeout": 3600,
+    "autoComponentSpacing": {
+      "dx": 450.0,
+      "dy": 350.0,
+      "x0": 0.0,
+      "y0": 0.0
+    },
+    "invalidErrors": []
+  }

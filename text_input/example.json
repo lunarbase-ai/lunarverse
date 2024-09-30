@@ -1,0 +1,55 @@
+{
+  "id": "8883ad1e-cf10-49a3-99b4-24296ea7afec",
+  "userId": "",
+  "name": "Text input example",
+  "description": "Text input example",
+  "version": null,
+  "components": [
+    {
+      "id": "4141f646-89e2-4c6d-a700-d1a76202ecd2",
+      "workflowId": "8883ad1e-cf10-49a3-99b4-24296ea7afec",
+      "name": "Text Input",
+      "className": "TextInput",
+      "description": "Allows the user to input a text (potentially with template variables) that can be used in other downstream components.\n    Inputs:\n      `Input` (str): The text to output.\n    Output (str): The inputted text.",
+      "group": "IO",
+      "inputs": [
+        {
+          "key": "Input",
+          "dataType": "TEMPLATE",
+          "value": "The quick brown fox jumps over the lazy dog",
+          "templateVariables": {},
+          "componentId": "4141f646-89e2-4c6d-a700-d1a76202ecd2"
+        }
+      ],
+      "output": {
+        "dataType": "TEXT",
+        "value": ":undef:"
+      },
+      "label": "TEXTINPUT-0",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 191.05546656966462,
+        "y": 263.86805015245403
+      },
+      "timeout": 600,
+      "componentCode": "text_input/text_input/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

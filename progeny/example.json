@@ -1,0 +1,119 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "PROGENy",
+  "description": "PROGENy is the definitive resource for pathways and target genes, with weights for each interaction. It requires two CSV files as input. decoupler https://decoupler-py.readthedocs.io/en/latest/notebooks/progeny.html | paper: Schubert, M., Klinger, B., Klünemann, M. et al. Perturbation-response genes reveal signaling footprints in cancer gene expression. Nat Commun 9, 20 (2018). https://doi.org/10.1038/s41467-017-02391-6 (https://www.nature.com/articles/s41467-017-02391-6)",
+  "version": null,
+  "components": [
+    {
+      "id": "0215071d-eee6-4383-887b-8760d505a963",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "PROGENy",
+      "className": "Progeny",
+      "description": "PROGENy",
+      "group": "DATA_EXTRACTION",
+      "inputs": [
+        {
+          "key": "adata",
+          "dataType": "TEXT",
+          "value": "/tmp/lunarcore/workflows/958a9148-923a-4160-966a-d2acd599137b/uploads/adata.csv",
+          "templateVariables": {},
+          "componentId": "0215071d-eee6-4383-887b-8760d505a963"
+        },
+        {
+          "key": "progeny",
+          "dataType": "TEXT",
+          "value": "/tmp/lunarcore/workflows/958a9148-923a-4160-966a-d2acd599137b/uploads/progeny.csv",
+          "templateVariables": {},
+          "componentId": "0215071d-eee6-4383-887b-8760d505a963"
+        }
+      ],
+      "output": {
+        "dataType": "LIST",
+        "value": ":undef:"
+      },
+      "label": "PROGENy-0",
+      "configuration": {
+        "force_run": false,
+        "client_id": "None",
+        "client_secret": "None"
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 1295.3366735368725,
+        "y": 635.6003442868345
+      },
+      "timeout": 600,
+      "componentCode": "PROGENy/PROGENy/__init__.py",
+      "componentCodeRequirements": [
+      	"decoupler",
+      	"pandas",
+      	"anndata"
+      ],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    },
+    {
+      "id": "d0e3a0b5-ab77-4dc6-a8f4-1a1f799ea083",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "File Upload",
+      "className": "UploadComponent",
+      "description": "",
+      "group": "IO",
+      "inputs": [
+        {
+          "key": "Input file",
+          "dataType": "FILE",
+          "value": {
+            "path": "upload",
+            "name": "upload",
+            "type": null,
+            "size": null,
+            "preview": null,
+            "description": null
+          },
+          "templateVariables": {},
+          "componentId": "d0e3a0b5-ab77-4dc6-a8f4-1a1f799ea083"
+        }
+      ],
+      "output": {
+        "dataType": "TEXT",
+        "value": null
+      },
+      "label": "UPLOADCOMPONENT-1",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": 860.4009467887947,
+        "y": 627.0930440081435
+      },
+      "timeout": 600,
+      "componentCode": "upload/upload/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [
+    {
+      "componentInputKey": "File path",
+      "sourceLabel": "UPLOADCOMPONENT-1",
+      "targetLabel": "PROGENy-0",
+      "templateVariableKey": null
+    }
+  ],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

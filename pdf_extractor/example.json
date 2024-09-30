@@ -1,0 +1,110 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "PDF extractor example",
+  "description": "PDF extractor example",
+  "version": null,
+  "components": [
+    {
+      "id": "0215071d-eee6-4383-887b-8760d505a963",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "PDF extractor",
+      "className": "PDFExtractor",
+      "description": "Extracts title, sections, references, tables and text from a PDF file.\n    Input (str): A string containing the server path of the PDF file to extract from.\n    Output (Dict): A dictionary containing the keys:\n        `title` (str), mapped to the title in the PDF file (str), \n        `sections` (str), mapped to a dictionary that maps section titles to section contents (Dict[str, List[str]]), \n        `references` (str), mapped to a list of bibliografic references in the PDF file (List[str]), \n        `tables` (str), mapped to a list of record formatted pandas dataframes (List[str]]),\n        `text` (str), mapped to list of strings containing the full document text (List[str]).",
+      "group": "DATA_EXTRACTION",
+      "inputs": [
+        {
+          "key": "file_path",
+          "dataType": "TEXT",
+          "value": "/Users/danilomirandagusicuma/lunarbase/persistence/workflows/958a9148-923a-4160-966a-d2acd599137b/uploads/refinement copy.pdf",
+          "templateVariables": {},
+          "componentId": "0215071d-eee6-4383-887b-8760d505a963"
+        }
+      ],
+      "output": {
+        "dataType": "JSON",
+        "value": ":undef:"
+      },
+      "label": "PDFEXTRACTOR-0",
+      "configuration": {
+        "force_run": false,
+        "client_id": "None",
+        "client_secret": "None"
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 1295.3366735368725,
+        "y": 635.6003442868345
+      },
+      "timeout": 600,
+      "componentCode": "pdf_extractor/pdf_extractor/__init__.py",
+      "componentCodeRequirements": [
+        "git+https://github.com/dscarvalho/pdf_extract.git"
+      ],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    },
+    {
+      "id": "d0e3a0b5-ab77-4dc6-a8f4-1a1f799ea083",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "File Upload",
+      "className": "UploadComponent",
+      "description": "Uploads local files to the server.\n        Input (str): A string of the local path of the local file to upload to the server. If needed, tha local path can be inputted manually by the user.\n        Output (str): A string of the server path of the uploaded file.",
+      "group": "IO",
+      "inputs": [
+        {
+          "key": "Input file",
+          "dataType": "FILE",
+          "value": {
+            "path": "upload",
+            "name": "upload",
+            "type": null,
+            "size": null,
+            "preview": null,
+            "description": null
+          },
+          "templateVariables": {},
+          "componentId": "d0e3a0b5-ab77-4dc6-a8f4-1a1f799ea083"
+        }
+      ],
+      "output": {
+        "dataType": "TEXT",
+        "value": null
+      },
+      "label": "UPLOADCOMPONENT-1",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": 860.4009467887947,
+        "y": 627.0930440081435
+      },
+      "timeout": 600,
+      "componentCode": "upload/upload/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [
+    {
+      "componentInputKey": "File path",
+      "sourceLabel": "UPLOADCOMPONENT-1",
+      "targetLabel": "PDFEXTRACTOR-0",
+      "templateVariableKey": null
+    }
+  ],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

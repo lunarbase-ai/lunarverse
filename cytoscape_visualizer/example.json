@@ -1,0 +1,272 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "Cystoscape Visualizer example",
+  "description": "Cytoscape Visualizer example",
+  "version": null,
+  "components": [
+    {
+      "id": "26934598-e5b9-4fe3-bb11-f1d64c985889",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "Cytoscape Visualizer",
+      "className": "CytoscapeVisualizer",
+      "description": "Receives a Cytoscape formatted JSON and creates a graph visualization.",
+      "group": "DATA_VISUALIZATION",
+      "inputs": [
+        {
+          "key": "cytoscape_JSON",
+          "dataType": "JSON",
+          "value": {
+            "nodes": [
+              {
+                "data": {
+                  "id": "a",
+                  "name": "Node A"
+                }
+              },
+              {
+                "data": {
+                  "id": "b",
+                  "name": "Node B"
+                }
+              },
+              {
+                "data": {
+                  "id": "c",
+                  "name": "Node C"
+                }
+              },
+              {
+                "data": {
+                  "id": "d",
+                  "name": "Node D"
+                }
+              }
+            ],
+            "edges": [
+              {
+                "data": {
+                  "id": "ab",
+                  "source": "a",
+                  "target": "b"
+                }
+              },
+              {
+                "data": {
+                  "id": "bc",
+                  "source": "b",
+                  "target": "c"
+                }
+              },
+              {
+                "data": {
+                  "id": "ca",
+                  "source": "c",
+                  "target": "a"
+                }
+              },
+              {
+                "data": {
+                  "id": "ad",
+                  "source": "a",
+                  "target": "d"
+                }
+              }
+            ]
+          },
+          "templateVariables": {},
+          "componentId": "26934598-e5b9-4fe3-bb11-f1d64c985889"
+        }
+      ],
+      "output": {
+        "dataType": "CYTOSCAPE",
+        "value": {
+          "nodes": [
+            {
+              "data": {
+                "id": "a",
+                "name": "Node A"
+              }
+            },
+            {
+              "data": {
+                "id": "b",
+                "name": "Node B"
+              }
+            },
+            {
+              "data": {
+                "id": "c",
+                "name": "Node C"
+              }
+            },
+            {
+              "data": {
+                "id": "d",
+                "name": "Node D"
+              }
+            }
+          ],
+          "edges": [
+            {
+              "data": {
+                "id": "ab",
+                "source": "a",
+                "target": "b"
+              }
+            },
+            {
+              "data": {
+                "id": "bc",
+                "source": "b",
+                "target": "c"
+              }
+            },
+            {
+              "data": {
+                "id": "ca",
+                "source": "c",
+                "target": "a"
+              }
+            },
+            {
+              "data": {
+                "id": "ad",
+                "source": "a",
+                "target": "d"
+              }
+            }
+          ]
+        }
+      },
+      "label": "CYTOSCAPEVISUALIZER-0",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 490,
+        "y": 366
+      },
+      "timeout": 600,
+      "componentCode": "cytoscape_visualizer/cytoscape_visualizer/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    },
+    {
+      "id": "6add3c53-2b4f-4c7a-8caa-7351b4d84a32",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "Python coder",
+      "className": "PythonCoder",
+      "description": "Performs customized Python code execution. Outputs the value that the Python variable `result` is set to during the execution of the Python code.\n    Inputs:\n      `Code` (str): A string of the Python code to execute.  If needed, the Python code can be inputted manually by the user.\n    Output (Any): The value of the variable `result` in the Python code after execution.",
+      "group": "CODERS",
+      "inputs": [
+        {
+          "key": "Code",
+          "dataType": "CODE",
+          "value": "result = {\n    \"nodes\": [\n      { \"data\": { \"id\": \"a\", \"name\": \"Node A\" } },\n      { \"data\": { \"id\": \"b\", \"name\": \"Node B\" } },\n      { \"data\": { \"id\": \"c\", \"name\": \"Node C\" } },\n      { \"data\": { \"id\": \"d\", \"name\": \"Node D\" } }\n    ],\n    \"edges\": [\n      { \"data\": { \"id\": \"ab\", \"source\": \"a\", \"target\": \"b\" } },\n      { \"data\": { \"id\": \"bc\", \"source\": \"b\", \"target\": \"c\" } },\n      { \"data\": { \"id\": \"ca\", \"source\": \"c\", \"target\": \"a\" } },\n      { \"data\": { \"id\": \"ad\", \"source\": \"a\", \"target\": \"d\" } }\n    ]\n}\n\n",
+          "templateVariables": {},
+          "componentId": "6add3c53-2b4f-4c7a-8caa-7351b4d84a32"
+        }
+      ],
+      "output": {
+        "dataType": "ANY",
+        "value": {
+          "nodes": [
+            {
+              "data": {
+                "id": "a",
+                "name": "Node A"
+              }
+            },
+            {
+              "data": {
+                "id": "b",
+                "name": "Node B"
+              }
+            },
+            {
+              "data": {
+                "id": "c",
+                "name": "Node C"
+              }
+            },
+            {
+              "data": {
+                "id": "d",
+                "name": "Node D"
+              }
+            }
+          ],
+          "edges": [
+            {
+              "data": {
+                "id": "ab",
+                "source": "a",
+                "target": "b"
+              }
+            },
+            {
+              "data": {
+                "id": "bc",
+                "source": "b",
+                "target": "c"
+              }
+            },
+            {
+              "data": {
+                "id": "ca",
+                "source": "c",
+                "target": "a"
+              }
+            },
+            {
+              "data": {
+                "id": "ad",
+                "source": "a",
+                "target": "d"
+              }
+            }
+          ]
+        }
+      },
+      "label": "PYTHONCODER-1",
+      "configuration": {
+        "force_run": false,
+        "openai_api_key": "",
+        "openai_api_base": ""
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": 93,
+        "y": 350
+      },
+      "timeout": 600,
+      "componentCode": "python_coder/python_coder/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [
+    {
+      "componentInputKey": "Cytoscape JSON",
+      "sourceLabel": "PYTHONCODER-1",
+      "targetLabel": "CYTOSCAPEVISUALIZER-0",
+      "templateVariableKey": null
+    }
+  ],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

@@ -1,0 +1,67 @@
+{
+    "id": "19c07004-8795-4475-a661-8529ccd61642",
+    "userId": "admin",
+    "name": "Test emails sender",
+    "description": "Workflow to test email sender",
+    "version": null,
+    "components": [
+        {
+            "id": "7b86cdef-86c6-45ab-ba35-2b6f36ddd124",
+            "workflowId": null,
+            "name": "Emails Sender",
+            "className": "EmailsSender",
+            "description": "Component to send emails",
+            "group": "UTILS",
+            "inputs": [
+                {
+                    "key": "emails_input",
+                    "dataType": "JSON",
+                    "value": {
+                        "william.droz@idiap.ch": {
+                            "html": "<b>pre-commits are important</b>",
+                            "subject": "test For William from Lunar"
+                        }
+                    },
+                    "templateVariables": {},
+                    "componentId": null
+                },
+                {
+                    "key": "sender",
+                    "dataType": "TEXT",
+                    "value": "testpython@test.com",
+                    "templateVariables": {},
+                    "componentId": null
+                },
+                {
+                    "key": "subject",
+                    "dataType": "TEXT",
+                    "value": "",
+                    "templateVariables": {},
+                    "componentId": null
+                }
+            ],
+            "output": {
+                "dataType": "TEXT",
+                "value": ":undef:"
+            },
+            "label": "EmailsSender_7b86cdef-86c6-45ab-ba35-2b6f36ddd124",
+            "configuration": {
+                "force_run": false
+            },
+            "version": null,
+            "isCustom": false,
+            "isTerminal": true,
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "timeout": 600,
+            "forceRun": false,
+            "componentCode": "/lunar/lunarcore/lunarcore/component_library/emails_sender/__init__.py",
+            "componentCodeRequirements": [],
+            "componentExamplePath": null
+        }
+    ],
+    "dependencies": [],
+    "timeout": 3600
+}

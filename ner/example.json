@@ -1,0 +1,107 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "Spacy NER example",
+  "description": "Spacy NER example",
+  "version": null,
+  "components": [
+    {
+      "id": "e625c908-10c5-4f20-bc19-e2748c78e6fc",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "Spacy NER",
+      "className": "Ner",
+      "description": "Performs Named Entity Recognition (NER).\n    Inputs:\n      `Text` (str): The text to perform NER on.\n    Output (List[Dict[str, str]]): A list of dictionaries containing two keys: `text` (str) mapped to the word/text (str), and `label` (str) mapped to the NER label (str).",
+      "group": "NLP",
+      "inputs": [
+        {
+          "key": "text",
+          "dataType": "TEMPLATE",
+          "value": "Apple sells phones",
+          "templateVariables": {},
+          "componentId": "e625c908-10c5-4f20-bc19-e2748c78e6fc"
+        }
+      ],
+      "output": {
+        "dataType": "LIST",
+        "value": [
+          {
+            "text": "Apple",
+            "label": "ORG"
+          }
+        ]
+      },
+      "label": "NER-0",
+      "configuration": {
+        "force_run": false,
+        "model_name": "en_core_web_sm"
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 544,
+        "y": 389
+      },
+      "timeout": 600,
+      "componentCode": "ner/ner/__init__.py",
+      "componentCodeRequirements": [
+        "spacy"
+      ],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    },
+    {
+      "id": "4141f646-89e2-4c6d-a700-d1a76202ecd2",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "Text Input",
+      "className": "TextInput",
+      "description": "Allows the user to input a text (potentially with template variables) that can be used in other downstream components.\n    Inputs:\n      `Input` (str): The text to output.\n    Output (str): The inputted text.",
+      "group": "IO",
+      "inputs": [
+        {
+          "key": "Input",
+          "dataType": "TEMPLATE",
+          "value": "Apple sells phones",
+          "templateVariables": {},
+          "componentId": "4141f646-89e2-4c6d-a700-d1a76202ecd2"
+        }
+      ],
+      "output": {
+        "dataType": "TEXT",
+        "value": "Apple sells phones"
+      },
+      "label": "TEXTINPUT-1",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": 87,
+        "y": 385
+      },
+      "timeout": 600,
+      "componentCode": "text_input/text_input/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [
+    {
+      "componentInputKey": "Text",
+      "sourceLabel": "TEXTINPUT-1",
+      "targetLabel": "NER-0",
+      "templateVariableKey": null
+    }
+  ],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

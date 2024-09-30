@@ -1,0 +1,6 @@
+# Copyright © 2024 Lunarbase (https://lunarbase.ai/) <contact@lunarbase.ai>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+pandas~=1.5.3
+spacy~=3.5.4

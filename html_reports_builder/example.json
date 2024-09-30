@@ -1,0 +1,69 @@
+{
+    "id": "19c07004-8794-4475-a661-8529ccd61642",
+    "userId": "admin",
+    "name": "Test HTML reports builder",
+    "description": "Workflow to test html reports builder",
+    "version": null,
+    "components": [
+        {
+            "id": "652036a5-cd7c-442f-a28f-b018ab809a98",
+            "workflowId": null,
+            "name": "HTML Reports Builder",
+            "className": "HTMLReportsBuilder",
+            "description": "Build HTML reports",
+            "group": "UTILS",
+            "inputs": [
+                {
+                    "key": "template_j2",
+                    "dataType": "TEXT",
+                    "value": "<html>\n              <head><title></title></head>\n              <body>\n              <h1> Report for {{ user }}</h1>\n              {% for sentence in sentences %}\n              <>{{ sentence }}</p>\n              {% endfor %}\n              </body>\n            </html>\n",
+                    "templateVariables": {},
+                    "componentId": null
+                },
+                {
+                    "key": "data",
+                    "dataType": "JSON",
+                    "value": {
+                        "User A": {
+                            "user": "User A",
+                            "sentences": [
+                                "sentence A",
+                                "sentence B"
+                            ]
+                        },
+                        "User B": {
+                            "user": "User B",
+                            "sentences": [
+                                "sentence C"
+                            ]
+                        }
+                    },
+                    "templateVariables": {},
+                    "componentId": null
+                }
+            ],
+            "output": {
+                "dataType": "JSON",
+                "value": ":undef:"
+            },
+            "label": "HTMLReportsBuilder_652036a5-cd7c-442f-a28f-b018ab809a98",
+            "configuration": {
+                "force_run": false
+            },
+            "version": null,
+            "isCustom": false,
+            "isTerminal": true,
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "timeout": 600,
+            "forceRun": false,
+            "componentCode": "/lunar/lunarcore/lunarcore/component_library/html_reports_builder/__init__.py",
+            "componentCodeRequirements": [],
+            "componentExamplePath": null
+        }
+    ],
+    "dependencies": [],
+    "timeout": 3600
+}

@@ -1,0 +1,124 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "Property selector example",
+  "description": "Property selector example",
+  "version": null,
+  "components": [
+    {
+      "id": "6add3c53-2b4f-4c7a-8caa-7351b4d84a32",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "Python coder",
+      "className": "PythonCoder",
+      "description": "Performs customized Python code execution. Outputs the value that the Python variable `result` is set to during the execution of the Python code.\n    Inputs:\n      `Code` (str): A string of the Python code to execute.  If needed, the Python code can be inputted manually by the user.\n    Output (Any): The value of the variable `result` in the Python code after execution.",
+      "group": "CODERS",
+      "inputs": [
+        {
+          "key": "Code",
+          "dataType": "CODE",
+          "value": "result = {\n  \"a\": \"apple\",\n  \"b\": \"banana\",\n  \"c\": \"cherry\"\n}\n",
+          "templateVariables": {},
+          "componentId": "6add3c53-2b4f-4c7a-8caa-7351b4d84a32"
+        }
+      ],
+      "output": {
+        "dataType": "ANY",
+        "value": {
+          "a": "apple",
+          "b": "banana",
+          "c": "cherry"
+        }
+      },
+      "label": "PYTHONCODER-0",
+      "configuration": {
+        "force_run": false,
+        "openai_api_key": "",
+        "openai_api_base": ""
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": 839.1326960920669,
+        "y": 676.0100206106167
+      },
+      "timeout": 600,
+      "componentCode": "python_coder/python_coder/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    },
+    {
+      "id": "c5f96165-b574-4aac-9dd5-e32b817a9700",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "Property Selector",
+      "className": "PropertySelector",
+      "description": "Get values of properties (keys) of an inputted dictionary.\n    Inputs:\n      `Inputs` (Dict[str, Any]): A dictionary to extract values from. E.g. `{`keyA`: {`keyB`: 123}, `keyC`: {`keyD`: 456}}`\n      `Selected properties` (str): A comma separated string of the properties (keys) to extract, using dots for nested properties. E.g. `keyA,keyC.keyD`\n    Output (Dict): A dictionary of the selected properties and their values. E.g. `{`keyA`: {`keyB`: 123}, `keyC.keyD`: 456}}`",
+      "group": "DATA_TRANSFORMATION",
+      "inputs": [
+        {
+          "key": "inputs",
+          "dataType": "AGGREGATED",
+          "value": {
+            "a": "apple",
+            "b": "banana",
+            "c": "cherry",
+            "PYTHONCODER-0": {
+              "a": "apple",
+              "b": "banana",
+              "c": "cherry"
+            }
+          },
+          "templateVariables": {},
+          "componentId": "c5f96165-b574-4aac-9dd5-e32b817a9700"
+        },
+        {
+          "key": "selected_properties",
+          "dataType": "PROPERTY_SELECTOR",
+          "value": "a,b",
+          "templateVariables": {},
+          "componentId": "c5f96165-b574-4aac-9dd5-e32b817a9700"
+        }
+      ],
+      "output": {
+        "dataType": "JSON",
+        "value": {
+          "a": "apple",
+          "b": "banana"
+        }
+      },
+      "label": "PROPERTYSELECTOR-1",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 1308.0976239549088,
+        "y": 616.4589186597796
+      },
+      "timeout": 600,
+      "componentCode": "property_selector/property_selector/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [
+    {
+      "componentInputKey": "Inputs",
+      "sourceLabel": "PYTHONCODER-0",
+      "targetLabel": "PROPERTYSELECTOR-1",
+      "templateVariableKey": null
+    }
+  ],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

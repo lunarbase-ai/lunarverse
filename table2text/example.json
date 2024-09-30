@@ -1,0 +1,62 @@
+{
+  "id": "8883ad1e-cf10-49a3-99b4-24296ea7afec",
+  "userId": "",
+  "name": "Table2Text example",
+  "description": "Table2Text example",
+  "version": null,
+  "components": [
+    {
+      "id": "16406d4d-e327-4b76-957f-6ebdb4cbc4a1",
+      "workflowId": "8883ad1e-cf10-49a3-99b4-24296ea7afec",
+      "name": "Table2Text",
+      "className": "Table2Text",
+      "description": "Takes a CSV formatted table as input and converts it to a text by sentencifying each row.\nInputs:\n  `Table` (str): A string of the table on CSV format.\nOutput (Dict): A dictionary containing only the key `results` which is mapped to a list of the sentences corresponding to the inputted table rows.",
+      "group": "DATA_EXTRACTION",
+      "inputs": [
+        {
+          "key": "table",
+          "dataType": "TEXT",
+          "value": "\"LatD\", \"LatM\", \"LatS\", \"NS\", \"LonD\", \"LonM\", \"LonS\", \"EW\", \"City\", \"State\"\n   41,    5,   59, \"N\",     80,   39,    0, \"W\", \"Youngstown\", OH\n   42,   52,   48, \"N\",     97,   23,   23, \"W\", \"Yankton\", SD\n   46,   35,   59, \"N\",    120,   30,   36, \"W\", \"Yakima\", WA\n   42,   16,   12, \"N\",     71,   48,    0, \"W\", \"Worcester\", MA\n   43,   37,   48, \"N\",     89,   46,   11, \"W\", \"Wisconsin Dells\", WI",
+          "templateVariables": {},
+          "componentId": "16406d4d-e327-4b76-957f-6ebdb4cbc4a1"
+        }
+      ],
+      "output": {
+        "dataType": "JSON",
+        "value": {
+          "results": [
+            " \"City\"  \"Youngstown\" has 41 LatD, has 5  \"LatM\", has 59  \"LatS\", is  \"N\", has 80  \"LonD\", has 39  \"LonM\", has 0  \"LonS\", is  \"W\" and is  OH.\n \"City\"  \"Yankton\" has 42 LatD, has 52  \"LatM\", has 48  \"LatS\", is  \"N\", has 97  \"LonD\", has 23  \"LonM\", has 23  \"LonS\", is  \"W\" and is  SD.\n \"City\"  \"Yakima\" has 46 LatD, has 35  \"LatM\", has 59  \"LatS\", is  \"N\", has 120  \"LonD\", has 30  \"LonM\", has 36  \"LonS\", is  \"W\" and is  WA.\n \"City\"  \"Worcester\" has 42 LatD, has 16  \"LatM\", has 12  \"LatS\", is  \"N\", has 71  \"LonD\", has 48  \"LonM\", has 0  \"LonS\", is  \"W\" and is  MA.\n \"City\"  \"Wisconsin Dells\" has 43 LatD, has 37  \"LatM\", has 48  \"LatS\", is  \"N\", has 89  \"LonD\", has 46  \"LonM\", has 11  \"LonS\", is  \"W\" and is  WI."
+          ]
+        }
+      },
+      "label": "TABLE2TEXT-0",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 249,
+        "y": 156
+      },
+      "timeout": 600,
+      "componentCode": "table2text/table2text/__init__.py",
+      "componentCodeRequirements": [
+        "spacy",
+        "pandas"
+      ],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

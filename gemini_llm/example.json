@@ -1,0 +1,56 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "Gemini AI Prompt example",
+  "description": "Gemini AI Prompt example",
+  "version": null,
+  "components": [
+    {
+      "id": "21811866-d822-45a2-9fed-5745f5de2873",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "Gemini AI prompt",
+      "className": "GeminiAIPrompt",
+      "description": "Connects to Gemini's API, runs natural language prompts and outputs the result as text\n    Output (str): The answer provided by the LLM to the prompt.",
+      "group": "GENAI",
+      "inputs": [
+        {
+          "key": "prompt",
+          "dataType": "TEMPLATE",
+          "value": "Say something interesting",
+          "templateVariables": {},
+          "componentId": "21811866-d822-45a2-9fed-5745f5de2873"
+        }
+      ],
+      "output": {
+        "dataType": "TEXT",
+        "value": null
+      },
+      "label": "GEMINIAIPROMPT-0",
+      "configuration": {
+        "force_run": "true",
+        "api_key": "YOUR_API_KEY"
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 396,
+        "y": 296
+      },
+      "timeout": 600,
+      "componentCode": "gemini_llm/gemini_llm/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

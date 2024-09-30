@@ -1,0 +1,59 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "CSV viewer example",
+  "description": "CSV viewer example",
+  "version": null,
+  "components": [
+    {
+      "id": "6224defa-a306-4bea-8e35-2c6760887bd9",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "Csv Viewer",
+      "className": "CsvViewer",
+      "description": "Displays .csv files Output (str): csv file",
+      "group": "DATA_VISUALIZATION",
+      "inputs": [
+        {
+          "key": "input_text",
+          "dataType": "TEXT",
+          "value": "Username; Identifier;First name;Last name\nbooker12;9012;Rachel;Booker\ngrey07;2070;Laura;Grey\njohnson81;4081;Craig;Johnson\njenkins46;9346;Mary;Jenkins\nsmith79;5079;Jamie;Smith",
+          "templateVariables": {},
+          "componentId": "6224defa-a306-4bea-8e35-2c6760887bd9"
+        }
+      ],
+      "output": {
+        "dataType": "CSV",
+        "value": ",Username; Identifier;First name;Last name\n0,booker12;9012;Rachel;Booker\n1,grey07;2070;Laura;Grey\n2,johnson81;4081;Craig;Johnson\n3,jenkins46;9346;Mary;Jenkins\n4,smith79;5079;Jamie;Smith\n"
+      },
+      "label": "CSVVIEWER-0",
+      "configuration": {
+        "force_run": false,
+        "sep": "None",
+        "lineterminator": "None"
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 324,
+        "y": 158
+      },
+      "timeout": 600,
+      "componentCode": "csv_viewer/csv_viewer/__init__.py",
+      "componentCodeRequirements": [
+        "pandas"
+      ],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

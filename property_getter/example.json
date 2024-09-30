@@ -1,0 +1,116 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "Property getter example",
+  "description": "Property getter example",
+  "version": null,
+  "components": [
+    {
+      "id": "6add3c53-2b4f-4c7a-8caa-7351b4d84a32",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "Python coder",
+      "className": "PythonCoder",
+      "description": "Performs customized Python code execution. Outputs the value that the Python variable `result` is set to during the execution of the Python code.\n    Inputs:\n      `Code` (str): A string of the Python code to execute.  If needed, the Python code can be inputted manually by the user.\n    Output (Any): The value of the variable `result` in the Python code after execution.",
+      "group": "CODERS",
+      "inputs": [
+        {
+          "key": "Code",
+          "dataType": "CODE",
+          "value": "result = {\n  \"a\": \"apple\",\n  \"b\": \"banana\",\n  \"c\": \"cherry\"\n}\n",
+          "templateVariables": {},
+          "componentId": "6add3c53-2b4f-4c7a-8caa-7351b4d84a32"
+        }
+      ],
+      "output": {
+        "dataType": "ANY",
+        "value": {
+          "a": "apple",
+          "b": "banana",
+          "c": "cherry"
+        }
+      },
+      "label": "PYTHONCODER-0",
+      "configuration": {
+        "force_run": false,
+        "openai_api_key": "",
+        "openai_api_base": ""
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": 839.1326960920669,
+        "y": 676.0100206106167
+      },
+      "timeout": 600,
+      "componentCode": "python_coder/python_coder/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    },
+    {
+      "id": "e36c9c8e-bb49-48ae-9306-8ca743e430a8",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "Property Getter",
+      "className": "PropertyGetter",
+      "description": "Extracts the mapped value of an inputted key/field/attribute in an inputted object/datastructure. It can be the value of a field/attribute in an object, or the mapped value of a key in a dictionary.\n    Input (Any, str): An object and a string with the name of the key/field/attribute to extract the value from. The object can for example be a Dict or a File object. If needed, the key/field/attribute can be inputted manually by the user. If nested objects/dicts, access nested keys by concatenating keys with dots (eg. `parent_dict_key.dict_key`).\n    Output (Any): The mapped value of the inputted key/field/attribute in the inputted dictionary.",
+      "group": "DATA_TRANSFORMATION",
+      "inputs": [
+        {
+          "key": "input",
+          "dataType": "JSON",
+          "value": {
+            "a": "apple",
+            "b": "banana",
+            "c": "cherry"
+          },
+          "templateVariables": {},
+          "componentId": "e36c9c8e-bb49-48ae-9306-8ca743e430a8"
+        },
+        {
+          "key": "selected_property",
+          "dataType": "PROPERTY_GETTER",
+          "value": "a",
+          "templateVariables": {},
+          "componentId": "e36c9c8e-bb49-48ae-9306-8ca743e430a8"
+        }
+      ],
+      "output": {
+        "dataType": "ANY",
+        "value": "apple"
+      },
+      "label": "PROPERTYGETTER-1",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 1298.5269111413818,
+        "y": 664.3124827274165
+      },
+      "timeout": 600,
+      "componentCode": "property_getter/property_getter/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [
+    {
+      "componentInputKey": "Input",
+      "sourceLabel": "PYTHONCODER-0",
+      "targetLabel": "PROPERTYGETTER-1",
+      "templateVariableKey": null
+    }
+  ],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

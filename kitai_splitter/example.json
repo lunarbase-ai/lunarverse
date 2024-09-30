@@ -1,0 +1,71 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "kitai_splitter",
+  "description": "kitai_splitter ",
+  "version": null,
+  "components": [
+    {
+      "id": "0215071d-eee6-4383-887b-8760d505a963",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "kitai_splitter",
+      "className": "Kitai_splitter",
+      "description": "kitai_splitter",
+      "group": "Extractors",
+      "inputs": [
+        {
+          "key": "api_key",
+          "dataType": "TEXT",
+          "value": "",
+          "templateVariables": {},
+          "componentId": "0215071d-eee6-4383-887b-8760d505a963"
+        },
+        {
+          "key": "sound_file",
+          "dataType": "TEXT",
+          "value": "",
+          "templateVariables": {},
+          "componentId": "0215071d-eee6-4383-887b-8760d505a963"
+        }
+      ],
+      "output": {
+        "dataType": "TEXT",
+        "value": ":undef:"
+      },
+      "label": "kitai_splitter-0",
+      "configuration": {
+        "force_run": false,
+        "client_id": "None",
+        "client_secret": "None"
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 1295.3366735368725,
+        "y": 635.6003442868345
+      },
+      "timeout": 6000,
+      "componentCode": "kitai_splitter/kitai_splitter/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [
+    {
+      "componentInputKey": "File path",
+      "sourceLabel": "UPLOADCOMPONENT-1",
+      "targetLabel": "kitai_splitter-0",
+      "templateVariableKey": null
+    }
+  ],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

@@ -1,0 +1,60 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "OpenAI prompt  example",
+  "description": "OpenAI prompt example",
+  "version": null,
+  "components": [
+    {
+      "id": "fc1eb439-db31-41e7-8284-7777cb380565",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "OpenAI prompt",
+      "className": "OpenAIPrompt",
+      "description": "Connects to OpenAI's API, runs natural language prompts and outputs the result as text\n    Output (str): The answer provided by the LLM to the prompt.",
+      "group": "GENAI",
+      "inputs": [
+        {
+          "key": "prompt",
+          "dataType": "TEMPLATE",
+          "value": "Say something interesting",
+          "templateVariables": {},
+          "componentId": "fc1eb439-db31-41e7-8284-7777cb380565"
+        }
+      ],
+      "output": {
+        "dataType": "TEXT",
+        "value": ":undef:"
+      },
+      "label": "OPENAIPROMPT-0",
+      "configuration": {
+        "force_run": "true",
+        "openai_api_key": "",
+        "model_name": "",
+        "openai_api_base": ""
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 348,
+        "y": 363
+      },
+      "timeout": 600,
+      "componentCode": "openai_llm/openai_llm/__init__.py",
+      "componentCodeRequirements": [
+        "langchain"
+      ],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}
