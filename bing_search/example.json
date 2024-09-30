@@ -1,0 +1,57 @@
+{
+  "id": "cd342874-b400-4b4f-b723-c2f146ea1da5",
+  "userId": "",
+  "name": "Bing search example",
+  "description": "Bing search example",
+  "version": null,
+  "components": [
+    {
+      "id": "9a871cef-e6f4-403e-a063-3b12a7b9df3c",
+      "workflowId": "cd342874-b400-4b4f-b723-c2f146ea1da5",
+      "name": "Bing Search client",
+      "className": "BingSearch",
+      "description": "Searches data using Bing Search API.",
+      "group": "API_TOOLS",
+      "inputs": [
+        {
+          "key": "query",
+          "dataType": "TEXT",
+          "value": "The quick brown fox jumps over the lazy dog",
+          "templateVariables": {},
+          "componentId": "9a871cef-e6f4-403e-a063-3b12a7b9df3c"
+        }
+      ],
+      "output": {
+        "dataType": "JSON",
+        "value": ":undef:"
+      },
+      "label": "BINGSEARCH-2",
+      "configuration": {
+        "force_run": false,
+        "bing_search_url": "https://api.bing.microsoft.com/v7.0/search",
+        "bing_subscription_key": ""
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 392,
+        "y": -42
+      },
+      "timeout": 600,
+      "componentCode": "bing_search/bing_search/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

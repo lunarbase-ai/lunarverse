@@ -1,0 +1,52 @@
+{
+    "id": "19c07004-8794-4475-a660-8529ccd61642",
+    "userId": "admin",
+    "name": "Test URLs Scraper",
+    "description": "Workflow to test url scraper",
+    "version": null,
+    "components": [
+      {
+        "id": "be19a210-ed50-46cc-a6c6-8c65b0b2783e",
+        "workflowId": null,
+        "name": "URLs Scraper",
+        "className": "URLsScraper",
+        "description": "Scrape URLs",
+        "group": "DATA_EXTRACTION",
+        "inputs": [
+          {
+            "key": "Urls",
+            "dataType": "LIST",
+            "value": [
+              "http://www.perdu.com/",
+              "I'm not a URL",
+              "https://www.idiap.ch/not_existing"
+            ],
+            "templateVariables": {},
+            "componentId": null
+          }
+        ],
+        "output": {
+          "dataType": "JSON",
+          "value": ":undef:"
+        },
+        "label": "URLsScraper_be19a210-ed50-46cc-a6c6-8c65b0b2783e",
+        "configuration": {
+          "force_run": false
+        },
+        "version": null,
+        "isCustom": false,
+        "isTerminal": true,
+        "position": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "timeout": 600,
+        "forceRun": false,
+        "componentCode": "/lunar/lunarcore/lunarcore/component_library/urls_scraper/__init__.py",
+        "componentCodeRequirements": [],
+        "componentExamplePath": null
+      }
+    ],
+    "dependencies": [],
+    "timeout": 3600
+  }

@@ -1,0 +1,80 @@
+{
+    "id": "19c07104-8794-4475-a660-9529ccd61642",
+    "userId": "admin",
+    "name": "Test Online Spreadsheet IO",
+    "description": "Workflow to test Online Spreadsheet IO",
+    "version": null,
+    "components": [
+      {
+        "id": "423a2600-1615-4424-a7ec-7d5558322b6f",
+        "workflowId": null,
+        "name": "Online Spreadsheet IO",
+        "className": "OnlineSpreadsheetIO",
+        "description": "Save to a online spreadsheet then and forward the content",
+        "group": "UTILS",
+        "inputs": [
+          {
+            "key": "content",
+            "dataType": "LIST",
+            "value": [
+              {
+                "work?": "yes"
+              }
+            ],
+            "templateVariables": {},
+            "componentId": null
+          },
+          {
+            "key": "url",
+            "dataType": "TEXT",
+            "value": "TODO YOUR URL",
+            "templateVariables": {},
+            "componentId": null
+          },
+          {
+            "key": "merge",
+            "dataType": "BOOL",
+            "value": 1,
+            "templateVariables": {},
+            "componentId": null
+          },
+          {
+            "key": "filename",
+            "dataType": "TEXT",
+            "value": "deleteme.xlsx",
+            "templateVariables": {},
+            "componentId": null
+          },
+          {
+            "key": "older_password",
+            "dataType": "TEXT",
+            "value": "TODO YOUR FOLDER PASSWORD",
+            "templateVariables": {},
+            "componentId": null
+          }
+        ],
+        "output": {
+          "dataType": "LIST",
+          "value": ":undef:"
+        },
+        "label": "OnlineSpreadsheetIO_423a2600-1615-4424-a7ec-7d5558322b6f",
+        "configuration": {
+          "force_run": false
+        },
+        "version": null,
+        "isCustom": false,
+        "isTerminal": true,
+        "position": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "timeout": 600,
+        "forceRun": false,
+        "componentCode": "/lunar/lunarcore/lunarcore/component_library/online_spreadsheet_io/__init__.py",
+        "componentCodeRequirements": [],
+        "componentExamplePath": null
+      }
+    ],
+    "dependencies": [],
+    "timeout": 3600
+  }

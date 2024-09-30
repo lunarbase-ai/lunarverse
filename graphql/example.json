@@ -1,0 +1,74 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "GraphQL Query example",
+  "description": "GraphQL Query example",
+  "version": null,
+  "components": [
+    {
+      "id": "aca9808d-63d7-435d-a3e2-c0974e165245",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "GraphQL Query",
+      "className": "GraphQLQuery",
+      "description": "Fetches data from a GraphQL endpoint\n    Output (dict): The response for the query",
+      "group": "DATABASES",
+      "inputs": [
+        {
+          "key": "query",
+          "dataType": "GRAPHQL",
+          "value": "{\n  \"query\": \"query getCountry($code: ID!) {\\n  country(code: $code) {\\n    name\\n    native\\n    capital\\n    emoji\\n    currency\\n    languages {\\n      code\\n      name\\n    }\\n  }\\n}\",\n  \"variables\": {\n    \"code\": \"BR\"\n  }\n}\n",
+          "templateVariables": {},
+          "componentId": "aca9808d-63d7-435d-a3e2-c0974e165245"
+        }
+      ],
+      "output": {
+        "dataType": "JSON",
+        "value": {
+          "data": {
+            "country": {
+              "name": "Brazil",
+              "native": "Brasil",
+              "capital": "Bras\u00edlia",
+              "emoji": "\ud83c\udde7\ud83c\uddf7",
+              "currency": "BRL",
+              "languages": [
+                {
+                  "code": "pt",
+                  "name": "Portuguese"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "label": "GRAPHQLQUERY-0",
+      "configuration": {
+        "force_run": "false",
+        "endpoint": "https://countries.trevorblades.com/graphql"
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 392,
+        "y": 258
+      },
+      "timeout": 600,
+      "componentCode": "graphql/graphql/__init__.py",
+      "componentCodeRequirements": [
+        "requests"
+      ],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

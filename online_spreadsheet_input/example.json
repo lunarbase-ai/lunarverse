@@ -1,0 +1,62 @@
+{
+    "id": "19c07104-8794-4475-a660-8529ccd61642",
+    "userId": "admin",
+    "name": "Test Online Spreadsheet",
+    "description": "Workflow to test Online Spreadsheet",
+    "version": null,
+    "components": [
+        {
+            "id": "46edd48b-ad5d-4ff0-a047-3f93ea5bc6e1",
+            "workflowId": null,
+            "name": "Online Spreadsheet",
+            "className": "OnlineSpreadsheetInput",
+            "description": "Download and forward content of an online spreadsheet",
+            "group": "UTILS",
+            "inputs": [
+                {
+                    "key": "url",
+                    "dataType": "TEXT",
+                    "value": "YOUR LINK",
+                    "templateVariables": {},
+                    "componentId": null
+                },
+                {
+                    "key": "filename",
+                    "dataType": "TEXT",
+                    "value": "urls.xlsx",
+                    "templateVariables": {},
+                    "componentId": null
+                },
+                {
+                    "key": "folder_password",
+                    "dataType": "TEXT",
+                    "value": "YOUR PASSWORD",
+                    "templateVariables": {},
+                    "componentId": null
+                }
+            ],
+            "output": {
+                "dataType": "LIST",
+                "value": ":undef:"
+            },
+            "label": "OnlineSpreadsheetInput_46edd48b-ad5d-4ff0-a047-3f93ea5bc6e1",
+            "configuration": {
+                "force_run": false
+            },
+            "version": null,
+            "isCustom": false,
+            "isTerminal": true,
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "timeout": 600,
+            "forceRun": false,
+            "componentCode": "/lunar/lunarcore/lunarcore/component_library/online_spreadsheet_input/__init__.py",
+            "componentCodeRequirements": [],
+            "componentExamplePath": null
+        }
+    ],
+    "dependencies": [],
+    "timeout": 3600
+}

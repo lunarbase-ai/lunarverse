@@ -1,0 +1,103 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "python coder example",
+  "description": "python coder example",
+  "version": null,
+  "components": [
+    {
+      "id": "6add3c53-2b4f-4c7a-8caa-7351b4d84a32",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "Python coder",
+      "className": "PythonCoder",
+      "description": "Performs customized Python code execution. Outputs the value that the Python variable `result` is set to during the execution of the Python code.\n    Inputs:\n      `Code` (str): A string of the Python code to execute.  If needed, the Python code can be inputted manually by the user.\n    Output (Any): The value of the variable `result` in the Python code after execution.",
+      "group": "CODERS",
+      "inputs": [
+        {
+          "key": "cwode",
+          "dataType": "CODE",
+          "value": "def reverse_each_word(input_string):\n    # Split the input string into words\n    words = input_string.split()\n    \n    # Reverse each word\n    reversed_words = [word[::-1] for word in words]\n    \n    # Join the reversed words back into a single string\n    reversed_string = ' '.join(reversed_words)\n    \n    return reversed_string\n\ninput_string = \"{input}\"\nresult = reverse_each_word(input_string)\n",
+          "templateVariables": {
+            "Code.input": "The quick brown fox jumps over the lazy dog"
+          },
+          "componentId": "6add3c53-2b4f-4c7a-8caa-7351b4d84a32"
+        }
+      ],
+      "output": {
+        "dataType": "ANY",
+        "value": "ehT kciuq nworb xof spmuj revo eht yzal god"
+      },
+      "label": "PYTHONCODER-0",
+      "configuration": {
+        "force_run": false,
+        "openai_api_key": "",
+        "openai_api_base": ""
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 1257.0538222827627,
+        "y": 618.5857437294525
+      },
+      "timeout": 600,
+      "componentCode": "python_coder/python_coder/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    },
+    {
+      "id": "4141f646-89e2-4c6d-a700-d1a76202ecd2",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "Text Input",
+      "className": "TextInput",
+      "description": "Allows the user to input a text (potentially with template variables) that can be used in other downstream components.\n    Inputs:\n      `Input` (str): The text to output.\n    Output (str): The inputted text.",
+      "group": "IO",
+      "inputs": [
+        {
+          "key": "Input",
+          "dataType": "TEMPLATE",
+          "value": "The quick brown fox jumps over the lazy dog",
+          "templateVariables": {},
+          "componentId": "4141f646-89e2-4c6d-a700-d1a76202ecd2"
+        }
+      ],
+      "output": {
+        "dataType": "TEXT",
+        "value": "The quick brown fox jumps over the lazy dog"
+      },
+      "label": "TEXTINPUT-1",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": 812.5473827211576,
+        "y": 626.0296314733071
+      },
+      "timeout": 600,
+      "componentCode": "text_input/text_input/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [
+    {
+      "componentInputKey": "Code",
+      "sourceLabel": "TEXTINPUT-1",
+      "targetLabel": "PYTHONCODER-0",
+      "templateVariableKey": "Code.input"
+    }
+  ],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

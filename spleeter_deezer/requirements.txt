@@ -1,0 +1,4 @@
+ffmpeg
+libsndfile
+spleeter
+numpy<2.0

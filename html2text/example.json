@@ -1,0 +1,96 @@
+{
+    "id": "19c07004-8794-4475-a660-8529ccd61642",
+    "userId": "admin",
+    "name": "Test html to text with url scraping",
+    "description": "Workflow to test html to text conversion with urls scraping",
+    "version": null,
+    "components": [
+        {
+            "id": "95f8d107-0240-46e5-b5b9-c39ebb1c279a",
+            "workflowId": null,
+            "name": "URLs Scraper",
+            "className": "URLsScraper",
+            "description": "Scrape URLs",
+            "group": "DATA_EXTRACTION",
+            "inputs": [
+                {
+                    "key": "Urls",
+                    "dataType": "LIST",
+                    "value": [
+                        "http://www.perdu.com/",
+                        "I'm not a URL",
+                        "https://www.idiap.ch/not_existing"
+                    ],
+                    "templateVariables": {},
+                    "componentId": null
+                }
+            ],
+            "output": {
+                "dataType": "JSON",
+                "value": ":undef:"
+            },
+            "label": "URLsScraper_95f8d107-0240-46e5-b5b9-c39ebb1c279a",
+            "configuration": {
+                "force_run": false
+            },
+            "version": null,
+            "isCustom": false,
+            "isTerminal": false,
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "timeout": 600,
+            "forceRun": false,
+            "componentCode": "/lunar/lunarcore/lunarcore/component_library/urls_scraper/__init__.py",
+            "componentCodeRequirements": [],
+            "componentExamplePath": "urls_scraper/example.json"
+        },
+        {
+            "id": "3d55a64e-cbc2-49f2-9b00-38a80dbaa6e9",
+            "workflowId": null,
+            "name": "Htmls2Texts",
+            "className": "HTMLsToTexts",
+            "description": "Convert HTMLs to texts",
+            "group": "DATA_EXTRACTION",
+            "inputs": [
+                {
+                    "key": "Scraper_results",
+                    "dataType": "JSON",
+                    "value": ":undef:",
+                    "templateVariables": {},
+                    "componentId": "3d55a64e-cbc2-49f2-9b00-38a80dbaa6e9"
+                }
+            ],
+            "output": {
+                "dataType": "JSON",
+                "value": ":undef:"
+            },
+            "label": "HTMLsToTexts_3d55a64e-cbc2-49f2-9b00-38a80dbaa6e9",
+            "configuration": {
+                "force_run": false
+            },
+            "version": null,
+            "isCustom": false,
+            "isTerminal": true,
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "timeout": 600,
+            "forceRun": false,
+            "componentCode": "/lunar/lunarcore/lunarcore/component_library/html2text/__init__.py",
+            "componentCodeRequirements": [],
+            "componentExamplePath": null
+        }
+    ],
+    "dependencies": [
+        {
+            "componentInputKey": "Scraper_results",
+            "sourceLabel": "URLsScraper_95f8d107-0240-46e5-b5b9-c39ebb1c279a",
+            "targetLabel": "HTMLsToTexts_3d55a64e-cbc2-49f2-9b00-38a80dbaa6e9",
+            "templateVariableKey": null
+        }
+    ],
+    "timeout": 3600
+}

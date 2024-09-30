@@ -1,0 +1,330 @@
+{
+  "id": "8883ad1e-cf10-49a3-99b4-24296ea7afec",
+  "userId": "",
+  "name": "Yahoo Finance example",
+  "description": "Yahoo Finance example",
+  "version": null,
+  "components": [
+    {
+      "id": "4abc4f9e-7b8c-4f24-bfc5-9a7cb5893941",
+      "workflowId": "8883ad1e-cf10-49a3-99b4-24296ea7afec",
+      "name": "Yahoo Finance API",
+      "className": "YahooFinanceAPI",
+      "description": "Connects to Yahoo's public API and retrieves financial data about companies and their stocks.\n    Input (List[str]): A list of strings of the tickers to the stocks to get data about.\n    Output (Dict[str,Dict[str, Any]]): A dictionary mapping each inputted ticker (str) to the financial data about the corresponding stock in the form of a dictionary of indicators (str) mapped to their values (Any)",
+      "group": "API_TOOLS",
+      "inputs": [
+        {
+          "key": "tickers",
+          "dataType": "LIST",
+          "value": [
+            "APPL"
+          ],
+          "templateVariables": {},
+          "componentId": "4abc4f9e-7b8c-4f24-bfc5-9a7cb5893941"
+        }
+      ],
+      "output": {
+        "dataType": "JSON",
+        "value": {
+          "APPL": {
+            "isin": "AU000000AD13",
+            "major_holders": {},
+            "mutualfund_holders": {},
+            "insider_purchases": {},
+            "insider_transactions": {},
+            "insider_roster_holders": {},
+            "dividends": [],
+            "capital_gains": [],
+            "splits": [],
+            "actions": "'Series' object has no attribute 'columns'",
+            "shares": "Have not implemented fetching 'shares' from Yahoo API",
+            "info": {
+              "exchange": "YHD",
+              "quoteType": "MUTUALFUND",
+              "symbol": "APPL",
+              "underlyingSymbol": "APPL",
+              "timeZoneFullName": "America/New_York",
+              "timeZoneShortName": "EDT",
+              "uuid": "fc74d387-06b2-3b3b-9d2b-a67dd39f76c4",
+              "gmtOffSetMilliseconds": -14400000,
+              "maxAge": 86400,
+              "trailingPegRatio": null
+            },
+            "sustainability": "Have not implemented fetching 'sustainability' from Yahoo API",
+            "analyst_price_target": "Have not implemented fetching 'analyst_price_target' from Yahoo API",
+            "rev_forecast": "Have not implemented fetching 'rev_est' from Yahoo API",
+            "calendar": {},
+            "recommendations": {},
+            "upgrades_downgrades": {},
+            "earnings": "Have not implemented fetching 'earnings' from Yahoo API",
+            "income_stmt": {},
+            "balance_sheet": {},
+            "cash_flow": {},
+            "options": {},
+            "news": [
+              {
+                "uuid": "4205eaa9-f620-3a0b-a81a-0e82c7c9fd0b",
+                "title": "Magnificent Seven Stocks: Nvidia Stock Slides From Record Highs; Amazon Retakes Key Level",
+                "publisher": "Investor's Business Daily",
+                "link": "https://finance.yahoo.com/m/4205eaa9-f620-3a0b-a81a-0e82c7c9fd0b/magnificent-seven-stocks%3A.html",
+                "providerPublishTime": 1717700262,
+                "type": "STORY",
+                "thumbnail": {
+                  "resolutions": [
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/kV2Fc5Kz3y8hNbXlVxHRQg--~B/aD01NjU7dz0xMDAwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/ibd.com/d5bee44b5deef90ccff5d488feb6722d",
+                      "width": 1000,
+                      "height": 565,
+                      "tag": "original"
+                    },
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/My3O.I831YydYsn.iMoUvw--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/ibd.com/d5bee44b5deef90ccff5d488feb6722d",
+                      "width": 140,
+                      "height": 140,
+                      "tag": "140x140"
+                    }
+                  ]
+                },
+                "relatedTickers": [
+                  "NVDA",
+                  "AAPL",
+                  "TSLA",
+                  "META",
+                  "MSFT"
+                ]
+              },
+              {
+                "uuid": "f0732126-445b-32b7-ba90-572e57964669",
+                "title": "Is Applied Materials A Good Quality Stock to Buy Now?",
+                "publisher": "Insider Monkey",
+                "link": "https://finance.yahoo.com/news/applied-materials-good-quality-stock-175652289.html",
+                "providerPublishTime": 1717696612,
+                "type": "STORY",
+                "thumbnail": {
+                  "resolutions": [
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/SsilVcvEuhxcem7tj.AMjw--~B/aD00MzA7dz03Njg7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/en/insidermonkey.com/baace31f0e29cc385fd4eec1d0fcbd68",
+                      "width": 768,
+                      "height": 430,
+                      "tag": "original"
+                    },
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/g9b70HKF1sNH.tWE5Hc40A--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/insidermonkey.com/baace31f0e29cc385fd4eec1d0fcbd68",
+                      "width": 140,
+                      "height": 140,
+                      "tag": "140x140"
+                    }
+                  ]
+                },
+                "relatedTickers": [
+                  "AMAT"
+                ]
+              },
+              {
+                "uuid": "a4b248de-b50c-3c2c-9750-0187bbc6bbd3",
+                "title": "Heard on the Street: Nvidia at $3 Trillion Isn\u2019t Priced for Trouble",
+                "publisher": "The Wall Street Journal",
+                "link": "https://finance.yahoo.com/m/a4b248de-b50c-3c2c-9750-0187bbc6bbd3/heard-on-the-street%3A-nvidia.html",
+                "providerPublishTime": 1717693920,
+                "type": "STORY",
+                "thumbnail": {
+                  "resolutions": [
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/Fwf5HL4GsEGPbDfR3MJBPg--~B/aD02MzA7dz0xMjAwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/wsj.com/7b2c285183be07ca3c4e8242b25a59a8",
+                      "width": 1200,
+                      "height": 630,
+                      "tag": "original"
+                    },
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/zIJaagDuCJitt1Cvcwyc7A--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/wsj.com/7b2c285183be07ca3c4e8242b25a59a8",
+                      "width": 140,
+                      "height": 140,
+                      "tag": "140x140"
+                    }
+                  ]
+                },
+                "relatedTickers": [
+                  "NVDA",
+                  "ALAB",
+                  "ARM",
+                  "MSFT",
+                  "AAPL"
+                ]
+              },
+              {
+                "uuid": "ebe67b25-a0c8-32f9-bf99-58980e642387",
+                "title": "Apple Stock Relative Strength Rating Jumps On Renewed Growth",
+                "publisher": "Investor's Business Daily",
+                "link": "https://finance.yahoo.com/m/ebe67b25-a0c8-32f9-bf99-58980e642387/apple-stock-relative-strength.html",
+                "providerPublishTime": 1717692600,
+                "type": "STORY",
+                "thumbnail": {
+                  "resolutions": [
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/xRFjNTAFgOkvUTxHG0gbdQ--~B/aD01NjM7dz0xMDAwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/ibd.com/3417047a4b024123b3a81ee1e1f53d5e",
+                      "width": 1000,
+                      "height": 563,
+                      "tag": "original"
+                    },
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/YXdXggxRqTNBuDBR0zRPvg--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/ibd.com/3417047a4b024123b3a81ee1e1f53d5e",
+                      "width": 140,
+                      "height": 140,
+                      "tag": "140x140"
+                    }
+                  ]
+                },
+                "relatedTickers": [
+                  "AAPL"
+                ]
+              },
+              {
+                "uuid": "ec2f2333-5a08-3aa2-81cd-dd63976825d3",
+                "title": "Should You Buy Apple Stock Ahead of WWDC? Shares Look Pricey to Some.",
+                "publisher": "Barrons.com",
+                "link": "https://finance.yahoo.com/m/ec2f2333-5a08-3aa2-81cd-dd63976825d3/should-you-buy-apple-stock.html",
+                "providerPublishTime": 1717692540,
+                "type": "STORY",
+                "thumbnail": {
+                  "resolutions": [
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/m4A38nu_P0k9JUpXHS4HYA--~B/aD02NDA7dz0xMjgwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/Barrons.com/8f997bcdbe079010d6126d7eeae5f769",
+                      "width": 1280,
+                      "height": 640,
+                      "tag": "original"
+                    },
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/Z0U1IrnLAtHGhmfObU5nnQ--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/Barrons.com/8f997bcdbe079010d6126d7eeae5f769",
+                      "width": 140,
+                      "height": 140,
+                      "tag": "140x140"
+                    }
+                  ]
+                },
+                "relatedTickers": [
+                  "AAPL"
+                ]
+              },
+              {
+                "uuid": "246f3c20-1235-33b7-a3e6-9bf12d0f6b7c",
+                "title": "Will Apple Give Siri A Brain Transplant At WWDC?",
+                "publisher": "Investor's Business Daily",
+                "link": "https://finance.yahoo.com/m/246f3c20-1235-33b7-a3e6-9bf12d0f6b7c/will-apple-give-siri-a-brain.html",
+                "providerPublishTime": 1717690771,
+                "type": "STORY",
+                "thumbnail": {
+                  "resolutions": [
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/6mn3aM1cD7hiid8Z36zE2w--~B/aD01MTE7dz0xMDAwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/ibd.com/d008916d1d647cf3385471a0754f0bde",
+                      "width": 1000,
+                      "height": 511,
+                      "tag": "original"
+                    },
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/DT0VKHTzvOrBtT9pHSGVaQ--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/ibd.com/d008916d1d647cf3385471a0754f0bde",
+                      "width": 140,
+                      "height": 140,
+                      "tag": "140x140"
+                    }
+                  ]
+                },
+                "relatedTickers": [
+                  "AAPL"
+                ]
+              },
+              {
+                "uuid": "7fd9578e-f963-3645-bdcc-50685104b66b",
+                "title": "Microsoft, Apple, and Nvidia Dominate the S&P 500 Like No Trio Ever Has",
+                "publisher": "Barrons.com",
+                "link": "https://finance.yahoo.com/m/7fd9578e-f963-3645-bdcc-50685104b66b/microsoft%2C-apple%2C-and-nvidia.html",
+                "providerPublishTime": 1717689540,
+                "type": "STORY",
+                "thumbnail": {
+                  "resolutions": [
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/PMlo5wvmQ4_7OIpXQbjD5A--~B/aD02NDA7dz0xMjgwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/Barrons.com/f30d4738c0b232168bea9a1e43628eb9",
+                      "width": 1280,
+                      "height": 640,
+                      "tag": "original"
+                    },
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/sGClPFLUjS90NoKpO2Wy1g--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/Barrons.com/f30d4738c0b232168bea9a1e43628eb9",
+                      "width": 140,
+                      "height": 140,
+                      "tag": "140x140"
+                    }
+                  ]
+                },
+                "relatedTickers": [
+                  "NVDA",
+                  "MSFT",
+                  "AAPL",
+                  "^GSPC"
+                ]
+              },
+              {
+                "uuid": "821c4352-641b-3b7f-8af6-1c894e4f3ffd",
+                "title": "How Google is battling Apple beyond mobile payments",
+                "publisher": "American Banker",
+                "link": "https://finance.yahoo.com/m/821c4352-641b-3b7f-8af6-1c894e4f3ffd/how-google-is-battling-apple.html",
+                "providerPublishTime": 1717684329,
+                "type": "STORY",
+                "thumbnail": {
+                  "resolutions": [
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/2iPVrthUpk1c_9QUvDbKIg--~B/aD0yNjU4O3c9NDAwMDthcHBpZD15dGFjaHlvbg--/https://media.zenfs.com/en/american_banker_655/3bd621b782fc70f86e252f4376db4792",
+                      "width": 4000,
+                      "height": 2658,
+                      "tag": "original"
+                    },
+                    {
+                      "url": "https://s.yimg.com/uu/api/res/1.2/_Xl05JFs3nmZEq34vuu_7g--~B/Zmk9ZmlsbDtoPTE0MDtweW9mZj0wO3c9MTQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/american_banker_655/3bd621b782fc70f86e252f4376db4792",
+                      "width": 140,
+                      "height": 140,
+                      "tag": "140x140"
+                    }
+                  ]
+                },
+                "relatedTickers": [
+                  "GOOG",
+                  "AAPL"
+                ]
+              }
+            ],
+            "trend_details": "Have not implemented fetching 'analyst_trend_details' from Yahoo API",
+            "earnings_trend": "Have not implemented fetching 'earnings_trend' from Yahoo API",
+            "earnings_dates": "get_earnings_dates() got an unexpected keyword argument 'as_dict'",
+            "earnings_forecasts": "Have not implemented fetching 'eps_est' from Yahoo API"
+          }
+        }
+      },
+      "label": "YAHOOFINANCEAPI-1",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 162,
+        "y": 313
+      },
+      "timeout": 600,
+      "componentCode": "yahoo_finance/yahoo_finance/__init__.py",
+      "componentCodeRequirements": [
+        "yfinance"
+      ],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

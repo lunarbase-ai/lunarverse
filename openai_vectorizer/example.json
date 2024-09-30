@@ -1,0 +1,103 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "OpenAI vectorizer  example",
+  "description": "OpenAI vectorizer example",
+  "version": null,
+  "components": [
+    {
+      "id": "501fe838-d6ea-4c38-b23f-7492a4a3c18a",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "OpenAI vectorizer",
+      "className": "OpenAIVectorizer",
+      "description": "Use OpenAI models to encode texts. The output is the embeddings\n    Output (List[dict]): A list of dictionaries containing the original text (str) and the \n    embeddings (List[Union[float, int]]) for each text item in the input.",
+      "group": "DATA_VECTORIZERS",
+      "inputs": [
+        {
+          "key": "documents",
+          "dataType": "LIST",
+          "value": [],
+          "templateVariables": {},
+          "componentId": "501fe838-d6ea-4c38-b23f-7492a4a3c18a"
+        }
+      ],
+      "output": {
+        "dataType": "EMBEDDINGS",
+        "value": ":undef:"
+      },
+      "label": "OPENAIVECTORIZER-0",
+      "configuration": {
+        "force_run": "true",
+        "model": "gpt-4",
+        "openai_api_key": ""
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 1361.5410813402204,
+        "y": 716.3658746516362
+      },
+      "timeout": 600,
+      "componentCode": "openai_vectorizer/openai_vectorizer/__init__.py",
+      "componentCodeRequirements": [
+        "langchain"
+      ],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    },
+    {
+      "id": "4141f646-89e2-4c6d-a700-d1a76202ecd2",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "Text Input",
+      "className": "TextInput",
+      "description": "Allows the user to input a text (potentially with template variables) that can be used in other downstream components.\n    Inputs:\n      `Input` (str): The text to output.\n    Output (str): The inputted text.",
+      "group": "IO",
+      "inputs": [
+        {
+          "key": "Input",
+          "dataType": "TEMPLATE",
+          "value": "The quick brown fox jumps over the lazy dog",
+          "templateVariables": {},
+          "componentId": "4141f646-89e2-4c6d-a700-d1a76202ecd2"
+        }
+      ],
+      "output": {
+        "dataType": "TEXT",
+        "value": ":undef:"
+      },
+      "label": "TEXTINPUT-1",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": 921.0154612744678,
+        "y": 696.214858772508
+      },
+      "timeout": 600,
+      "componentCode": "text_input/text_input/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [
+    {
+      "componentInputKey": "Text list",
+      "sourceLabel": "TEXTINPUT-1",
+      "targetLabel": "OPENAIVECTORIZER-0",
+      "templateVariableKey": null
+    }
+  ],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

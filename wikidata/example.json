@@ -1,0 +1,106 @@
+{
+  "id": "8883ad1e-cf10-49a3-99b4-24296ea7afec",
+  "userId": "",
+  "name": "Wikidata example",
+  "description": "Wikidata example",
+  "version": null,
+  "components": [
+    {
+      "id": "d6d132da-b282-4db3-86b1-404e3a86be32",
+      "workflowId": "8883ad1e-cf10-49a3-99b4-24296ea7afec",
+      "name": "Wikidata client",
+      "className": "Wikidata",
+      "description": "Retrieves data from Wikidata API (a knowledge graph / knowledge base).\nInputs:\n  `Query` (str): A string of the the term to search for in Wikidata. E.g. `Barack Obama`.\nOutput (Dict[str, Dict]): A dictionary with the key `results` (str), mapped to a list containing one dictionary of information/knowledge for each query match. E.g. `{`results`: [{`description`: `President of the United States from 2009 to 2017`, ...}]}`",
+      "group": "API_TOOLS",
+      "inputs": [
+        {
+          "key": "query",
+          "dataType": "TEXT",
+          "value": "Dog",
+          "templateVariables": {},
+          "componentId": "d6d132da-b282-4db3-86b1-404e3a86be32"
+        }
+      ],
+      "output": {
+        "dataType": "JSON",
+        "value": {
+          "results": [
+            {
+              "label": "dog",
+              "description": "domestic animal",
+              "aliases": [
+                "domestic dog",
+                "Canis lupus familiaris",
+                "Canis familiaris"
+              ],
+              "instance of": [
+                "organisms known by a particular common name"
+              ],
+              "subclass of": [
+                "domesticated mammal",
+                "pet"
+              ],
+              "has part(s)": [
+                "animal"
+              ]
+            },
+            {
+              "label": "dogsled musher",
+              "description": "dog musher",
+              "aliases": [
+                "mushers",
+                "dogsled musher",
+                "dog musher",
+                "dog sled driver",
+                "dog sled musher",
+                "dog sled racer",
+                "dog-sledder",
+                "dogsledder",
+                "dog sledge driver",
+                "dogsled driver",
+                "dogsled racer",
+                "sled dog driver",
+                "sled dog musher",
+                "sled dog racer"
+              ],
+              "instance of": [
+                "profession"
+              ],
+              "subclass of": [
+                "athlete"
+              ]
+            }
+          ]
+        }
+      },
+      "label": "WIKIDATA-0",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 199.68929246169995,
+        "y": 327.54251610621463
+      },
+      "timeout": 600,
+      "componentCode": "wikidata/wikidata/__init__.py",
+      "componentCodeRequirements": [
+        "wikibase-rest-api-client",
+        "mediawikiapi"
+      ],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

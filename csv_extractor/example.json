@@ -1,0 +1,57 @@
+{
+  "id": "cd342874-b400-4b4f-b723-c2f146ea1da5",
+  "userId": "",
+  "name": "CSV Upload example",
+  "description": "CSV Upload example",
+  "version": null,
+  "components": [
+    {
+      "id": "a39df9e6-41c8-492d-b1e4-e45185411982",
+      "workflowId": "cd342874-b400-4b4f-b723-c2f146ea1da5",
+      "name": "Csv Upload",
+      "className": "CsvExtractor",
+      "description": "Reads a CSV file.\nInputs:\n  `Input file` (File): A File object with a field `path` (str) containing the local path to the local CSV file to read. If needed, the local path can be inputted manually by the user.\nOutput (File): A File object with a field `preview` which has the value pandas.read_csv(file_path, nrows=10).head().to_csv(). This means that the field contains a record formatted pandas dataframe of the data in the inputted CSV file (if we see the CSV file as a m*n matrix M, the format becomes a string `,M(1,1),M(1,2),...,M(1,n) 0,M(2,1),...,M(2,n) 1,M(3,n),... ... M(m,n)`).",
+      "group": "IO",
+      "inputs": [
+        {
+          "key": "input_file",
+          "dataType": "FILE",
+          "value": ":undef:",
+          "templateVariables": {},
+          "componentId": "a39df9e6-41c8-492d-b1e4-e45185411982"
+        }
+      ],
+      "output": {
+        "dataType": "FILE",
+        "value": ":undef:"
+      },
+      "label": "CSVEXTRACTOR-0",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 416,
+        "y": -30
+      },
+      "timeout": 600,
+      "componentCode": "csv_extractor/csv_extractor/__init__.py",
+      "componentCodeRequirements": [
+        "pandas"
+      ],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

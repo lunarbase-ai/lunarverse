@@ -1,0 +1,56 @@
+{
+  "id": "403b6ffe-6513-466e-be77-3d6755b6710a",
+  "userId": "",
+  "name": "Azure Open AI prompt example",
+  "description": "Connects to Azure OpenAI's API, runs natural language prompts and outputs the result as text Output (str): The answer provided by the LLM to the prompt.",
+  "version": null,
+  "components": [
+    {
+      "id": "dfe764ff-8301-4034-83bf-0a0d562d579d",
+      "workflowId": "403b6ffe-6513-466e-be77-3d6755b6710a",
+      "name": "Azure Open AI prompt",
+      "className": "AzureOpenAIPrompt",
+      "description": "Connects to Azure OpenAI's API, runs natural language prompts and outputs the result as text\n    Output (str): The answer provided by the LLM to the prompt.",
+      "group": "GENAI",
+      "inputs": [
+        {
+          "key": "prompt",
+          "dataType": "TEMPLATE",
+          "value": "Say something interesting",
+          "templateVariables": {},
+          "componentId": "dfe764ff-8301-4034-83bf-0a0d562d579d"
+        }
+      ],
+      "output": {
+        "dataType": "TEXT",
+        "value": ":undef:"
+      },
+      "label": "AZUREOPENAIPROMPT-0",
+      "configuration": {
+        "force_run": false,
+        "model_name": "text-davinci-003",
+        "openai_api_type": "azure",
+        "openai_api_version": "2023-05-15",
+        "deployment_name": "gpt-35-turbo",
+        "openai_api_key": "None",
+        "azure_endpoint": "None"
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 185,
+        "y": 304
+      },
+      "timeout": 600,
+      "forceRun": false,
+      "componentCode": "azure_openai_llm/azure_openai_llm/__init__.py",
+      "componentCodeRequirements": [
+        "langchain"
+      ],
+      "componentExamplePath": "azure_openai_llm/azure_openai_llm/example.json"
+    }
+  ],
+  "dependencies": [],
+  "timeout": 3600
+}

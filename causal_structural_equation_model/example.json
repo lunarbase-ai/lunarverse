@@ -1,0 +1,365 @@
+{
+  "id": "d105dd0d-7a20-4bc0-9559-a4ac70973171",
+  "userId": "",
+  "name": "SEM Refiner",
+  "description": "Run a Structural Equation Model Refiner with an agent-based LLM and SemoPy.",
+  "version": null,
+  "components": [
+    {
+      "id": "b861e911-c356-4382-a213-f0235396c969",
+      "workflowId": "d105dd0d-7a20-4bc0-9559-a4ac70973171",
+      "name": "Structural Equation Model Refinement with LLM",
+      "className": "StructuralEquationModel",
+      "description": "Run SemoPy with an initial SEM so it can be refined and interpreted by an LLM.",
+      "group": "Causal Inference",
+      "inputs": [
+        {
+          "key": "Data",
+          "dataType": "TEXT",
+          "value": "/home/jppatricio/lunar/sotrage/workflows/d105dd0d-7a20-4bc0-9559-a4ac70973171/uploads/clean_PimaDiabetes.csv",
+          "templateVariables": {},
+          "componentId": "b861e911-c356-4382-a213-f0235396c969"
+        },
+        {
+          "key": "Data Separator",
+          "dataType": "TEXT",
+          "value": ",",
+          "templateVariables": {},
+          "componentId": "b861e911-c356-4382-a213-f0235396c969"
+        },
+        {
+          "key": "SEM",
+          "dataType": "TEXT",
+          "value": "\n# structural part\n## Glucose, BloodPressure, Insulin, BMI, and Age have a causal impact on the Outcome (diabetes)\nOutcome ~ Glucose + BloodPressure + Insulin + BMI + Age\nGlucose ~ Pregnancies + SkinThickness + BMI + DiabetesPedigree + Age\nBloodPressure ~ Pregnancies + SkinThickness + Insulin + BMI + Outcome\nInsulin ~ Pregnancies + BloodPressure + SkinThickness + Age + Outcome\nBMI ~ Glucose + BloodPressure + SkinThickness + DiabetesPedigree + Age\nAge ~ Glucose + SkinThickness + Insulin + BMI + DiabetesPedigree + Outcome \n# measurement model \n# residual correlations\nGlucose ~~ Insulin\n",
+          "templateVariables": {},
+          "componentId": "b861e911-c356-4382-a213-f0235396c969"
+        },
+        {
+          "key": "Context",
+          "dataType": "TEXT",
+          "value": "The variables Glucose, BloodPressure, Insulin, BMI, and Age have a causal impact on the Outcome (diabetes) in the dataset.",
+          "templateVariables": {},
+          "componentId": "b861e911-c356-4382-a213-f0235396c969"
+        },
+        {
+          "key": "Log File Name",
+          "dataType": "TEXT",
+          "value": "SEM_Toolformer_Log",
+          "templateVariables": {},
+          "componentId": "b861e911-c356-4382-a213-f0235396c969"
+        }
+      ],
+      "output": {
+        "dataType": "ANY",
+        "value": {
+          "output": "By adding a covariance between BloodPressure and Glucose, the SEM model has been improved based on the metrics such as AIC and BIC values.",
+          "interpretation": "The SEM model shows that the variables Glucose, BloodPressure, Insulin, BMI, and Age have a significant causal impact on the Outcome, which in this case is diabetes. The addition of a covariance between BloodPressure and Glucose has improved the model based on metrics such as AIC and BIC values.\n\nThe model fit statistics indicate a good fit of the model to the data, with high values for CFI, NFI, and TLI, and a low RMSEA value. This suggests that the model is able to explain a significant amount of the variance in the Outcome variable.\n\nBased on these results, an intervention plan could focus on controlling and monitoring the levels of Glucose, BloodPressure, Insulin, BMI, and Age in individuals at risk of developing diabetes. This could involve lifestyle changes such as improving diet, increasing physical activity, and monitoring blood sugar levels regularly. Additionally, it may be beneficial to target interventions specifically at reducing the covariance between BloodPressure and Glucose, as this relationship appears to be important in predicting diabetes in this dataset.\n\nOverall, the SEM results provide valuable insights that can be used to inform targeted interventions aimed at preventing or managing diabetes in at-risk individuals.",
+          "model": "\n# structural part\n## Glucose, BloodPressure, Insulin, BMI, and Age have a causal impact on the Outcome (diabetes)\nOutcome ~ Glucose + BloodPressure + Insulin + BMI + Age\nGlucose ~ Pregnancies + SkinThickness + BMI + DiabetesPedigree + Age\nBloodPressure ~ Pregnancies + SkinThickness + Insulin + BMI + Outcome\nInsulin ~ Pregnancies + BloodPressure + SkinThickness + Age + Outcome\nBMI ~ Glucose + BloodPressure + SkinThickness + DiabetesPedigree + Age\nAge ~ Glucose + SkinThickness + Insulin + BMI + DiabetesPedigree + Outcome \n# measurement model \n# residual correlations\nGlucose ~~ Insulin\n\n# new covariance\nBloodPressure ~~ Glucose"
+        }
+      },
+      "label": "STRUCTURALEQUATIONMODEL-0",
+      "configuration": {
+        "force_run": "true",
+        "openai_api_key": "",
+        "model_name": "gpt-3.5-turbo"
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": 472.3952866344056,
+        "y": 345.28471515735646
+      },
+      "timeout": 600,
+      "componentCode": "causal_structural_equation_model/causal_structural_equation_model/__init__.py",
+      "componentCodeRequirements": [
+        "graphviz",
+        "pygraphviz",
+        "langchain",
+        "semopy"
+      ],
+      "componentExamplePath": "causal_structural_equation_model/causal_structural_equation_model/example.json",
+      "invalidErrors": []
+    },
+    {
+      "id": "356217e7-ca49-49aa-b080-2f5ce6f26477",
+      "workflowId": "d105dd0d-7a20-4bc0-9559-a4ac70973171",
+      "name": "Csv Upload",
+      "className": "CsvExtractor",
+      "description": "Reads a CSV file.\nInputs:\n  `Input file` (File): A File object with a field `path` (str) containing the local path to the local CSV file to read. If needed, the local path can be inputted manually by the user.\nOutput (File): A File object with a field `preview` which has the value pandas.read_csv(file_path, nrows=10).head().to_csv(). This means that the field contains a record formatted pandas dataframe of the data in the inputted CSV file (if we see the CSV file as a m*n matrix M, the format becomes a string `,M(1,1),M(1,2),...,M(1,n) 0,M(2,1),...,M(2,n) 1,M(3,n),... ... M(m,n)`).",
+      "group": "Input",
+      "inputs": [
+        {
+          "key": "Input file",
+          "dataType": "FILE",
+          "value": {
+            "path": "/home/jppatricio/lunar/sotrage/workflows/d105dd0d-7a20-4bc0-9559-a4ac70973171/uploads/clean_PimaDiabetes.csv",
+            "name": "file",
+            "type": null,
+            "size": null,
+            "preview": null,
+            "description": null
+          },
+          "templateVariables": {},
+          "componentId": "356217e7-ca49-49aa-b080-2f5ce6f26477"
+        }
+      ],
+      "output": {
+        "dataType": "FILE",
+        "value": {
+          "path": "/home/jppatricio/lunar/sotrage/workflows/d105dd0d-7a20-4bc0-9559-a4ac70973171/uploads/clean_PimaDiabetes.csv",
+          "name": "file",
+          "type": ".csv",
+          "size": null,
+          "preview": ",Pregnancies,Glucose,BloodPressure,SkinThickness,Insulin,BMI,DiabetesPedigree,Age,Outcome\n0,6,148.0,72.0,35.0,0.0,33.6,0.627,50,1\n1,1,85.0,66.0,29.0,0.0,26.6,0.351,31,0\n2,8,183.0,64.0,29.0,0.0,23.3,0.672,32,1\n3,1,89.0,66.0,23.0,94.0,28.1,0.167,21,0\n4,0,137.0,40.0,35.0,168.0,43.1,2.288,33,1\n",
+          "description": null
+        }
+      },
+      "label": "CSVEXTRACTOR-1",
+      "configuration": {
+        "force_run": "true",
+        "sep": ","
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": -442.3787584989893,
+        "y": 288.1270548184142
+      },
+      "timeout": 600,
+      "componentCode": "csv_extractor/csv_extractor/__init__.py",
+      "componentCodeRequirements": [
+        "pandas"
+      ],
+      "componentExamplePath": "csv_extractor/csv_extractor/example.json",
+      "invalidErrors": []
+    },
+    {
+      "id": "d2cd72c3-efe5-4314-9be1-6196c323892d",
+      "workflowId": "d105dd0d-7a20-4bc0-9559-a4ac70973171",
+      "name": "Property Getter",
+      "className": "PropertyGetter",
+      "description": "Extracts the mapped value of an inputted key/field/attribute in an inputted object/datastructure. It can be the value of a field/attribute in an object, or the mapped value of a key in a dictionary.\n    Input (Any, str): An object and a string with the name of the key/field/attribute to extract the value from. The object can for example be a Dict or a File object. If needed, the key/field/attribute can be inputted manually by the user. If nested objects/dicts, access nested keys by concatenating keys with dots (eg. `parent_dict_key.dict_key`).\n    Output (Any): The mapped value of the inputted key/field/attribute in the inputted dictionary.",
+      "group": "Transformations",
+      "inputs": [
+        {
+          "key": "Input",
+          "dataType": "JSON",
+          "value": {
+            "output": "By adding a covariance between BloodPressure and Glucose, the SEM model has been improved based on the metrics such as AIC and BIC values.",
+            "interpretation": "The SEM model shows that the variables Glucose, BloodPressure, Insulin, BMI, and Age have a significant causal impact on the Outcome, which in this case is diabetes. The addition of a covariance between BloodPressure and Glucose has improved the model based on metrics such as AIC and BIC values.\n\nThe model fit statistics indicate a good fit of the model to the data, with high values for CFI, NFI, and TLI, and a low RMSEA value. This suggests that the model is able to explain a significant amount of the variance in the Outcome variable.\n\nBased on these results, an intervention plan could focus on controlling and monitoring the levels of Glucose, BloodPressure, Insulin, BMI, and Age in individuals at risk of developing diabetes. This could involve lifestyle changes such as improving diet, increasing physical activity, and monitoring blood sugar levels regularly. Additionally, it may be beneficial to target interventions specifically at reducing the covariance between BloodPressure and Glucose, as this relationship appears to be important in predicting diabetes in this dataset.\n\nOverall, the SEM results provide valuable insights that can be used to inform targeted interventions aimed at preventing or managing diabetes in at-risk individuals.",
+            "model": "\n# structural part\n## Glucose, BloodPressure, Insulin, BMI, and Age have a causal impact on the Outcome (diabetes)\nOutcome ~ Glucose + BloodPressure + Insulin + BMI + Age\nGlucose ~ Pregnancies + SkinThickness + BMI + DiabetesPedigree + Age\nBloodPressure ~ Pregnancies + SkinThickness + Insulin + BMI + Outcome\nInsulin ~ Pregnancies + BloodPressure + SkinThickness + Age + Outcome\nBMI ~ Glucose + BloodPressure + SkinThickness + DiabetesPedigree + Age\nAge ~ Glucose + SkinThickness + Insulin + BMI + DiabetesPedigree + Outcome \n# measurement model \n# residual correlations\nGlucose ~~ Insulin\n\n# new covariance\nBloodPressure ~~ Glucose"
+          },
+          "templateVariables": {},
+          "componentId": "d2cd72c3-efe5-4314-9be1-6196c323892d"
+        },
+        {
+          "key": "Selected property",
+          "dataType": "PROPERTY_GETTER",
+          "value": "interpretation",
+          "templateVariables": {},
+          "componentId": "d2cd72c3-efe5-4314-9be1-6196c323892d"
+        }
+      ],
+      "output": {
+        "dataType": "ANY",
+        "value": "The SEM model shows that the variables Glucose, BloodPressure, Insulin, BMI, and Age have a significant causal impact on the Outcome, which in this case is diabetes. The addition of a covariance between BloodPressure and Glucose has improved the model based on metrics such as AIC and BIC values.\n\nThe model fit statistics indicate a good fit of the model to the data, with high values for CFI, NFI, and TLI, and a low RMSEA value. This suggests that the model is able to explain a significant amount of the variance in the Outcome variable.\n\nBased on these results, an intervention plan could focus on controlling and monitoring the levels of Glucose, BloodPressure, Insulin, BMI, and Age in individuals at risk of developing diabetes. This could involve lifestyle changes such as improving diet, increasing physical activity, and monitoring blood sugar levels regularly. Additionally, it may be beneficial to target interventions specifically at reducing the covariance between BloodPressure and Glucose, as this relationship appears to be important in predicting diabetes in this dataset.\n\nOverall, the SEM results provide valuable insights that can be used to inform targeted interventions aimed at preventing or managing diabetes in at-risk individuals."
+      },
+      "label": "PROPERTYGETTER-3",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 1006.5415763657288,
+        "y": 219.84825257262196
+      },
+      "timeout": 600,
+      "componentCode": "property_getter/property_getter/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": "property_getter/property_getter/example.json",
+      "invalidErrors": []
+    },
+    {
+      "id": "d2cd72c3-efe5-4314-9be1-6196c323892d",
+      "workflowId": "d105dd0d-7a20-4bc0-9559-a4ac70973171",
+      "name": "Property Getter",
+      "className": "PropertyGetter",
+      "description": "Extracts the mapped value of an inputted key/field/attribute in an inputted object/datastructure. It can be the value of a field/attribute in an object, or the mapped value of a key in a dictionary.\n    Input (Any, str): An object and a string with the name of the key/field/attribute to extract the value from. The object can for example be a Dict or a File object. If needed, the key/field/attribute can be inputted manually by the user. If nested objects/dicts, access nested keys by concatenating keys with dots (eg. `parent_dict_key.dict_key`).\n    Output (Any): The mapped value of the inputted key/field/attribute in the inputted dictionary.",
+      "group": "Transformations",
+      "inputs": [
+        {
+          "key": "Input",
+          "dataType": "JSON",
+          "value": {
+            "output": "By adding a covariance between BloodPressure and Glucose, the SEM model has been improved based on the metrics such as AIC and BIC values.",
+            "interpretation": "The SEM model shows that the variables Glucose, BloodPressure, Insulin, BMI, and Age have a significant causal impact on the Outcome, which in this case is diabetes. The addition of a covariance between BloodPressure and Glucose has improved the model based on metrics such as AIC and BIC values.\n\nThe model fit statistics indicate a good fit of the model to the data, with high values for CFI, NFI, and TLI, and a low RMSEA value. This suggests that the model is able to explain a significant amount of the variance in the Outcome variable.\n\nBased on these results, an intervention plan could focus on controlling and monitoring the levels of Glucose, BloodPressure, Insulin, BMI, and Age in individuals at risk of developing diabetes. This could involve lifestyle changes such as improving diet, increasing physical activity, and monitoring blood sugar levels regularly. Additionally, it may be beneficial to target interventions specifically at reducing the covariance between BloodPressure and Glucose, as this relationship appears to be important in predicting diabetes in this dataset.\n\nOverall, the SEM results provide valuable insights that can be used to inform targeted interventions aimed at preventing or managing diabetes in at-risk individuals.",
+            "model": "\n# structural part\n## Glucose, BloodPressure, Insulin, BMI, and Age have a causal impact on the Outcome (diabetes)\nOutcome ~ Glucose + BloodPressure + Insulin + BMI + Age\nGlucose ~ Pregnancies + SkinThickness + BMI + DiabetesPedigree + Age\nBloodPressure ~ Pregnancies + SkinThickness + Insulin + BMI + Outcome\nInsulin ~ Pregnancies + BloodPressure + SkinThickness + Age + Outcome\nBMI ~ Glucose + BloodPressure + SkinThickness + DiabetesPedigree + Age\nAge ~ Glucose + SkinThickness + Insulin + BMI + DiabetesPedigree + Outcome \n# measurement model \n# residual correlations\nGlucose ~~ Insulin\n\n# new covariance\nBloodPressure ~~ Glucose"
+          },
+          "templateVariables": {},
+          "componentId": "d2cd72c3-efe5-4314-9be1-6196c323892d"
+        },
+        {
+          "key": "Selected property",
+          "dataType": "PROPERTY_GETTER",
+          "value": "model",
+          "templateVariables": {},
+          "componentId": "d2cd72c3-efe5-4314-9be1-6196c323892d"
+        }
+      ],
+      "output": {
+        "dataType": "ANY",
+        "value": "\n# structural part\n## Glucose, BloodPressure, Insulin, BMI, and Age have a causal impact on the Outcome (diabetes)\nOutcome ~ Glucose + BloodPressure + Insulin + BMI + Age\nGlucose ~ Pregnancies + SkinThickness + BMI + DiabetesPedigree + Age\nBloodPressure ~ Pregnancies + SkinThickness + Insulin + BMI + Outcome\nInsulin ~ Pregnancies + BloodPressure + SkinThickness + Age + Outcome\nBMI ~ Glucose + BloodPressure + SkinThickness + DiabetesPedigree + Age\nAge ~ Glucose + SkinThickness + Insulin + BMI + DiabetesPedigree + Outcome \n# measurement model \n# residual correlations\nGlucose ~~ Insulin\n\n# new covariance\nBloodPressure ~~ Glucose"
+      },
+      "label": "PROPERTYGETTER-4",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 990.3596251921799,
+        "y": 910.100698606424
+      },
+      "timeout": 600,
+      "componentCode": "property_getter/property_getter/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": "property_getter/property_getter/example.json",
+      "invalidErrors": []
+    },
+    {
+      "id": "426ced40-28d2-4a49-82a0-3956ccb70128",
+      "workflowId": "d105dd0d-7a20-4bc0-9559-a4ac70973171",
+      "name": "Property Getter",
+      "className": "PropertyGetter",
+      "description": "Extracts the mapped value of an inputted key/field/attribute in an inputted object/datastructure. It can be the value of a field/attribute in an object, or the mapped value of a key in a dictionary.\n    Input (Any, str): An object and a string with the name of the key/field/attribute to extract the value from. The object can for example be a Dict or a File object. If needed, the key/field/attribute can be inputted manually by the user. If nested objects/dicts, access nested keys by concatenating keys with dots (eg. `parent_dict_key.dict_key`).\n    Output (Any): The mapped value of the inputted key/field/attribute in the inputted dictionary.",
+      "group": "Transformations",
+      "inputs": [
+        {
+          "key": "Input",
+          "dataType": "JSON",
+          "value": {
+            "path": "/home/jppatricio/lunar/sotrage/workflows/d105dd0d-7a20-4bc0-9559-a4ac70973171/uploads/clean_PimaDiabetes.csv",
+            "name": "file",
+            "type": ".csv",
+            "size": null,
+            "preview": ",Pregnancies,Glucose,BloodPressure,SkinThickness,Insulin,BMI,DiabetesPedigree,Age,Outcome\n0,6,148.0,72.0,35.0,0.0,33.6,0.627,50,1\n1,1,85.0,66.0,29.0,0.0,26.6,0.351,31,0\n2,8,183.0,64.0,29.0,0.0,23.3,0.672,32,1\n3,1,89.0,66.0,23.0,94.0,28.1,0.167,21,0\n4,0,137.0,40.0,35.0,168.0,43.1,2.288,33,1\n",
+            "description": null
+          },
+          "templateVariables": {},
+          "componentId": "426ced40-28d2-4a49-82a0-3956ccb70128"
+        },
+        {
+          "key": "Selected property",
+          "dataType": "PROPERTY_GETTER",
+          "value": "path",
+          "templateVariables": {},
+          "componentId": "426ced40-28d2-4a49-82a0-3956ccb70128"
+        }
+      ],
+      "output": {
+        "dataType": "ANY",
+        "value": "/home/jppatricio/lunar/sotrage/workflows/d105dd0d-7a20-4bc0-9559-a4ac70973171/uploads/clean_PimaDiabetes.csv"
+      },
+      "label": "PROPERTYGETTER-5",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": -2.062866266041624,
+        "y": 270.6728822316144
+      },
+      "timeout": 600,
+      "componentCode": "property_getter/property_getter/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": "property_getter/property_getter/example.json",
+      "invalidErrors": []
+    },
+    {
+      "id": "fcc995ff-75a3-4e37-af07-d46113e77d00",
+      "workflowId": "d105dd0d-7a20-4bc0-9559-a4ac70973171",
+      "name": "Python coder",
+      "className": "PythonCoder",
+      "description": "Performs customized Python code execution. Outputs the value that the Python variable `result` is set to during the execution of the Python code.\n    Inputs:\n      `Code` (str): A string of the Python code to execute.  If needed, the Python code can be inputted manually by the user.\n    Output (Any): The value of the variable `result` in the Python code after execution.",
+      "group": "Coders",
+      "inputs": [
+        {
+          "key": "Code",
+          "dataType": "CODE",
+          "value": "sem_s = '''\n# structural part\n## Glucose, BloodPressure, Insulin, BMI, and Age have a causal impact on the Outcome (diabetes)\nOutcome ~ Glucose + BloodPressure + Insulin + BMI + Age\nGlucose ~ Pregnancies + SkinThickness + BMI + DiabetesPedigree + Age\nBloodPressure ~ Pregnancies + SkinThickness + Insulin + BMI + Outcome\nInsulin ~ Pregnancies + BloodPressure + SkinThickness + Age + Outcome\nBMI ~ Glucose + BloodPressure + SkinThickness + DiabetesPedigree + Age\nAge ~ Glucose + SkinThickness + Insulin + BMI + DiabetesPedigree + Outcome \n# measurement model \n# residual correlations\nGlucose ~~ Insulin\n'''\nresult = sem_s\n",
+          "templateVariables": {},
+          "componentId": "fcc995ff-75a3-4e37-af07-d46113e77d00"
+        }
+      ],
+      "output": {
+        "dataType": "ANY",
+        "value": "\n# structural part\n## Glucose, BloodPressure, Insulin, BMI, and Age have a causal impact on the Outcome (diabetes)\nOutcome ~ Glucose + BloodPressure + Insulin + BMI + Age\nGlucose ~ Pregnancies + SkinThickness + BMI + DiabetesPedigree + Age\nBloodPressure ~ Pregnancies + SkinThickness + Insulin + BMI + Outcome\nInsulin ~ Pregnancies + BloodPressure + SkinThickness + Age + Outcome\nBMI ~ Glucose + BloodPressure + SkinThickness + DiabetesPedigree + Age\nAge ~ Glucose + SkinThickness + Insulin + BMI + DiabetesPedigree + Outcome \n# measurement model \n# residual correlations\nGlucose ~~ Insulin\n"
+      },
+      "label": "PYTHONCODER-2",
+      "configuration": {
+        "force_run": false,
+        "openai_api_key": "",
+        "openai_api_base": ""
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": 10,
+        "y": 743
+      },
+      "timeout": 600,
+      "componentCode": "python_coder/python_coder/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": "python_coder/python_coder/example.json",
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [
+    {
+      "componentInputKey": "Input",
+      "sourceLabel": "STRUCTURALEQUATIONMODEL-0",
+      "targetLabel": "PROPERTYGETTER-3",
+      "templateVariableKey": null
+    },
+    {
+      "componentInputKey": "Input",
+      "sourceLabel": "STRUCTURALEQUATIONMODEL-0",
+      "targetLabel": "PROPERTYGETTER-4",
+      "templateVariableKey": null
+    },
+    {
+      "componentInputKey": "Input",
+      "sourceLabel": "CSVEXTRACTOR-1",
+      "targetLabel": "PROPERTYGETTER-5",
+      "templateVariableKey": null
+    },
+    {
+      "componentInputKey": "Data",
+      "sourceLabel": "PROPERTYGETTER-5",
+      "targetLabel": "STRUCTURALEQUATIONMODEL-0",
+      "templateVariableKey": null
+    },
+    {
+      "componentInputKey": "SEM",
+      "sourceLabel": "PYTHONCODER-2",
+      "targetLabel": "STRUCTURALEQUATIONMODEL-0",
+      "templateVariableKey": null
+    }
+  ],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

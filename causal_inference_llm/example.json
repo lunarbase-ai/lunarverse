@@ -1,0 +1,553 @@
+{
+  "id": "711f4bf0-9c36-4fbb-bd93-12bd209c61e7",
+  "userId": "",
+  "name": "Causal Inference Toolformer",
+  "description": "Run causal inference with an estimator and refutations with causalpy and dowhy through an agent-based LLM",
+  "version": null,
+  "components": [
+    {
+      "id": "356217e7-ca49-49aa-b080-2f5ce6f26477",
+      "workflowId": "711f4bf0-9c36-4fbb-bd93-12bd209c61e7",
+      "name": "Csv Upload",
+      "className": "CsvExtractor",
+      "description": "Reads a CSV file.\nInputs:\n  `Input file` (File): A File object with a field `path` (str) containing the local path to the local CSV file to read. If needed, the local path can be inputted manually by the user.\nOutput (File): A File object with a field `preview` which has the value pandas.read_csv(file_path, nrows=10).head().to_csv(). This means that the field contains a record formatted pandas dataframe of the data in the inputted CSV file (if we see the CSV file as a m*n matrix M, the format becomes a string `,M(1,1),M(1,2),...,M(1,n) 0,M(2,1),...,M(2,n) 1,M(3,n),... ... M(m,n)`).",
+      "group": "Input",
+      "inputs": [
+        {
+          "key": "Input file",
+          "dataType": "FILE",
+          "value": {
+            "path": "/home/jppatricio/lunar/sotrage/workflows/711f4bf0-9c36-4fbb-bd93-12bd209c61e7/uploads/PimaDiabetes.csv",
+            "name": "file",
+            "type": null,
+            "size": null,
+            "preview": null,
+            "description": null
+          },
+          "templateVariables": {},
+          "componentId": "356217e7-ca49-49aa-b080-2f5ce6f26477"
+        }
+      ],
+      "output": {
+        "dataType": "FILE",
+        "value": {
+          "path": "/home/jppatricio/lunar/sotrage/workflows/711f4bf0-9c36-4fbb-bd93-12bd209c61e7/uploads/PimaDiabetes.csv",
+          "name": "file",
+          "type": ".csv",
+          "size": null,
+          "preview": ",Pregnancies,Glucose,BloodPressure,SkinThickness,Insulin,BMI,DiabetesPedigree,Age,Outcome\n0,6,148,72,35,0,33.6,0.627,50,1\n1,1,85,66,29,0,26.6,0.351,31,0\n2,8,183,64,0,0,23.3,0.672,32,1\n3,1,89,66,23,94,28.1,0.167,21,0\n4,0,137,40,35,168,43.1,2.288,33,1\n",
+          "description": null
+        }
+      },
+      "label": "CSVEXTRACTOR-1",
+      "configuration": {
+        "force_run": "true",
+        "sep": ","
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": -688.2756237886241,
+        "y": 555.1293335216783
+      },
+      "timeout": 600,
+      "componentCode": "csv_extractor/csv_extractor/__init__.py",
+      "componentCodeRequirements": [
+        "pandas"
+      ],
+      "componentExamplePath": "csv_extractor/csv_extractor/example.json",
+      "invalidErrors": []
+    },
+    {
+      "id": "d2cd72c3-efe5-4314-9be1-6196c323892d",
+      "workflowId": "711f4bf0-9c36-4fbb-bd93-12bd209c61e7",
+      "name": "Property Getter",
+      "className": "PropertyGetter",
+      "description": "Extracts the mapped value of an inputted key/field/attribute in an inputted object/datastructure. It can be the value of a field/attribute in an object, or the mapped value of a key in a dictionary.\n    Input (Any, str): An object and a string with the name of the key/field/attribute to extract the value from. The object can for example be a Dict or a File object. If needed, the key/field/attribute can be inputted manually by the user. If nested objects/dicts, access nested keys by concatenating keys with dots (eg. `parent_dict_key.dict_key`).\n    Output (Any): The mapped value of the inputted key/field/attribute in the inputted dictionary.",
+      "group": "Transformations",
+      "inputs": [
+        {
+          "key": "Input",
+          "dataType": "JSON",
+          "value": {
+            "path": "/home/jppatricio/lunar/sotrage/workflows/711f4bf0-9c36-4fbb-bd93-12bd209c61e7/uploads/PimaDiabetes.csv",
+            "name": "file",
+            "type": ".csv",
+            "size": null,
+            "preview": ",Pregnancies,Glucose,BloodPressure,SkinThickness,Insulin,BMI,DiabetesPedigree,Age,Outcome\n0,6,148,72,35,0,33.6,0.627,50,1\n1,1,85,66,29,0,26.6,0.351,31,0\n2,8,183,64,0,0,23.3,0.672,32,1\n3,1,89,66,23,94,28.1,0.167,21,0\n4,0,137,40,35,168,43.1,2.288,33,1\n",
+            "description": null
+          },
+          "templateVariables": {},
+          "componentId": "d2cd72c3-efe5-4314-9be1-6196c323892d"
+        },
+        {
+          "key": "Selected property",
+          "dataType": "PROPERTY_GETTER",
+          "value": "path",
+          "templateVariables": {},
+          "componentId": "d2cd72c3-efe5-4314-9be1-6196c323892d"
+        }
+      ],
+      "output": {
+        "dataType": "ANY",
+        "value": "/home/jppatricio/lunar/sotrage/workflows/711f4bf0-9c36-4fbb-bd93-12bd209c61e7/uploads/PimaDiabetes.csv"
+      },
+      "label": "PROPERTYGETTER-2",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": -247.73673411496475,
+        "y": 1053.7228668455944
+      },
+      "timeout": 600,
+      "componentCode": "property_getter/property_getter/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": "property_getter/property_getter/example.json",
+      "invalidErrors": []
+    },
+    {
+      "id": "21a9002b-c0d8-40c7-a2a2-2e7862a88fda",
+      "workflowId": "711f4bf0-9c36-4fbb-bd93-12bd209c61e7",
+      "name": "Causal Inference with a LLM",
+      "className": "CausalInferenceLLM",
+      "description": "\n    Run Causal Inference with the help of a LLM to run different methods (DoWhy and CausalPy)\n    \n    Inputs:\n        Data Path (str): Path to the file\n        Data Separator (str): Separator of the file\n        Background Graph (str): Node-Link formatted Graph\n        Context (str): Context for the causal inference methods\n        Log File Name (str): Name of the log file to store the step-by-step reasoning of the LLM and results\n        \n    Outputs:\n        Results (JSON):\n            - Agent output (str): Output of the LLM\n            - Dowhy results (str): Results of the causal inference methods\n            - CausalPy results (str): Results of the causal inference methods\n    ",
+      "group": "Causal Inference",
+      "inputs": [
+        {
+          "key": "Data Path",
+          "dataType": "TEXT",
+          "value": "/home/jppatricio/lunar/sotrage/workflows/711f4bf0-9c36-4fbb-bd93-12bd209c61e7/uploads/PimaDiabetes.csv",
+          "templateVariables": {},
+          "componentId": "21a9002b-c0d8-40c7-a2a2-2e7862a88fda"
+        },
+        {
+          "key": "Data Separator",
+          "dataType": "TEXT",
+          "value": ",",
+          "templateVariables": {},
+          "componentId": "21a9002b-c0d8-40c7-a2a2-2e7862a88fda"
+        },
+        {
+          "key": "Background Graph",
+          "dataType": "JSON",
+          "value": {
+            "directed": true,
+            "multigraph": false,
+            "graph": {},
+            "nodes": [
+              {
+                "id": "Glucose"
+              },
+              {
+                "id": "Pregnancies"
+              },
+              {
+                "id": "BloodPressure"
+              },
+              {
+                "id": "SkinThickness"
+              },
+              {
+                "id": "Insulin"
+              },
+              {
+                "id": "BMI"
+              },
+              {
+                "id": "DiabetesPedigree"
+              },
+              {
+                "id": "Age"
+              },
+              {
+                "id": "Outcome"
+              }
+            ],
+            "links": [
+              {
+                "weight": 1,
+                "source": "Glucose",
+                "target": "Pregnancies"
+              },
+              {
+                "weight": -1,
+                "source": "Glucose",
+                "target": "Insulin"
+              },
+              {
+                "weight": -1,
+                "source": "Glucose",
+                "target": "DiabetesPedigree"
+              },
+              {
+                "weight": -1,
+                "source": "Pregnancies",
+                "target": "Glucose"
+              },
+              {
+                "weight": 1,
+                "source": "Pregnancies",
+                "target": "BloodPressure"
+              },
+              {
+                "weight": -1,
+                "source": "Pregnancies",
+                "target": "SkinThickness"
+              },
+              {
+                "weight": -1,
+                "source": "Pregnancies",
+                "target": "BMI"
+              },
+              {
+                "weight": -1,
+                "source": "Pregnancies",
+                "target": "DiabetesPedigree"
+              },
+              {
+                "weight": -1,
+                "source": "BloodPressure",
+                "target": "Pregnancies"
+              },
+              {
+                "weight": -1,
+                "source": "BloodPressure",
+                "target": "SkinThickness"
+              },
+              {
+                "weight": -1,
+                "source": "BloodPressure",
+                "target": "Insulin"
+              },
+              {
+                "weight": -1,
+                "source": "BloodPressure",
+                "target": "DiabetesPedigree"
+              },
+              {
+                "weight": -1,
+                "source": "SkinThickness",
+                "target": "Pregnancies"
+              },
+              {
+                "weight": -1,
+                "source": "SkinThickness",
+                "target": "BloodPressure"
+              },
+              {
+                "weight": -1,
+                "source": "SkinThickness",
+                "target": "Insulin"
+              },
+              {
+                "weight": -1,
+                "source": "SkinThickness",
+                "target": "DiabetesPedigree"
+              },
+              {
+                "weight": 1,
+                "source": "Insulin",
+                "target": "Glucose"
+              },
+              {
+                "weight": -1,
+                "source": "Insulin",
+                "target": "BloodPressure"
+              },
+              {
+                "weight": -1,
+                "source": "Insulin",
+                "target": "SkinThickness"
+              },
+              {
+                "weight": -1,
+                "source": "Insulin",
+                "target": "BMI"
+              },
+              {
+                "weight": 1,
+                "source": "Glucose",
+                "target": "Outcome"
+              },
+              {
+                "weight": -1,
+                "source": "BMI",
+                "target": "Pregnancies"
+              },
+              {
+                "weight": 1,
+                "source": "BMI",
+                "target": "Insulin"
+              },
+              {
+                "weight": 1,
+                "source": "BMI",
+                "target": "Outcome"
+              },
+              {
+                "weight": -1,
+                "source": "DiabetesPedigree",
+                "target": "Pregnancies"
+              },
+              {
+                "weight": -1,
+                "source": "DiabetesPedigree",
+                "target": "Glucose"
+              },
+              {
+                "weight": -1,
+                "source": "DiabetesPedigree",
+                "target": "BloodPressure"
+              },
+              {
+                "weight": -1,
+                "source": "DiabetesPedigree",
+                "target": "SkinThickness"
+              },
+              {
+                "weight": -1,
+                "source": "Outcome",
+                "target": "Insulin"
+              },
+              {
+                "weight": -1,
+                "source": "Outcome",
+                "target": "BMI"
+              }
+            ]
+          },
+          "templateVariables": {},
+          "componentId": "21a9002b-c0d8-40c7-a2a2-2e7862a88fda"
+        },
+        {
+          "key": "Context",
+          "dataType": "TEXT",
+          "value": "This data lists various diagnostic measures recorded from 750 women along with a 0/1 variable, Outcome, that indicates whether the person eventually tested positive for diabetes.",
+          "templateVariables": {},
+          "componentId": "21a9002b-c0d8-40c7-a2a2-2e7862a88fda"
+        },
+        {
+          "key": "Log File Name",
+          "dataType": "TEXT",
+          "value": "CI_log",
+          "templateVariables": {},
+          "componentId": "21a9002b-c0d8-40c7-a2a2-2e7862a88fda"
+        }
+      ],
+      "output": {
+        "dataType": "ANY",
+        "value": {
+          "agent": "The causal inference analysis using DoWhy indicates a significant causal effect of Glucose on the Outcome of testing positive for diabetes. Further exploration into potential confounding variables and sensitivity analysis with different methods can enhance the model.",
+          "dowhy": "[\"\\n        identified_estimand: Estimand type: EstimandType.NONPARAMETRIC_ATE\\n\\n### Estimand : 1\\nEstimand name: backdoor\\nEstimand expression:\\n    d                         \\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500(E[Outcome|Insulin])\\nd[Glucose]                    \\nEstimand assumption 1, Unconfoundedness: If U\u2192{Glucose} and U\u2192Outcome then P(Outcome|Glucose,Insulin,U) = P(Outcome|Glucose,Insulin)\\n\\n### Estimand : 2\\nEstimand name: iv\\nNo such variable(s) found!\\n\\n### Estimand : 3\\nEstimand name: frontdoor\\nNo such variable(s) found!\\n\\n\\n        causal_estimand: *** Causal Estimate ***\\n\\n## Identified estimand\\nEstimand type: EstimandType.NONPARAMETRIC_ATE\\n\\n### Estimand : 1\\nEstimand name: backdoor\\nEstimand expression:\\n    d                         \\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500(E[Outcome|Insulin])\\nd[Glucose]                    \\nEstimand assumption 1, Unconfoundedness: If U\u2192{Glucose} and U\u2192Outcome then P(Outcome|Glucose,Insulin,U) = P(Outcome|Glucose,Insulin)\\n\\n## Realized estimand\\nb: Outcome~Glucose+Insulin\\nTarget units: ate\\n\\n## Estimate\\nMean value: 0.00697069415324042\\np-value: [7.56602335e-38]\\n95.0% confidence interval: [[0.00596527 0.00797612]]\\n\\n\\n        refutes: [{'Method': 'random_common_cause', 'Results': 'Refute: Add a random common cause\\\\nEstimated effect:0.00697069415324042\\\\nNew effect:0.0069718738734275065\\\\np value:0.98\\\\n'}, {'Method': 'placebo_treatment_refuter', 'Results': 'Refute: Use a Placebo Treatment\\\\nEstimated effect:0.00697069415324042\\\\nNew effect:-1.2082558330940852e-05\\\\np value:0.96\\\\n'}, {'Method': 'data_subset_refuter', 'Results': 'Refute: Use a subset of data\\\\nEstimated effect:0.00697069415324042\\\\nNew effect:0.007012812492750636\\\\np value:0.94\\\\n'}, {'Method': 'add_unobserved_common_cause', 'Results': '\\\\n                Refute: Add an Unobserved Common Cause\\\\n                Estimated effect: 0.00697069415324042\\\\n                New Effect Range (must not include 0): (0.0004951366660905787, 0.00698206200792395)\\\\n                '}]\\n\\n        causal_graph: \\n{'directed': True, 'multigraph': False, 'graph': {}, 'nodes': [{'observed': 'yes', 'id': 'Glucose'}, {'observed': 'yes', 'id': 'Pregnancies'}, {'observed': 'yes', 'id': 'BloodPressure'}, {'observed': 'yes', 'id': 'SkinThickness'}, {'observed': 'yes', 'id': 'Insulin'}, {'observed': 'yes', 'id': 'BMI'}, {'observed': 'yes', 'id': 'DiabetesPedigree'}, {'observed': 'yes', 'id': 'Age'}, {'observed': 'yes', 'id': 'Outcome'}], 'links': [{'weight': 1, 'source': 'Glucose', 'target': 'Pregnancies'}, {'weight': 1, 'source': 'Glucose', 'target': 'Outcome'}, {'weight': 1, 'source': 'Pregnancies', 'target': 'BloodPressure'}, {'weight': 1, 'source': 'Insulin', 'target': 'Glucose'}, {'weight': 1, 'source': 'BMI', 'target': 'Insulin'}, {'weight': 1, 'source': 'BMI', 'target': 'Outcome'}]}\\n\\n        \"]",
+          "causalpy": "[]"
+        }
+      },
+      "label": "CAUSALINFERENCELLM-0",
+      "configuration": {
+        "force_run": "true",
+        "openai_api_key": "",
+        "model_name": "gpt-3.5-turbo"
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": 341.67366804699134,
+        "y": 478.49245225969025
+      },
+      "timeout": 600,
+      "componentCode": "causal_inference_llm/causal_inference_llm/__init__.py",
+      "componentCodeRequirements": [
+        "DoWhy",
+        "langchain",
+        "dowhy",
+        "econml",
+        "langchain-community",
+        "causalpy",
+        "graphviz",
+        "pygraphviz",
+        "langchain-openai"
+      ],
+      "componentExamplePath": "causal_inference_llm/causal_inference_llm/example.json",
+      "invalidErrors": []
+    },
+    {
+      "id": "b1079cae-bbd5-4c0d-abd6-c83d1ada4dcd",
+      "workflowId": "711f4bf0-9c36-4fbb-bd93-12bd209c61e7",
+      "name": "Text Input",
+      "className": "TextInput",
+      "description": "Allows the user to input a text (potentially with template variables) that can be used in other downstream components.\n    Inputs:\n      `Input` (str): The text to output.\n    Output (str): The inputted text.",
+      "group": "Input",
+      "inputs": [
+        {
+          "key": "Input",
+          "dataType": "TEMPLATE",
+          "value": "{\n            \"directed\": true,\n            \"multigraph\": false,\n            \"graph\": {},\n            \"nodes\": [\n              {\n                \"id\": \"Glucose\"\n              },\n              {\n                \"id\": \"Pregnancies\"\n              },\n              {\n                \"id\": \"BloodPressure\"\n              },\n              {\n                \"id\": \"SkinThickness\"\n              },\n              {\n                \"id\": \"Insulin\"\n              },\n              {\n                \"id\": \"BMI\"\n              },\n              {\n                \"id\": \"DiabetesPedigree\"\n              },\n              {\n                \"id\": \"Age\"\n              },\n              {\n                \"id\": \"Outcome\"\n              }\n            ],\n            \"links\": [\n              {\n                \"weight\": 1,\n                \"source\": \"Glucose\",\n                \"target\": \"Pregnancies\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Glucose\",\n                \"target\": \"Insulin\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Glucose\",\n                \"target\": \"DiabetesPedigree\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Pregnancies\",\n                \"target\": \"Glucose\"\n              },\n              {\n                \"weight\": 1,\n                \"source\": \"Pregnancies\",\n                \"target\": \"BloodPressure\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Pregnancies\",\n                \"target\": \"SkinThickness\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Pregnancies\",\n                \"target\": \"BMI\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Pregnancies\",\n                \"target\": \"DiabetesPedigree\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"BloodPressure\",\n                \"target\": \"Pregnancies\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"BloodPressure\",\n                \"target\": \"SkinThickness\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"BloodPressure\",\n                \"target\": \"Insulin\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"BloodPressure\",\n                \"target\": \"DiabetesPedigree\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"SkinThickness\",\n                \"target\": \"Pregnancies\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"SkinThickness\",\n                \"target\": \"BloodPressure\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"SkinThickness\",\n                \"target\": \"Insulin\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"SkinThickness\",\n                \"target\": \"DiabetesPedigree\"\n              },\n              {\n                \"weight\": 1,\n                \"source\": \"Insulin\",\n                \"target\": \"Glucose\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Insulin\",\n                \"target\": \"BloodPressure\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Insulin\",\n                \"target\": \"SkinThickness\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Insulin\",\n                \"target\": \"BMI\"\n              },\n              {\n                \"weight\": 1,\n                \"source\": \"Glucose\",\n                \"target\": \"Outcome\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"BMI\",\n                \"target\": \"Pregnancies\"\n              },\n              {\n                \"weight\": 1,\n                \"source\": \"BMI\",\n                \"target\": \"Insulin\"\n              },\n              {\n                \"weight\": 1,\n                \"source\": \"BMI\",\n                \"target\": \"Outcome\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"DiabetesPedigree\",\n                \"target\": \"Pregnancies\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"DiabetesPedigree\",\n                \"target\": \"Glucose\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"DiabetesPedigree\",\n                \"target\": \"BloodPressure\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"DiabetesPedigree\",\n                \"target\": \"SkinThickness\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Outcome\",\n                \"target\": \"Insulin\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Outcome\",\n                \"target\": \"BMI\"\n              }\n            ]\n          }",
+          "templateVariables": {},
+          "componentId": "b1079cae-bbd5-4c0d-abd6-c83d1ada4dcd"
+        }
+      ],
+      "output": {
+        "dataType": "TEXT",
+        "value": "{\n            \"directed\": true,\n            \"multigraph\": false,\n            \"graph\": {},\n            \"nodes\": [\n              {\n                \"id\": \"Glucose\"\n              },\n              {\n                \"id\": \"Pregnancies\"\n              },\n              {\n                \"id\": \"BloodPressure\"\n              },\n              {\n                \"id\": \"SkinThickness\"\n              },\n              {\n                \"id\": \"Insulin\"\n              },\n              {\n                \"id\": \"BMI\"\n              },\n              {\n                \"id\": \"DiabetesPedigree\"\n              },\n              {\n                \"id\": \"Age\"\n              },\n              {\n                \"id\": \"Outcome\"\n              }\n            ],\n            \"links\": [\n              {\n                \"weight\": 1,\n                \"source\": \"Glucose\",\n                \"target\": \"Pregnancies\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Glucose\",\n                \"target\": \"Insulin\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Glucose\",\n                \"target\": \"DiabetesPedigree\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Pregnancies\",\n                \"target\": \"Glucose\"\n              },\n              {\n                \"weight\": 1,\n                \"source\": \"Pregnancies\",\n                \"target\": \"BloodPressure\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Pregnancies\",\n                \"target\": \"SkinThickness\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Pregnancies\",\n                \"target\": \"BMI\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Pregnancies\",\n                \"target\": \"DiabetesPedigree\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"BloodPressure\",\n                \"target\": \"Pregnancies\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"BloodPressure\",\n                \"target\": \"SkinThickness\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"BloodPressure\",\n                \"target\": \"Insulin\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"BloodPressure\",\n                \"target\": \"DiabetesPedigree\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"SkinThickness\",\n                \"target\": \"Pregnancies\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"SkinThickness\",\n                \"target\": \"BloodPressure\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"SkinThickness\",\n                \"target\": \"Insulin\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"SkinThickness\",\n                \"target\": \"DiabetesPedigree\"\n              },\n              {\n                \"weight\": 1,\n                \"source\": \"Insulin\",\n                \"target\": \"Glucose\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Insulin\",\n                \"target\": \"BloodPressure\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Insulin\",\n                \"target\": \"SkinThickness\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Insulin\",\n                \"target\": \"BMI\"\n              },\n              {\n                \"weight\": 1,\n                \"source\": \"Glucose\",\n                \"target\": \"Outcome\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"BMI\",\n                \"target\": \"Pregnancies\"\n              },\n              {\n                \"weight\": 1,\n                \"source\": \"BMI\",\n                \"target\": \"Insulin\"\n              },\n              {\n                \"weight\": 1,\n                \"source\": \"BMI\",\n                \"target\": \"Outcome\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"DiabetesPedigree\",\n                \"target\": \"Pregnancies\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"DiabetesPedigree\",\n                \"target\": \"Glucose\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"DiabetesPedigree\",\n                \"target\": \"BloodPressure\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"DiabetesPedigree\",\n                \"target\": \"SkinThickness\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Outcome\",\n                \"target\": \"Insulin\"\n              },\n              {\n                \"weight\": -1,\n                \"source\": \"Outcome\",\n                \"target\": \"BMI\"\n              }\n            ]\n          }"
+      },
+      "label": "TEXTINPUT-3",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": false,
+      "position": {
+        "x": -229.6208263200474,
+        "y": 157.19421459565808
+      },
+      "timeout": 600,
+      "componentCode": "text_input/text_input/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": "text_input/text_input/example.json",
+      "invalidErrors": []
+    },
+    {
+      "id": "426ced40-28d2-4a49-82a0-3956ccb70128",
+      "workflowId": "711f4bf0-9c36-4fbb-bd93-12bd209c61e7",
+      "name": "Do Why Results",
+      "className": "PropertyGetter",
+      "description": "Extracts the mapped value of an inputted key/field/attribute in an inputted object/datastructure. It can be the value of a field/attribute in an object, or the mapped value of a key in a dictionary.\n    Input (Any, str): An object and a string with the name of the key/field/attribute to extract the value from. The object can for example be a Dict or a File object. If needed, the key/field/attribute can be inputted manually by the user. If nested objects/dicts, access nested keys by concatenating keys with dots (eg. `parent_dict_key.dict_key`).\n    Output (Any): The mapped value of the inputted key/field/attribute in the inputted dictionary.",
+      "group": "Transformations",
+      "inputs": [
+        {
+          "key": "Input",
+          "dataType": "JSON",
+          "value": {
+            "agent": "The causal inference analysis using DoWhy indicates a significant causal effect of Glucose on the Outcome of testing positive for diabetes. Further exploration into potential confounding variables and sensitivity analysis with different methods can enhance the model.",
+            "dowhy": "[\"\\n        identified_estimand: Estimand type: EstimandType.NONPARAMETRIC_ATE\\n\\n### Estimand : 1\\nEstimand name: backdoor\\nEstimand expression:\\n    d                         \\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500(E[Outcome|Insulin])\\nd[Glucose]                    \\nEstimand assumption 1, Unconfoundedness: If U\u2192{Glucose} and U\u2192Outcome then P(Outcome|Glucose,Insulin,U) = P(Outcome|Glucose,Insulin)\\n\\n### Estimand : 2\\nEstimand name: iv\\nNo such variable(s) found!\\n\\n### Estimand : 3\\nEstimand name: frontdoor\\nNo such variable(s) found!\\n\\n\\n        causal_estimand: *** Causal Estimate ***\\n\\n## Identified estimand\\nEstimand type: EstimandType.NONPARAMETRIC_ATE\\n\\n### Estimand : 1\\nEstimand name: backdoor\\nEstimand expression:\\n    d                         \\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500(E[Outcome|Insulin])\\nd[Glucose]                    \\nEstimand assumption 1, Unconfoundedness: If U\u2192{Glucose} and U\u2192Outcome then P(Outcome|Glucose,Insulin,U) = P(Outcome|Glucose,Insulin)\\n\\n## Realized estimand\\nb: Outcome~Glucose+Insulin\\nTarget units: ate\\n\\n## Estimate\\nMean value: 0.00697069415324042\\np-value: [7.56602335e-38]\\n95.0% confidence interval: [[0.00596527 0.00797612]]\\n\\n\\n        refutes: [{'Method': 'random_common_cause', 'Results': 'Refute: Add a random common cause\\\\nEstimated effect:0.00697069415324042\\\\nNew effect:0.0069718738734275065\\\\np value:0.98\\\\n'}, {'Method': 'placebo_treatment_refuter', 'Results': 'Refute: Use a Placebo Treatment\\\\nEstimated effect:0.00697069415324042\\\\nNew effect:-1.2082558330940852e-05\\\\np value:0.96\\\\n'}, {'Method': 'data_subset_refuter', 'Results': 'Refute: Use a subset of data\\\\nEstimated effect:0.00697069415324042\\\\nNew effect:0.007012812492750636\\\\np value:0.94\\\\n'}, {'Method': 'add_unobserved_common_cause', 'Results': '\\\\n                Refute: Add an Unobserved Common Cause\\\\n                Estimated effect: 0.00697069415324042\\\\n                New Effect Range (must not include 0): (0.0004951366660905787, 0.00698206200792395)\\\\n                '}]\\n\\n        causal_graph: \\n{'directed': True, 'multigraph': False, 'graph': {}, 'nodes': [{'observed': 'yes', 'id': 'Glucose'}, {'observed': 'yes', 'id': 'Pregnancies'}, {'observed': 'yes', 'id': 'BloodPressure'}, {'observed': 'yes', 'id': 'SkinThickness'}, {'observed': 'yes', 'id': 'Insulin'}, {'observed': 'yes', 'id': 'BMI'}, {'observed': 'yes', 'id': 'DiabetesPedigree'}, {'observed': 'yes', 'id': 'Age'}, {'observed': 'yes', 'id': 'Outcome'}], 'links': [{'weight': 1, 'source': 'Glucose', 'target': 'Pregnancies'}, {'weight': 1, 'source': 'Glucose', 'target': 'Outcome'}, {'weight': 1, 'source': 'Pregnancies', 'target': 'BloodPressure'}, {'weight': 1, 'source': 'Insulin', 'target': 'Glucose'}, {'weight': 1, 'source': 'BMI', 'target': 'Insulin'}, {'weight': 1, 'source': 'BMI', 'target': 'Outcome'}]}\\n\\n        \"]",
+            "causalpy": "[]"
+          },
+          "templateVariables": {},
+          "componentId": "426ced40-28d2-4a49-82a0-3956ccb70128"
+        },
+        {
+          "key": "Selected property",
+          "dataType": "PROPERTY_GETTER",
+          "value": "dowhy",
+          "templateVariables": {},
+          "componentId": "426ced40-28d2-4a49-82a0-3956ccb70128"
+        }
+      ],
+      "output": {
+        "dataType": "ANY",
+        "value": "[\"\\n        identified_estimand: Estimand type: EstimandType.NONPARAMETRIC_ATE\\n\\n### Estimand : 1\\nEstimand name: backdoor\\nEstimand expression:\\n    d                         \\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500(E[Outcome|Insulin])\\nd[Glucose]                    \\nEstimand assumption 1, Unconfoundedness: If U\u2192{Glucose} and U\u2192Outcome then P(Outcome|Glucose,Insulin,U) = P(Outcome|Glucose,Insulin)\\n\\n### Estimand : 2\\nEstimand name: iv\\nNo such variable(s) found!\\n\\n### Estimand : 3\\nEstimand name: frontdoor\\nNo such variable(s) found!\\n\\n\\n        causal_estimand: *** Causal Estimate ***\\n\\n## Identified estimand\\nEstimand type: EstimandType.NONPARAMETRIC_ATE\\n\\n### Estimand : 1\\nEstimand name: backdoor\\nEstimand expression:\\n    d                         \\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500(E[Outcome|Insulin])\\nd[Glucose]                    \\nEstimand assumption 1, Unconfoundedness: If U\u2192{Glucose} and U\u2192Outcome then P(Outcome|Glucose,Insulin,U) = P(Outcome|Glucose,Insulin)\\n\\n## Realized estimand\\nb: Outcome~Glucose+Insulin\\nTarget units: ate\\n\\n## Estimate\\nMean value: 0.00697069415324042\\np-value: [7.56602335e-38]\\n95.0% confidence interval: [[0.00596527 0.00797612]]\\n\\n\\n        refutes: [{'Method': 'random_common_cause', 'Results': 'Refute: Add a random common cause\\\\nEstimated effect:0.00697069415324042\\\\nNew effect:0.0069718738734275065\\\\np value:0.98\\\\n'}, {'Method': 'placebo_treatment_refuter', 'Results': 'Refute: Use a Placebo Treatment\\\\nEstimated effect:0.00697069415324042\\\\nNew effect:-1.2082558330940852e-05\\\\np value:0.96\\\\n'}, {'Method': 'data_subset_refuter', 'Results': 'Refute: Use a subset of data\\\\nEstimated effect:0.00697069415324042\\\\nNew effect:0.007012812492750636\\\\np value:0.94\\\\n'}, {'Method': 'add_unobserved_common_cause', 'Results': '\\\\n                Refute: Add an Unobserved Common Cause\\\\n                Estimated effect: 0.00697069415324042\\\\n                New Effect Range (must not include 0): (0.0004951366660905787, 0.00698206200792395)\\\\n                '}]\\n\\n        causal_graph: \\n{'directed': True, 'multigraph': False, 'graph': {}, 'nodes': [{'observed': 'yes', 'id': 'Glucose'}, {'observed': 'yes', 'id': 'Pregnancies'}, {'observed': 'yes', 'id': 'BloodPressure'}, {'observed': 'yes', 'id': 'SkinThickness'}, {'observed': 'yes', 'id': 'Insulin'}, {'observed': 'yes', 'id': 'BMI'}, {'observed': 'yes', 'id': 'DiabetesPedigree'}, {'observed': 'yes', 'id': 'Age'}, {'observed': 'yes', 'id': 'Outcome'}], 'links': [{'weight': 1, 'source': 'Glucose', 'target': 'Pregnancies'}, {'weight': 1, 'source': 'Glucose', 'target': 'Outcome'}, {'weight': 1, 'source': 'Pregnancies', 'target': 'BloodPressure'}, {'weight': 1, 'source': 'Insulin', 'target': 'Glucose'}, {'weight': 1, 'source': 'BMI', 'target': 'Insulin'}, {'weight': 1, 'source': 'BMI', 'target': 'Outcome'}]}\\n\\n        \"]"
+      },
+      "label": "PROPERTYGETTER-4",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 851.2757397138478,
+        "y": 910.5665426393612
+      },
+      "timeout": 600,
+      "componentCode": "property_getter/property_getter/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": "property_getter/property_getter/example.json",
+      "invalidErrors": []
+    },
+    {
+      "id": "426ced40-28d2-4a49-82a0-3956ccb70128",
+      "workflowId": "711f4bf0-9c36-4fbb-bd93-12bd209c61e7",
+      "name": "LLM response",
+      "className": "PropertyGetter",
+      "description": "Extracts the mapped value of an inputted key/field/attribute in an inputted object/datastructure. It can be the value of a field/attribute in an object, or the mapped value of a key in a dictionary.\n    Input (Any, str): An object and a string with the name of the key/field/attribute to extract the value from. The object can for example be a Dict or a File object. If needed, the key/field/attribute can be inputted manually by the user. If nested objects/dicts, access nested keys by concatenating keys with dots (eg. `parent_dict_key.dict_key`).\n    Output (Any): The mapped value of the inputted key/field/attribute in the inputted dictionary.",
+      "group": "Transformations",
+      "inputs": [
+        {
+          "key": "Input",
+          "dataType": "JSON",
+          "value": {
+            "agent": "The causal inference analysis using DoWhy indicates a significant causal effect of Glucose on the Outcome of testing positive for diabetes. Further exploration into potential confounding variables and sensitivity analysis with different methods can enhance the model.",
+            "dowhy": "[\"\\n        identified_estimand: Estimand type: EstimandType.NONPARAMETRIC_ATE\\n\\n### Estimand : 1\\nEstimand name: backdoor\\nEstimand expression:\\n    d                         \\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500(E[Outcome|Insulin])\\nd[Glucose]                    \\nEstimand assumption 1, Unconfoundedness: If U\u2192{Glucose} and U\u2192Outcome then P(Outcome|Glucose,Insulin,U) = P(Outcome|Glucose,Insulin)\\n\\n### Estimand : 2\\nEstimand name: iv\\nNo such variable(s) found!\\n\\n### Estimand : 3\\nEstimand name: frontdoor\\nNo such variable(s) found!\\n\\n\\n        causal_estimand: *** Causal Estimate ***\\n\\n## Identified estimand\\nEstimand type: EstimandType.NONPARAMETRIC_ATE\\n\\n### Estimand : 1\\nEstimand name: backdoor\\nEstimand expression:\\n    d                         \\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500(E[Outcome|Insulin])\\nd[Glucose]                    \\nEstimand assumption 1, Unconfoundedness: If U\u2192{Glucose} and U\u2192Outcome then P(Outcome|Glucose,Insulin,U) = P(Outcome|Glucose,Insulin)\\n\\n## Realized estimand\\nb: Outcome~Glucose+Insulin\\nTarget units: ate\\n\\n## Estimate\\nMean value: 0.00697069415324042\\np-value: [7.56602335e-38]\\n95.0% confidence interval: [[0.00596527 0.00797612]]\\n\\n\\n        refutes: [{'Method': 'random_common_cause', 'Results': 'Refute: Add a random common cause\\\\nEstimated effect:0.00697069415324042\\\\nNew effect:0.0069718738734275065\\\\np value:0.98\\\\n'}, {'Method': 'placebo_treatment_refuter', 'Results': 'Refute: Use a Placebo Treatment\\\\nEstimated effect:0.00697069415324042\\\\nNew effect:-1.2082558330940852e-05\\\\np value:0.96\\\\n'}, {'Method': 'data_subset_refuter', 'Results': 'Refute: Use a subset of data\\\\nEstimated effect:0.00697069415324042\\\\nNew effect:0.007012812492750636\\\\np value:0.94\\\\n'}, {'Method': 'add_unobserved_common_cause', 'Results': '\\\\n                Refute: Add an Unobserved Common Cause\\\\n                Estimated effect: 0.00697069415324042\\\\n                New Effect Range (must not include 0): (0.0004951366660905787, 0.00698206200792395)\\\\n                '}]\\n\\n        causal_graph: \\n{'directed': True, 'multigraph': False, 'graph': {}, 'nodes': [{'observed': 'yes', 'id': 'Glucose'}, {'observed': 'yes', 'id': 'Pregnancies'}, {'observed': 'yes', 'id': 'BloodPressure'}, {'observed': 'yes', 'id': 'SkinThickness'}, {'observed': 'yes', 'id': 'Insulin'}, {'observed': 'yes', 'id': 'BMI'}, {'observed': 'yes', 'id': 'DiabetesPedigree'}, {'observed': 'yes', 'id': 'Age'}, {'observed': 'yes', 'id': 'Outcome'}], 'links': [{'weight': 1, 'source': 'Glucose', 'target': 'Pregnancies'}, {'weight': 1, 'source': 'Glucose', 'target': 'Outcome'}, {'weight': 1, 'source': 'Pregnancies', 'target': 'BloodPressure'}, {'weight': 1, 'source': 'Insulin', 'target': 'Glucose'}, {'weight': 1, 'source': 'BMI', 'target': 'Insulin'}, {'weight': 1, 'source': 'BMI', 'target': 'Outcome'}]}\\n\\n        \"]",
+            "causalpy": "[]"
+          },
+          "templateVariables": {},
+          "componentId": "426ced40-28d2-4a49-82a0-3956ccb70128"
+        },
+        {
+          "key": "Selected property",
+          "dataType": "PROPERTY_GETTER",
+          "value": "agent",
+          "templateVariables": {},
+          "componentId": "426ced40-28d2-4a49-82a0-3956ccb70128"
+        }
+      ],
+      "output": {
+        "dataType": "ANY",
+        "value": "The causal inference analysis using DoWhy indicates a significant causal effect of Glucose on the Outcome of testing positive for diabetes. Further exploration into potential confounding variables and sensitivity analysis with different methods can enhance the model."
+      },
+      "label": "PROPERTYGETTER-5",
+      "configuration": {
+        "force_run": false
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 853.0168408404402,
+        "y": 358.6374855096181
+      },
+      "timeout": 600,
+      "componentCode": "property_getter/property_getter/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": "property_getter/property_getter/example.json",
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [
+    {
+      "componentInputKey": "Input",
+      "sourceLabel": "CSVEXTRACTOR-1",
+      "targetLabel": "PROPERTYGETTER-2",
+      "templateVariableKey": null
+    },
+    {
+      "componentInputKey": "Data Path",
+      "sourceLabel": "PROPERTYGETTER-2",
+      "targetLabel": "CAUSALINFERENCELLM-0",
+      "templateVariableKey": null
+    },
+    {
+      "componentInputKey": "Background Graph",
+      "sourceLabel": "TEXTINPUT-3",
+      "targetLabel": "CAUSALINFERENCELLM-0",
+      "templateVariableKey": null
+    },
+    {
+      "componentInputKey": "Input",
+      "sourceLabel": "CAUSALINFERENCELLM-0",
+      "targetLabel": "PROPERTYGETTER-4",
+      "templateVariableKey": null
+    },
+    {
+      "componentInputKey": "Input",
+      "sourceLabel": "CAUSALINFERENCELLM-0",
+      "targetLabel": "PROPERTYGETTER-5",
+      "templateVariableKey": null
+    }
+  ],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}

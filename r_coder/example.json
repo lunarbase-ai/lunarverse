@@ -1,0 +1,59 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "R coder example",
+  "description": "R coder example",
+  "version": null,
+  "components": [
+    {
+      "id": "4189ceaf-716c-478d-9573-f46bcf35c7ad",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "R coder",
+      "className": "RCoder",
+      "description": "Performs customized R code execution. Outputs the value that the R variable `result` is set to during the execution of the R code.\n    Inputs:\n      `Code` (str): A string of the R code to execute.  If needed, the R code can be inputted manually by the user.\n    Output (Any): The value of the variable `result` in the R code after execution.",
+      "group": "CODERS",
+      "inputs": [
+        {
+          "key": "Code",
+          "dataType": "R_CODE",
+          "value": "reverse_each_word <- function(input_string) {\n  # Split the input string into words\n  words <- unlist(strsplit(input_string, \" \"))\n  \n  # Reverse each word\n  reversed_words <- sapply(words, function(word) {\n    paste(rev(strsplit(word, NULL)[[1]]), collapse = \"\")\n  })\n  \n  # Join the reversed words back into a single string\n  reversed_string <- paste(reversed_words, collapse = \" \")\n  \n  return(reversed_string)\n}\n\ninput_string <- \"The quick brown fox jumps over the lazy dog\"\nresult <- reverse_each_word(input_string)",
+          "templateVariables": {},
+          "componentId": "4189ceaf-716c-478d-9573-f46bcf35c7ad"
+        }
+      ],
+      "output": {
+        "dataType": "ANY",
+        "value": "ehT kciuq nworb xof spmuj revo eht yzal god"
+      },
+      "label": "RCODER-0",
+      "configuration": {
+        "force_run": false,
+        "openai_api_key": "",
+        "openai_api_base": ""
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 983.7568008298142,
+        "y": 646.2344696351983
+      },
+      "timeout": 600,
+      "componentCode": "r_coder/r_coder/__init__.py",
+      "componentCodeRequirements": [
+        "rpy2"
+      ],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}
