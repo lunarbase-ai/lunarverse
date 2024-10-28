@@ -192,3 +192,4 @@ create/
 
 settings.json
 tests/*/*.json
+**/local/
