@@ -1,5 +1,4 @@
 from text_input import TextInput
-from pytest_expect import expect
 
 class TestTextInput:
 

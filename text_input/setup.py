@@ -18,5 +18,4 @@ setup(
     author="Your Name",
     author_email="your.email@example.com",
     description="A package that defines the TextInput component",
-    url="https://github.com/yourusername/your-repo",  # Optional
 )
