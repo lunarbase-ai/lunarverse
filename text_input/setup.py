@@ -7,6 +7,14 @@ setup(
     install_requires=[
         "lunarcore @ git+https://github.com/lunarbase-ai/lunar.git@feature/cancel-button#subdirectory=lunarcore"
     ],
+    tests_require=[
+        'pytest',
+    ],
+    extras_require={
+        'dev': [
+            'pytest',
+        ],
+    },
     author="Your Name",
     author_email="your.email@example.com",
     description="A package that defines the TextInput component",
