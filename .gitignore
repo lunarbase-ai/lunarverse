@@ -192,6 +192,4 @@ create/
 
 settings.json
 tests/*/*.json
-!tests/
 **/local/
-local.py
