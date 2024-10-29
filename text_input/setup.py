@@ -6,7 +6,7 @@ LICENSE = "SPDX-License-Identifier: GPL-3.0-or-later"
 TEST_REQUIREMENTS = [
     'pytest'
 ]
-EXTRAS_REQUIRE = {
+EXTRAS_REQUIREMENTS = {
     'dev': [
         'pytest',
     ],
@@ -24,14 +24,15 @@ class ComponentSetupGenerator:
         return {
             "name": self.name,
             "version": self.version,
-            "packages": find_packages(),
+            "packages":find_packages(where="src"),
+            "package_dir":{"": "src"},
             "install_requires": self._load_requirements(),
             "tests_require": TEST_REQUIREMENTS,
-            "extras_require": EXTRAS_REQUIRE,
+            "extras_require": EXTRAS_REQUIREMENTS,
             "author": AUTHOR,
             "author_email": AUTHOR_EMAIL,
             "description": self.description,
-            "license": LICENSE
+            "license": LICENSE,
         }
 
     def _load_requirements(self):
