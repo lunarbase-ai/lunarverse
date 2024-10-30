@@ -17,27 +17,30 @@ EXTRAS_REQUIREMENTS = {
 REQUIREMENTS_FILE_PATH = 'requirements.txt'
 
 class ComponentSetupGenerator:
-    def __init__(self):
-        pass
+    def __init__(self, name, version, description, package_dir):
+        self.name = name
+        self.version = version
+        self.description = description
+        self.package_dir = package_dir
 
-    def generate_arguments(self, name, version, description, package_dir):
+    def generate_arguments(self):
         return {
-            "name": name,
-            "version": version,
+            "name": self.name,
+            "version": self.version,
             # "packages":find_packages(where="src"),
             # "package_dir":{"": "src"},
-            "install_requires": self._load_requirements(os.path.join(package_dir, REQUIREMENTS_FILE_PATH)),
+            "install_requires": self._load_requirements(os.path.join(self.package_dir, REQUIREMENTS_FILE_PATH)),
             "tests_require": TEST_REQUIREMENTS,
             "extras_require": EXTRAS_REQUIREMENTS,
             "author": AUTHOR,
             "author_email": AUTHOR_EMAIL,
-            "description": description,
+            "description": self.description,
             "license": LICENSE,
         }
 
-    def generate_setup_file(self, name, version, description, package_dir):
-        arguments = self.generate_arguments(name, version, description, package_dir)
-        with open(os.path.join(package_dir, 'setup.py'), 'w') as file:
+    def generate_setup_file(self):
+        arguments = self.generate_arguments()
+        with open(os.path.join(self.package_dir, 'setup.py'), 'w') as file:
             file.write(f"from setuptools import setup\n")
             file.write("\n")
             file.write(f"setup(\n")
@@ -79,12 +82,12 @@ for component_dir in dirs:
                 }
                 components.append(component_info)
 
-generator = ComponentSetupGenerator()
 for component in components:
-    generator.generate_setup_file(
+    generator = ComponentSetupGenerator(
         component['name'], 
         component['version'], 
         component['description'], 
         os.path.join(component['name'])
     )
+    generator.generate_setup_file()
     print(f"Generated setup.py for {component['name']}")
