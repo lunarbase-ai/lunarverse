@@ -1,0 +1,68 @@
+{
+    "id": "7be88867-7497-4994-9bb5-7e4a3ac9b29f",
+    "name": "Range component example",
+    "description": "A one-component workflow illustrating the use of Range component.",
+    "version": null,
+    "components": [
+        {
+            "id": "fe4c9de9-3184-497f-84f2-beca6e4cb3cf",
+            "workflow_id": null,
+            "name": "Range",
+            "class_name": "Range",
+            "description": "Generate a sequence of numbers, starting from 0 by default, and increments by 1 (by default), and stops before a specified number.\nInputs:\n  `Start` (int): The number to start from.\n  `Stop` (int): The stopping number - it stops before it.\n  `Step` (int): The value of the increment\nOutput (STREAM): The generated sequence as a generator - it needs to be consumed by some downstream component.",
+            "group": "Utilities",
+            "inputs": [
+                {
+                    "key": "start",
+                    "data_type": "INT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "fe4c9de9-3184-497f-84f2-beca6e4cb3cf"
+                },
+                {
+                    "key": "stop",
+                    "data_type": "INT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "fe4c9de9-3184-497f-84f2-beca6e4cb3cf"
+                },
+                {
+                    "key": "step",
+                    "data_type": "INT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "fe4c9de9-3184-497f-84f2-beca6e4cb3cf"
+                }
+            ],
+            "output": {
+                "data_type": "STREAM",
+                "value": ":undef:"
+            },
+            "label": "Range_fe4c9de9-3184-497f-84f2-beca6e4cb3cf",
+            "configuration": {
+                "force_run": false
+            },
+            "version": null,
+            "is_custom": false,
+            "is_terminal": true,
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "timeout": 600,
+            "component_code": "range/range/__init__.py",
+            "component_code_requirements": [],
+            "component_example_path": null,
+            "invalid_errors": []
+        }
+    ],
+    "dependencies": [],
+    "timeout": 3600,
+    "auto_component_spacing": {
+        "dx": 450.0,
+        "dy": 350.0,
+        "x0": 0.0,
+        "y0": 0.0
+    },
+    "invalid_errors": []
+}
