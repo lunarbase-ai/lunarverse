@@ -1,0 +1,61 @@
+{
+    "id": "d8ac2f4d-f5ad-44f0-b0e1-2def28ce48dc",
+    "name": "Sleep",
+    "description": "Sleep",
+    "version": null,
+    "components": [
+      {
+        "id": "4945f558-4720-48f1-9531-cf5659f8b86b",
+        "workflowId": "d8ac2f4d-f5ad-44f0-b0e1-2def28ce48dc",
+        "name": "Sleep",
+        "className": "Sleep",
+        "description": "Sleep (delay execution) for the given number of seconds.\nInputs:\n  `Timeout` (int): The number of seconds to delay.\n  `Input` (any): The data to pass over.\nOutput (any): The input data.",
+        "group": "Utilities",
+        "inputs": [
+          {
+            "key": "timeout",
+            "dataType": "INT",
+            "value": 2,
+            "templateVariables": {},
+            "componentId": "4945f558-4720-48f1-9531-cf5659f8b86b"
+          },
+          {
+            "key": "input",
+            "dataType": "ANY",
+            "value": "Sleep",
+            "templateVariables": {},
+            "componentId": "4945f558-4720-48f1-9531-cf5659f8b86b"
+          }
+        ],
+        "output": {
+          "dataType": "ANY",
+          "value": ":undef:"
+        },
+        "label": "SLEEP-0",
+        "configuration": {
+          "force_run": false
+        },
+        "version": null,
+        "isCustom": false,
+        "isTerminal": true,
+        "position": {
+          "x": 345,
+          "y": 150
+        },
+        "timeout": 600,
+        "componentCode": "sleep/sleep/__init__.py",
+        "componentCodeRequirements": [],
+        "componentExamplePath": "sleep/sleep/example.json",
+        "invalidErrors": []
+      }
+    ],
+    "dependencies": [],
+    "timeout": 3600,
+    "autoComponentSpacing": {
+      "dx": 450.0,
+      "dy": 350.0,
+      "x0": 0.0,
+      "y0": 0.0
+    },
+    "invalidErrors": []
+  }
