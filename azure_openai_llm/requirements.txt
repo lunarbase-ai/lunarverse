@@ -2,4 +2,6 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-langchain~=0.1.7
+langchain-openai>=0.1.7
+langchain-core>=0.3.14
+lunarcore @ git+https://github.com/lunarbase-ai/lunar.git@lunarbase#subdirectory=lunarbase/core
