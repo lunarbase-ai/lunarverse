@@ -5,12 +5,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from black.parsing import parse_ast
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.typings.datatypes import DataType
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 
 class PythonCoder(
-    BaseComponent,
+    LunarComponent,
     component_name="Python coder",
     component_description="""Performs customized Python code execution. Outputs the value that the Python variable `result` is set to during the execution of the Python code.
 Inputs:
