@@ -8,15 +8,15 @@ Notes
 This package defines the Sleep Lunar component.
 """
 
-from typing import Any, List
+from typing import Any
 import time
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.typings.datatypes import DataType
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 
 
 class Sleep(
-    BaseComponent,
+    LunarComponent,
     component_name="Sleep",
     component_description="""Sleep (delay execution) for the given number of seconds.
 Inputs:
