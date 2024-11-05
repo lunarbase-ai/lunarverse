@@ -9,7 +9,7 @@ inputs:
 Output (dict): The converted htmls in texts e.g {'https://example.com': {'text': 'Hello World', 'content': '<html><body>Hello World</body></html>'}}
 """
 
-from typing import Any
+from typing import Any, Dict
 
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
