@@ -21,11 +21,11 @@ class TextParser(HTMLParser):
     def get_text(self):
         content = ' '.join(self.text)
 
-        self._clean_text()
+        self._reset_text()
         
         return content
     
-    def _clean_text(self):
+    def _reset_text(self):
         self.text = []
     
 
