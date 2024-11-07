@@ -36,6 +36,9 @@ Output (Dict): A dictionary of the selected properties and their values. E.g. `{
         data: Dict,
         selected_properties: str,
     ):
+        if not selected_properties:
+            return {}
+
         selected_properties_list = selected_properties.split(',')
         result = {}
 
