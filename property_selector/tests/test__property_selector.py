@@ -61,3 +61,54 @@ class TestPropertySelector:
         expected_output = {}
         result = self.property_selector.run(data, selected_properties)
         assert result == expected_output
+
+    def test_properties_with_spaces(self):
+        data = {
+            "a": 1,
+            "b": 2,
+            "c": 3,
+            "d": {"e": 4}
+        }
+        selected_properties = "a , b,c, d.e"
+        expected_output = {
+            "a": 1,
+            "b": 2,
+            "c": 3,
+            "d.e": 4
+        }
+        result = self.property_selector.run(data, selected_properties)
+        assert result == expected_output
+
+    def test_deeply_nested_properties(self):
+        data = {
+            "keyA": {"keyB": {"keyC": {"keyD": 123}}}
+        }
+        selected_properties = "keyA.keyB.keyC.keyD"
+        expected_output = {
+            "keyA.keyB.keyC.keyD": 123
+        }
+        result = self.property_selector.run(data, selected_properties)
+        assert result == expected_output
+
+    def test_non_existent_nested_properties(self):
+        data = {
+            "keyA": {"keyB": 123}
+        }
+        selected_properties = "keyA.keyC"
+        expected_output = {
+            "keyA.keyC": None
+        }
+        result = self.property_selector.run(data, selected_properties)
+        assert result == expected_output
+
+    def test_single_property(self):
+        data = {
+            "keyA": 123,
+            "keyB": 456
+        }
+        selected_properties = "keyA"
+        expected_output = {
+            "keyA": 123
+        }
+        result = self.property_selector.run(data, selected_properties)
+        assert result == expected_output

@@ -39,7 +39,7 @@ Output (Dict): A dictionary of the selected properties and their values. E.g. `{
         if not selected_properties:
             return {}
 
-        selected_properties_list = selected_properties.split(',')
+        selected_properties_list = [prop.strip() for prop in selected_properties.split(',')]
         result = {}
 
         for prop in selected_properties_list:
