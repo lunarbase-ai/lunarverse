@@ -3,8 +3,9 @@
 # SPDX-FileContributor: William Droz <william.droz@idiap.ch>
 #
 # SPDX-License-Identifier: LicenseRef-lunarbase
-from typing import Any, List
-from urls_scraper.scraper import scrape_urls
+from typing import Any, List, Dict
+from urls_scraper.scraper import scrape_urls, ScraperResultModel
+from pydantic import HttpUrl
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
@@ -26,7 +27,5 @@ Output (Dict[str, Dict[str, str]]): A dictionary where each key is a URL from th
     ):
         super().__init__(configuration=kwargs)
 
-    def run(self, urls: List[str]):
-        if urls and isinstance(urls[0], dict):
-            urls = [a["URL"] for a in urls]
+    def run(self, urls: List[HttpUrl]) -> Dict[HttpUrl, ScraperResultModel]:
         return scrape_urls(urls)
