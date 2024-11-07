@@ -3,14 +3,6 @@
 # SPDX-FileContributor: William Droz <william.droz@idiap.ch>
 #
 # SPDX-License-Identifier: LicenseRef-lunarbase
-"""Component to scrape URLs sequantially
-Inputs:
-  Urls (List[Dict[str, Any] | str]]): List of the URLs. Two possible format:
-    List of url directly
-    List of dict which contains "URL" as key and the url as the value.
-Output (Dict[str, Dict[str, str]]): for each url, either the content e.g {'https://example.com': {'content': '...'}} or an error e.g {'https://invalidurl.com': {'error': 'Invalid URL: ...'}}
-"""
-
 from typing import Any, Dict, List, Optional
 
 import requests
@@ -26,7 +18,6 @@ from requests.exceptions import (
 )
 from lunarcore.core.component import BaseComponent
 from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
 from lunarcore.core.typings.datatypes import DataType
 
 
@@ -104,10 +95,9 @@ Output (Dict[str, Dict[str, str]]): A dictionary where each key is a URL from th
 ):
     def __init__(
         self,
-        model: Optional[ComponentModel] = None,
         **kwargs: Any,
     ):
-        super().__init__(model=model, configuration=kwargs)
+        super().__init__(configuration=kwargs)
 
     def run(self, urls: List[str]):
         if urls and isinstance(urls[0], dict):
