@@ -39,59 +39,59 @@ def scrape_urls(urls: List[HttpUrl]) -> Dict[HttpUrl, ScraperResultModel]:
                     code=r.status_code,
                     error=f"A http error {r.status_code} occurred"
                 ).model_dump(exclude_none=True)
-        except Timeout as e:
+        except Timeout:
             results[url] = ScraperResultModel(
                 success=False,
                 content="",
-                error=f"A timeout occurred: {e}"
+                error=f"A timeout occurred"
             ).model_dump(exclude_none=True)
-        except TooManyRedirects as e:
+        except TooManyRedirects:
             results[url] = ScraperResultModel(
                 success=False,
                 content="",
-                error=f"Too many redirects: {e}"
+                error=f"Too many redirects"
             ).model_dump(exclude_none=True)
-        except URLRequired as e:
+        except URLRequired:
             results[url] = ScraperResultModel(
                 success=False,
                 content="",
-                error=f"A valid URL is required: {e}"
+                error=f"A valid URL is required"
             ).model_dump(exclude_none=True)
-        except InvalidURL as e:
+        except InvalidURL:
             results[url] = ScraperResultModel(
                 success=False,
                 content="",
-                error=f"Invalid URL: {e}"
+                error=f"Invalid URL"
             ).model_dump(exclude_none=True)
-        except ContentDecodingError as e:
+        except ContentDecodingError:
             results[url] = ScraperResultModel(
                 success=False,
                 content="",
-                error=f"Error decoding response content: {e}"
+                error=f"Error decoding response content"
             ).model_dump(exclude_none=True)
-        except RetryError as e:
+        except RetryError:
             results[url] = ScraperResultModel(
                 success=False,
                 content="",
-                error=f"Request failed after retries: {e}"
+                error=f"Request failed after retries"
             ).model_dump(exclude_none=True)
-        except SSLError as e:
+        except SSLError:
             results[url] = ScraperResultModel(
                 success=False,
                 content="",
-                error=f"SSL error occurred: {e}"
+                error=f"SSL error occurred"
             ).model_dump(exclude_none=True)
-        except RequestException as e:
+        except RequestException:
             results[url] = ScraperResultModel(
                 success=False,
                 content="",
-                error=f"A request exception occurred: {e}"
+                error=f"A request exception occurred"
             ).model_dump(exclude_none=True)
-        except Exception as e:
+        except Exception:
             results[url] = ScraperResultModel(
                 success=False,
                 content="",
-                error=f"An unexpected exception occurred: {e}"
+                error=f"An unexpected exception occurred"
             ).model_dump(exclude_none=True)
 
     return results
