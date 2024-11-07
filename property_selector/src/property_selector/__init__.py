@@ -10,7 +10,7 @@ from typing import Dict
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
-
+from property_selector.utils import get_nested_value_from_dict
 
 
 class PropertySelector(
@@ -36,18 +36,13 @@ Output (Dict): A dictionary of the selected properties and their values. E.g. `{
         data: Dict,
         selected_properties: str,
     ):
-        def get_nested_value(d, keys):
-            for key in keys:
-                d = d[key]
-            return d
-
         selected_properties_list = selected_properties.split(',')
         result = {}
 
         for prop in selected_properties_list:
             keys = prop.split('.')
             try:
-                result[prop] = get_nested_value(data, keys)
+                result[prop] = get_nested_value_from_dict(data, keys)
             except KeyError:
                 result[prop] = None
 
