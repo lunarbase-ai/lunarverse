@@ -6,18 +6,14 @@
 
 import csv
 import io
-from typing import Union, List, Any, Optional
 
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.connectors.sql import SQLConnector
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.typings.datatypes import DataType
-from lunarcore.errors import ComponentError
-
+from lunarcore.connectors import SQLConnector
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 
 class SQLQuery(
-    BaseComponent,
+    LunarComponent,
     component_name="SQL Query",
     component_description="""Connects to a SQL database and returns the result of a query
     Output (str): the query result.""",
@@ -30,8 +26,8 @@ class SQLQuery(
     host=None,
     database=None,
 ):
-    def __init__(self, model: Optional[ComponentModel] = None, **kwargs):
-        super().__init__(model=model, configuration=kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(configuration=kwargs)
         self.sql_connector = SQLConnector(
             driver_name=self.configuration.get("driver_name") or "",
             username=self.configuration.get("username") or "",
