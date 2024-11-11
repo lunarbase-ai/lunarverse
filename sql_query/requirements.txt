@@ -2,6 +2,5 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 psycopg2-binary
-sqlalchemy
-mysql-connector-python
+SQLAlchemy
 lunarcore @ git+https://github.com/lunarbase-ai/lunar.git@lunarbase#subdirectory=lunarbase/core
