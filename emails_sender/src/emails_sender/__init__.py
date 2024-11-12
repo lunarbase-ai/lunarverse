@@ -25,7 +25,7 @@ class EmailsSender(
     component_name="Emails Sender",
     component_description="""Sends emails.
 Inputs:
-  emails_input (Dict[Dict[str, str]]): A dictionary with the receiver email adresses (str) as keys, each mapped to a dictionary with the keys `html` (str) mapped to a string `<b>body of the email</b>` with the email content, and `subject` mapped to a string of the email subject.
+  emails_input (Dict[Dict[str, Optional]]): A dictionary with the receiver email adresses (str) as keys, each mapped to a dictionary with the keys `html` (str) mapped to a string `<b>body of the email</b>` with the email content, and `subject` mapped to a string of the email subject.
   sender (str): A string of the sender email, e.g `no-reply@lunarbase.ch`.
   subject (str): Optional global subject, will overwrite the subject. e.g `newsletter for you!`.
 Output (str): A string of the text `emails sent` if the emails were sent successfully.""",
@@ -65,5 +65,7 @@ Output (str): A string of the text `emails sent` if the emails were sent success
 
                     server.sendmail(sender, receiver, msg.as_string())
             return "emails sent"
+        except smtplib.SMTPException as e:
+            return f"failed to send emails: {str(e)}"
         except Exception as e:
-            return "failed to send emails: " + str(e)
+            return f"failed to send emails: {str(e)}"
