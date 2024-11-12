@@ -10,7 +10,11 @@ Need two inputs:
   `subject` (str): Optionnal global subject, will overwrite the subject. e.g "newsletter for you!"
 """
 
-from typing import Any, Dict
+from typing import Any, Dict, Optional
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from emails_sender.models import EmailsInputModel
 
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
@@ -42,8 +46,24 @@ Output (str): A string of the text `emails sent` if the emails were sent success
 
     def run(
         self,
-        emails_input: Dict,
+        emails_input: EmailsInputModel,
         sender: str,
-        subject: str = "Email from Lunar without a particular subject",
-    ) -> Dict[str, Dict[str, str]]:
-        return "emails sent"
+        subject: Optional[str] = None,
+    ) -> str:
+        try:
+            with smtplib.SMTP(self.configuration['smtp_server'], self.configuration['smtp_port']) as server:
+                server.login(self.configuration['smtp_username'], self.configuration['smtp_password'])
+
+                for receiver, content in emails_input.items():
+                    msg = MIMEMultipart()
+
+                    msg['From'] = sender
+                    msg['To'] = receiver
+                    msg['Subject'] = subject if subject else content.get('subject', '')
+
+                    msg.attach(MIMEText(content.get('html', ''), 'html'))
+
+                    server.sendmail(sender, receiver, msg.as_string())
+            return "emails sent"
+        except Exception as e:
+            return "failed to send emails: " + str(e)
