@@ -9,7 +9,7 @@ from typing import Optional, Any
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.data_types import DataType
-from pubmed_searcher.src.pubmed_searcher import (
+from pubmed_searcher import (
     async_pubmed_scraper as pubmed_scraper,
 )
 
