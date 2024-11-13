@@ -191,12 +191,14 @@ async def get_pmids(page: int, keyword: str, pubmed_url: str):
             # Parse the current page of search results from the response
             soup = BeautifulSoup(data, "lxml")
             # Find section which holds the PMIDs for all articles on a single page of search results
-            pmids = soup.find('meta', {'name': 'log_displayeduids'})['content']
-            # alternative to get pmids: page_content = soup.find_all('div', {'class': 'docsum-content'}) + for line in page_content: line.find('a').get('href')
-            # Extract URLs by getting PMIDs for all pubmed articles on the results page (default 10 articles/page)
-            for pmid in pmids.split(','):
-                url = ROOT_PUBMED_URL + '/' + pmid
-                urls.append(url)
+            meta_tags = soup.find_all('meta', {'name': 'log_displayeduids'})
+            for meta in meta_tags:
+                content = meta.get('content')
+                if content:
+                    pmids = content.split(',')
+                    for pmid in pmids:
+                        url = f'{ROOT_PUBMED_URL}/{pmid.strip()}'
+                        urls.append(url)
 
 
 def get_num_pages(keyword: str, pages: int, pubmed_url: str):
@@ -258,7 +260,7 @@ async def get_article_data(urls):
     await asyncio.gather(*tasks)
 
 
-def main(pages: int, keywords: [str], start: int = 2019, stop: int = 2023) -> pd.DataFrame:
+def main(pages: int, keywords: str, start: int = 2019, stop: int = 2023) -> pd.DataFrame:
     # Set options so user can choose number of pages and publication date range to scrape, and output file name
     time_start = time.time()
     # This pubmed link is hardcoded to search for articles from user specified date range, defaults to 2019-2020
