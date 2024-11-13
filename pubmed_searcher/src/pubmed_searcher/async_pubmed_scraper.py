@@ -222,7 +222,7 @@ def get_num_pages(keyword: str, pages: int, pubmed_url: str):
         return num_pages  # Can hardcode this value (e.g. 10 pages) to limit # of articles scraped per keyword
 
 
-async def build_article_urls(keywords: [str], pages: int, start: int, stop: int, pubmed_url: str):
+async def build_article_urls(keywords: str, pages: int, start: int, stop: int, pubmed_url: str):
     """
     PubMed uniquely identifies articles using a PMID
     e.g. https://pubmed.ncbi.nlm.nih.gov/32023415/ #shameless self plug :)
