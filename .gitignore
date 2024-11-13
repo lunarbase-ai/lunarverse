@@ -193,3 +193,5 @@ create/
 
 settings.json
 tests/*/*.json
+
+pytest.ini
