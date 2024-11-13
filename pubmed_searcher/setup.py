@@ -4,11 +4,11 @@ AUTHOR = "Lunarbase (https://lunarbase.ai/)"
 AUTHOR_EMAIL = "contact@lunarbase.ai"
 LICENSE = "SPDX-License-Identifier: GPL-3.0-or-later"
 TEST_REQUIREMENTS = [
-    'pytest'
+    'pytest', 'pytest-asyncio'
 ]
 EXTRAS_REQUIREMENTS = {
     'dev': [
-        'pytest',
+        'pytest', 'pytest-asyncio'
     ],
 }
 

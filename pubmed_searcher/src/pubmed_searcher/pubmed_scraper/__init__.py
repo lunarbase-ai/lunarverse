@@ -172,6 +172,8 @@ async def extract_by_article(url):
             # Add dict containing one article's data to list of article dicts
             articles_data.append(article_data)
 
+            return article_data
+
 
 async def get_pmids(page: int, keyword: str, pubmed_url: str):
     """
