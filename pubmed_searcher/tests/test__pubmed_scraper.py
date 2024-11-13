@@ -1,15 +1,6 @@
 import pytest
 from unittest.mock import patch, AsyncMock
-from pubmed_searcher.pubmed_scraper import get_num_pages, build_article_urls, get_article_data, extract_by_article
-from pydantic import BaseModel
-
-class ArticleDetails(BaseModel):
-    abstract: str
-    affiliations: list
-    keywords: str
-    title: str
-    authors: str
-    journal: str
+import pubmed_searcher.pubmed_scraper as scraper
 
 class TestAsyncPubmedScraper:
 
@@ -18,7 +9,7 @@ class TestAsyncPubmedScraper:
         mock_response = mock_get.return_value.__enter__.return_value
         mock_response.text = '<span class="total-pages">10</span>'
         
-        num_pages = get_num_pages('cancer', None, 'https://pubmed.ncbi.nlm.nih.gov')
+        num_pages = scraper.get_num_pages('cancer', None, 'https://pubmed.ncbi.nlm.nih.gov')
         assert num_pages == 10
 
     @pytest.mark.asyncio
@@ -26,7 +17,7 @@ class TestAsyncPubmedScraper:
     async def test_build_article_urls(self, mock_get_pmids):
         mock_get_pmids.return_value = AsyncMock()
         
-        await build_article_urls(['cancer'], 2, 0, 1, 'https://pubmed.ncbi.nlm.nih.gov')
+        await scraper.build_article_urls(['cancer'], 2, 0, 1, 'https://pubmed.ncbi.nlm.nih.gov')
         assert mock_get_pmids.call_count == 2
 
     @pytest.mark.asyncio
@@ -35,7 +26,7 @@ class TestAsyncPubmedScraper:
         mock_extract.return_value = AsyncMock()
         urls = ['https://pubmed.ncbi.nlm.nih.gov/12345678/']
         
-        await get_article_data(urls)
+        await scraper.get_article_data(urls)
         mock_extract.assert_called_with('https://pubmed.ncbi.nlm.nih.gov/12345678/')
 
     @pytest.mark.asyncio
@@ -65,7 +56,7 @@ class TestAsyncPubmedScraper:
         mock_get.return_value.__aenter__.return_value = mock_response
 
         url = 'https://pubmed.ncbi.nlm.nih.gov/12345678/'
-        details = await extract_by_article(url)
+        details = await scraper.extract_by_article(url)
 
         expected = {
             "url": 'https://pubmed.ncbi.nlm.nih.gov/12345678/',
@@ -79,3 +70,25 @@ class TestAsyncPubmedScraper:
         }
 
         assert details == expected
+
+    @pytest.mark.asyncio
+    @patch('pubmed_searcher.pubmed_scraper.aiohttp.ClientSession.get')
+    @patch('pubmed_searcher.pubmed_scraper.urls', new=[]) 
+    async def test_get_pmids(self, mock_get):
+        mock_response = AsyncMock()
+        mock_response.text.return_value = '''
+            <html>
+                <meta name="log_displayeduids" content="12345678,87654321">
+            </html>
+        '''
+        mock_get.return_value.__aenter__.return_value = mock_response
+
+        await scraper.get_pmids(page=1, keyword='test', pubmed_url='https://pubmed.ncbi.nlm.nih.gov/')
+
+        expected_urls = [
+            'https://pubmed.ncbi.nlm.nih.gov/12345678',
+            'https://pubmed.ncbi.nlm.nih.gov/87654321'
+        ]
+
+
+        assert scraper.urls == expected_urls
