@@ -5,14 +5,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from typing import Any, Optional, List, Dict
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.typings.datatypes import DataType
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 
 
 class PropertyGetter(
-    BaseComponent,
+    LunarComponent,
     component_name="Property Getter",
     component_description="""Extracts the mapped value of an inputted key/field/attribute in an inputted object/datastructure. It can be the value of a field/attribute in an object, or the mapped value of a key in a dictionary.
 Inputs:
@@ -23,8 +22,8 @@ Output (Any): The mapped value of the inputted key/field/attribute in the inputt
     output_type=DataType.ANY,
     component_group=ComponentGroup.DATA_TRANSFORMATION,
 ):
-    def __init__(self, model: Optional[ComponentModel] = None, **kwargs):
-        super().__init__(model=model, configuration=kwargs)
+    def __init__(self,**kwargs):
+        super().__init__(configuration=kwargs)
 
     @staticmethod
     def get_property_from_dict(dictionary: dict, key_path: str) -> List[Any]:
