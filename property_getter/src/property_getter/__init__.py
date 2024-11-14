@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from typing import Any, Optional, List, Dict
+from typing import Any, Union, List, Dict
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
@@ -55,19 +55,27 @@ Output (Any): The mapped value of the inputted key/field/attribute in the inputt
                     f"The selected property <{key_path}> doesn't exist in the input object! Accepted properties: {list(dictionary.keys())}"
                 )
 
-    def run(self, input: Dict, selected_property: str):
-        if not isinstance(input, dict):
-            raise ValueError(f"{self.__class__} expects a dict input. Got {type(input)}!")
-        selected_property_keys = [k.strip() for k in selected_property.split(",")]
-        selected_values = []
-        for selected_property_key in selected_property_keys:
-            _vals = PropertyGetter.get_property_from_dict(input, selected_property_key)
-            if isinstance(_vals, list):
-                selected_values.extend(_vals)
+    def run(self, input: Union[Dict, List], selected_property: str) -> Any:
+        if not isinstance(input, (dict, list)):
+            raise ValueError(f"{self.__class__} expects a dict or list input. Got {type(input)}!")
+
+        prop = selected_property.strip()
+        parts = prop.split('.')
+        value = input
+
+        for p in parts:
+            if isinstance(value, list):
+                try:
+                    index = int(p)
+                    value = value[index]
+                except (ValueError, IndexError):
+                    raise ValueError(f"Invalid list index: {p} in path: {prop}!")
+            elif isinstance(value, dict):
+                try:
+                    value = value[p]
+                except KeyError:
+                    raise ValueError(f"The selected property path is invalid: {prop}!")
             else:
-                selected_values.append(_vals)
+                raise ValueError(f"Cannot navigate through type: {type(value)}!")
 
-        if len(selected_values) == 1:
-            selected_values = selected_values[0]
-
-        return selected_values
+        return value
