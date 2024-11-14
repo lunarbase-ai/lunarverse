@@ -8,6 +8,8 @@ from typing import Any, Union, List, Dict
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
+from property_getter.extractor import PropertyExtractor
+
 
 
 class PropertyGetter(
@@ -22,38 +24,9 @@ Output (Any): The mapped value of the inputted key/field/attribute in the inputt
     output_type=DataType.ANY,
     component_group=ComponentGroup.DATA_TRANSFORMATION,
 ):
-    def __init__(self,**kwargs):
+    def __init__(self, **kwargs):
         super().__init__(configuration=kwargs)
-
-    @staticmethod
-    def get_property_from_dict(dictionary: dict, key_path: str) -> List[Any]:
-        parts = key_path.split(".")
-
-        if len(parts) > 1:
-            value = dictionary[parts[0]]
-            try:
-                for p in parts[1:]:
-                    if p.strip() == "*":
-                        if isinstance(value, dict):
-                            return list(value.values())
-                        else:
-                            return value
-                    value = value[p]
-            except KeyError:
-                raise ValueError(f"The selected property path is invalid: {parts}!")
-            return value
-
-        else:
-            if key_path == "*":
-                return list(dictionary.values())
-
-            try:
-                value = dictionary[key_path]
-                return value
-            except KeyError:
-                raise ValueError(
-                    f"The selected property <{key_path}> doesn't exist in the input object! Accepted properties: {list(dictionary.keys())}"
-                )
+        self.property_extractor = PropertyExtractor()
 
     def run(self, input: Union[Dict, List], selected_property: str) -> Any:
         if not isinstance(input, (dict, list)):
@@ -61,21 +34,5 @@ Output (Any): The mapped value of the inputted key/field/attribute in the inputt
 
         prop = selected_property.strip()
         parts = prop.split('.')
-        value = input
 
-        for p in parts:
-            if isinstance(value, list):
-                try:
-                    index = int(p)
-                    value = value[index]
-                except (ValueError, IndexError):
-                    raise ValueError(f"Invalid list index: {p} in path: {prop}!")
-            elif isinstance(value, dict):
-                try:
-                    value = value[p]
-                except KeyError:
-                    raise ValueError(f"The selected property path is invalid: {prop}!")
-            else:
-                raise ValueError(f"Cannot navigate through type: {type(value)}!")
-
-        return value
+        return self.property_extractor.get_nested_value(input, parts)
