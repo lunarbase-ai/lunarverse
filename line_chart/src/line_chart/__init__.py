@@ -38,21 +38,17 @@ Output (Dict): A dictionary with the key `data` (str) mapped to the original inp
 
         matplotlib.use("agg")
 
-        # Plot the bar chart
         plt.plot(keys, values)
         plt.xlabel("Keys")
         plt.ylabel("Values")
         plt.title("Line Chart")
 
-        # Save the plot to a BytesIO buffer
         buffer = io.BytesIO()
         plt.savefig(buffer, format="png")
         buffer.seek(0)
 
-        # Convert the BytesIO buffer to a base64-encoded PNG string URL
         png_string_url = f"data:image/png;base64,{base64.b64encode(buffer.read()).decode()}"
 
-        # Close the plot to free resources
         plt.close()
 
         return png_string_url
