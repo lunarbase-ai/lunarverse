@@ -8,7 +8,7 @@ import io
 import matplotlib
 import matplotlib.pyplot as plt
 
-from typing import Any, Optional, Dict
+from typing import Dict
 
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
