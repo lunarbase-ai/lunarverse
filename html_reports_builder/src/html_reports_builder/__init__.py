@@ -17,6 +17,7 @@ from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
 
 from jinja2 import Template
+from markupsafe import escape
 
 
 class HTMLReportsBuilder(
@@ -41,5 +42,7 @@ Output (Dict[str, str]): A dictionary where each inputted label is mapped to the
         template_j2 = Template(template_j2)
         results: Dict[str, str] = dict()
         for key, sub_dict in data.items():
-            results[key] = template_j2.render(**sub_dict)
+            # Convert None values to empty strings and escape special characters
+            sanitized_sub_dict = {k: escape(v if v is not None else "") for k, v in sub_dict.items()}
+            results[key] = template_j2.render(**sanitized_sub_dict)
         return results
