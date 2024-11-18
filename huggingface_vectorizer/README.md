@@ -11,7 +11,8 @@ The **HuggingFace Vectorizer** is a component designed to encode texts using Hug
 
 ## Inputs
 
-- **Text**: A list of strings (`LIST`) that you want to encode.
+- **text**: A list of strings (`LIST`) that you want to encode. Ex: `["Hello, world!", "How are you?"]`
+- **model_name**: A string with the name of the Huggingface model you want to use. Ex: `distilbert-base-uncased`
 
 ## Outputs
 
@@ -21,19 +22,12 @@ The **HuggingFace Vectorizer** is a component designed to encode texts using Hug
 
 ## Configuration Parameters
 
-- **model_name**: The name of the pre-trained HuggingFace model to use for encoding the texts. This should be a string representing a valid model name available in the HuggingFace model hub.
+There is no configuration parameter for this component.
 
 ## Usage
 
 To use the HuggingFace Vectorizer, you need to provide a list of texts to be encoded and specify the `model_name` to be used for encoding. The component will then return the embeddings for each text.
 
-## Example Configuration
-
-```yaml
-model_name: 'distilbert-base-uncased'
-```
-
-In this example, the component will use the `distilbert-base-uncased` model from HuggingFace to encode the input texts.
 
 ## Summary
 
