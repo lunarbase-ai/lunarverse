@@ -19,6 +19,8 @@ def convert_audio_to_data_uri(file_path):
             mime_type = 'audio/mpeg'
         elif file_path.endswith('.wav'):
             mime_type = 'audio/wav'
+        else:
+            raise ValueError("Unsupported file type")
     
     with open(file_path, "rb") as audio_file:
         binary_data = audio_file.read()
@@ -26,7 +28,6 @@ def convert_audio_to_data_uri(file_path):
         data_uri = f"data:{mime_type};base64,{base64_string}"
         
     return data_uri
-
 
 class Audio2Base64(
     LunarComponent,
