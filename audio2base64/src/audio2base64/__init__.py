@@ -7,12 +7,9 @@
 import base64
 import mimetypes
 
-from typing import Any, Optional
-
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.typings.datatypes import DataType
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 
 
 def convert_audio_to_data_uri(file_path):
@@ -32,7 +29,7 @@ def convert_audio_to_data_uri(file_path):
 
 
 class Audio2Base64(
-    BaseComponent,
+    LunarComponent,
     component_name="Audio2Base64",
     component_description="""Converts an audio file (.mp3 or .wav) to a base64 string.
 Inputs:
@@ -43,8 +40,8 @@ Output (str): A string on the following format: f`data:{mime_type};base64,{base6
     output_type=DataType.TEXT,
     component_group=ComponentGroup.MUSICGEN,
 ):
-    def __init__(self, model: Optional[ComponentModel] = None, **kwargs):
-        super().__init__(model=model, configuration=kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(configuration=kwargs)
 
     def run(self, audio_file_path: str):
         data_uri_audio = convert_audio_to_data_uri(audio_file_path)
