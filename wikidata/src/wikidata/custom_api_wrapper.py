@@ -2,17 +2,15 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import logging
 from typing import Optional
 from langchain_community.tools.wikidata.tool import WikidataAPIWrapper
+from wikibase_rest_api_client.utilities.fluent import FluentWikibaseClient
 
-logger = logging.getLogger(__name__)
 
 WIKIDATA_MAX_QUERY_LENGTH = 300
 
 class CustomWikidataAPIWrapper(WikidataAPIWrapper):
     def _item_to_structured_document(self, qid: str) -> Optional[dict]:
-        from wikibase_rest_api_client.utilities.fluent import FluentWikibaseClient
 
         fluent_client: FluentWikibaseClient = FluentWikibaseClient(
             self.wikidata_rest, supported_props=self.wikidata_props, lang=self.lang
@@ -20,7 +18,6 @@ class CustomWikidataAPIWrapper(WikidataAPIWrapper):
         resp = fluent_client.get_item(qid)
 
         if not resp:
-            logger.warning(f"Could not find item {qid} in Wikidata")
             return None
 
         doc = {}

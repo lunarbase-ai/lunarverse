@@ -1,44 +1,40 @@
-# # SPDX-FileCopyrightText: Copyright © 2024 João Gabriel Oliveira <jgoliveira84@gmail.com>
-# #
-# # SPDX-License-Identifier: GPL-3.0-or-later
+import pytest
+from unittest.mock import MagicMock, patch
+from wikidata import Wikidata
 
-# from unittest.mock import MagicMock
+class TestWikidata:
+    @patch('wikidata.WikidataQueryRun')
+    @patch('wikidata.CustomWikidataAPIWrapper')
+    def test_wikidata_run(self, mock_api_wrapper, mock_query_run):
 
-# from lunarcore.component_library.wikidata import Wikidata
-# from lunarcore.core.data_models import ComponentInput
-# from lunarcore.core.typings.datatypes import DataType
-# from lunarcore.core.typings.datatypes import DataType
+        mock_query_run_instance = MagicMock()
+        mock_query_run_instance.run.return_value = [{"description": "President of the United States from 2009 to 2017"}]
+        mock_query_run.return_value = mock_query_run_instance
+
+        wikidata = Wikidata()
 
 
-# def test_wikidata():
-#     wikidata = Wikidata()
-#     wikidata_client_mock = MagicMock()
+        result = wikidata.run("Barack Obama")
 
-#     mock_result = [
-#         {
-#             "id": "Q1638872",
-#             "label": "document retrieval",
-#             "description": "matching of some stated user query against a set of free-text records",
-#             "instance_of": ["specialty", "field of study"],
-#         },
-#         {
-#             "id": "Q58631505",
-#             "label": "SIGNATURES IN SOME NINETEENTH-CENTURY MASSACHUSETTS DUODECIMOS: A QUERY",
-#             "instance_of": ["scholarly article"],
-#             "publication_date": "1948",
-#         },
-#     ]
+        assert result == {
+            "results": [{"description": "President of the United States from 2009 to 2017"}]
+        }
+        mock_query_run_instance.run.assert_called_once_with("Barack Obama")
 
-#     wikidata_client_mock.run.return_value = mock_result
+    @patch('wikidata.__init__.WikidataQueryRun')
+    @patch('wikidata.__init__.CustomWikidataAPIWrapper')
+    def test_wikidata_empty_query(self, mock_api_wrapper, mock_query_run):
 
-#     wikidata._wikidata = wikidata_client_mock
+        mock_query_run_instance = MagicMock()
+        mock_query_run_instance.run.return_value = []
+        mock_query_run.return_value = mock_query_run_instance
 
-#     assert wikidata.run(
-#         ComponentInput(
-#             key="query",
-#             data_type=DataType.TEXT,
-#             value="Some query",
-#         )
-#     ) == {
-#         "results": mock_result
-#     }
+        wikidata = Wikidata()
+
+
+        result = wikidata.run("")
+
+        assert result == {
+            "results": []
+        }
+        mock_query_run_instance.run.assert_not_called()
