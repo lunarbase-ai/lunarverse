@@ -24,10 +24,10 @@ Output (Any): The value of the variable `result` in the Python code after execut
     input_types={"code": DataType.CODE},
     output_type=DataType.ANY,
     component_group=ComponentGroup.CODERS,
-    openai_api_version="$LUNARENV::PYTHON_CODER_OPENAI_API_VERSION",
-    deployment_name="$LUNARENV::PYTHON_CODER_DEPLOYMENT_NAME",
-    openai_api_key="$LUNARENV::PYTHON_CODER_OPENAI_API_KEY",
-    azure_endpoint="$LUNARENV::PYTHON_CODER_AZURE_OPENAI_ENDPOINT",
+    openai_api_version="$LUNARENV?::PYTHON_CODER_OPENAI_API_VERSION",
+    deployment_name="$LUNARENV?::PYTHON_CODER_DEPLOYMENT_NAME",
+    openai_api_key="$LUNARENV?::PYTHON_CODER_OPENAI_API_KEY",
+    azure_endpoint="$LUNARENV?::PYTHON_CODER_AZURE_OPENAI_ENDPOINT",
 ):
     def __init__(
         self,
