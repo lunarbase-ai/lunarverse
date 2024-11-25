@@ -5,7 +5,7 @@
 from typing import Optional
 from langchain_community.tools.wikidata.tool import WikidataQueryRun
 
-from wikidata import CustomWikidataAPIWrapper
+from wikidata.custom_api_wrapper import CustomWikidataAPIWrapper
 
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
@@ -27,6 +27,8 @@ Output (Dict[str, List[Dict]]): A dictionary with the key `results` (str), mappe
         self._wikidata = WikidataQueryRun(api_wrapper=CustomWikidataAPIWrapper())
 
     def run(self, query:str):
+        if not query:
+            return {"results": []}
         return {
             "results": self._wikidata.run(query)
         }
