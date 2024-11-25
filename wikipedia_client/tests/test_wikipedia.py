@@ -1,53 +1,57 @@
-# SPDX-FileCopyrightText: Copyright © 2024 João Gabriel Oliveira <jgoliveira84@gmail.com>
-#
-# SPDX-License-Identifier: GPL-3.0-or-later
-
-import os
-import unittest.mock as mock
-
-from unittest.mock import MagicMock
-
-from lunarcore.component_library.wikipedia import Wikipedia
-from lunarcore.core.data_models import ComponentInput
-from lunarcore.core.typings.datatypes import DataType
+from unittest.mock import patch, MagicMock
+from wikipedia_client import Wikipedia
+from wikipedia.exceptions import DisambiguationError, PageError
+import pytest
 
 
-@mock.patch(
-    "wikipedia.search"
-)
-@mock.patch(
-    "wikipedia.page"
-)
-def test_wikipedia(mock_wikipedia_page, mock_wikipedia_search):
-    wikipedia = Wikipedia()
+class TestWikipedia:
 
-    mock_result = [
-        {
-            "title": "Title 1",
-            "snippet": "Description 1",
-            "link": "https://www.example.com/1",
-        },
-        {
-            "title": "Title 2",
-            "snippet": "Description 2",
-            "link": "https://www.example.com/2",
-        },
-    ]
-    mock_page_result = MagicMock()
+    @patch('wikipedia.page')
+    def test_run_success(self, mock_wikipedia_page):
+        mock_page = MagicMock()
+        mock_page.content = "Sample content"
+        mock_page.summary = "Sample summary"
+        mock_wikipedia_page.return_value = mock_page
 
-    mock_wikipedia_search.return_value = mock_result
-    mock_wikipedia_page.return_value = mock_page_result
+        wikipedia_client = Wikipedia()
 
-    results = wikipedia.run(
-        ComponentInput(
-            key="query",
-            data_type=DataType.TEXT,
-            value="Query plan",
-        )
-    )
+        result = wikipedia_client.run("Sample query")
 
-    assert results == {
-        "results": mock_result,
-        "page": mock_page_result
-    }
+        assert result == {
+            "content": "Sample content",
+            "summary": "Sample summary"
+        }
 
+    @patch('wikipedia.page')
+    def test_run_disambiguation_error(self, mock_wikipedia_page):
+        mock_wikipedia_page.side_effect = DisambiguationError("Sample query", ["Option1", "Option2"])
+
+        wikipedia_client = Wikipedia()
+
+        with pytest.raises(DisambiguationError):
+            wikipedia_client.run("Sample query")
+
+    @patch('wikipedia.page')
+    def test_run_page_error(self, mock_wikipedia_page):
+        mock_wikipedia_page.side_effect = PageError("Sample query", "Page not found")
+
+        wikipedia_client = Wikipedia()
+
+        with pytest.raises(PageError):
+            wikipedia_client.run("Sample query")
+
+    @patch('wikipedia.page')
+    def test_run_empty_query(self, mock_wikipedia_page):
+        wikipedia_client = Wikipedia()
+
+        with pytest.raises(ValueError):
+            wikipedia_client.run("")
+
+    @patch('wikipedia.page')
+    def test_run_general_exception(self, mock_wikipedia_page):
+        mock_wikipedia_page.side_effect = Exception("General error")
+
+        wikipedia_client = Wikipedia()
+
+        with pytest.raises(Exception):
+            wikipedia_client.run("Sample query")
