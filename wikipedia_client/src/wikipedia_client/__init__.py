@@ -21,13 +21,17 @@ Output (Dict[str, str]): A dictionary with the string `content` mapped to a stri
     component_group=ComponentGroup.API_TOOLS,
 ):
     def run(self, query: str):
-        page = None
+        if not query:
+            raise ValueError("Query cannot be empty")
         try:
             page = wikipedia.page(query)
+            return {
+                "content": page.content,
+                "summary": page.summary
+            }
         except wikipedia.exceptions.DisambiguationError as e:
-            pass
-
-        return {
-            "content": page.content,
-            "summary": page.summary
-        }
+            raise e
+        except wikipedia.exceptions.PageError as e:
+            raise e
+        except Exception as e:
+            raise e
