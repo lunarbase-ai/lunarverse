@@ -27,4 +27,4 @@ class UploadComponent(
     def run(self, input_file: Dict):
         if not isinstance(input_file, File):
             input_file = File.model_validate(input_file)
-        return self._file_connector.get_absolute_path(input_file.get("path"))
+        return self._file_connector.get_absolute_path(input_file.path)
