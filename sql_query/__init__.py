@@ -43,6 +43,8 @@ class SQLQuery(
     def run(self, query: str):
         result = self.sql_connector.query(query)
         output = io.StringIO()
+        if not result:
+            return None
         if len(result) > 0:
             headers = list(result[0].keys())
             writer = csv.DictWriter(output, fieldnames=headers)
