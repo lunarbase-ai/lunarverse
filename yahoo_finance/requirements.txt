@@ -1,5 +1,5 @@
 # Copyright © 2024 Lunarbase (https://lunarbase.ai/) <contact@lunarbase.ai>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
-
+lunarcore @ git+https://github.com/lunarbase-ai/lunar.git@lunarbase#subdirectory=lunarbase/core
 yfinance~=0.2.37
