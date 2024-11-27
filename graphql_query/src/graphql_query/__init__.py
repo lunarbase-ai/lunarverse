@@ -26,13 +26,15 @@ class GraphQLQuery(
     def __init__(self, **kwargs):
         super().__init__(configuration=kwargs)
         self.endpoint = self.configuration.get("endpoint")
+
     def run(self, query: str):
-        endpoint = self.endpoint
+        if not query:
+            raise TypeError("The query parameter cannot be None or empty.")
 
-        response = requests.post(endpoint, json={"query": query})
+        response = requests.post(self.endpoint, json={"query": query})
 
-        if response.status_code == 200:
-            data = response.json()
-            return data
-        else:
-            response.raise_for_status()
+        # Check for HTTP error response
+        response.raise_for_status()
+
+        data = response.json()
+        return data
