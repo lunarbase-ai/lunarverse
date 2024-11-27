@@ -6,15 +6,15 @@
 
 from typing import Any, Optional
 
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.connectors.sparql import SPARQLConnector
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.typings.datatypes import DataType
+
+from lunarcore.connectors.sparql import SPARQLConnector
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 
 
 class SPARQLQuery(
-    BaseComponent,
+    LunarComponent,
     component_name="SPARQL Query",
     component_description="""Fetch data from a SPARQL endpoint.
     Input (str): A string that is the SPARQL query.
@@ -24,8 +24,8 @@ class SPARQLQuery(
     component_group=ComponentGroup.DATABASES,
     endpoint="",
 ):
-    def __init__(self, model: Optional[ComponentModel] = None, **kwargs):
-        super().__init__(model=model, configuration=kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(configuration=kwargs)
         endpoint = self.configuration.get("endpoint")
         self.connector = SPARQLConnector(endpoint=endpoint)
 
