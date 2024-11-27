@@ -7,16 +7,14 @@
 import json
 
 import requests
-from typing import Any, Optional
 
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.typings.datatypes import DataType
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 
 
 class GraphQLQuery(
-    BaseComponent,
+    LunarComponent,
     component_name="GraphQL",
     component_description="""Fetches data from a GraphQL endpoint
     Output (dict): The response for the query""",
@@ -25,15 +23,13 @@ class GraphQLQuery(
     component_group=ComponentGroup.DATABASES,
     endpoint="",
 ):
-    def __init__(self, model: Optional[ComponentModel] = None, **kwargs):
-        super().__init__(model=model, configuration=kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(configuration=kwargs)
         self.endpoint = self.configuration.get("endpoint")
-
     def run(self, query: str):
         endpoint = self.endpoint
-        query = json.loads(query, strict=False)
 
-        response = requests.post(endpoint, json=query)
+        response = requests.post(endpoint, json={"query": query})
 
         if response.status_code == 200:
             data = response.json()
