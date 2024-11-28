@@ -25,9 +25,10 @@ Output (List[Dict]): A list of dictionaries -- one for each text in the input. "
     output_type=DataType.EMBEDDINGS,
     component_group=ComponentGroup.DATA_VECTORIZERS,
     openai_api_version="$LUNARENV::OPENAI_API_VERSION",
-    deployment_name="$LUNARENV::DEPLOYMENT_NAME",
+    azure_deployment="$LUNARENV::AZURE_OPENAI_VECTORIZER_DEPLOYMENT_NAME",
     openai_api_key="$LUNARENV::OPENAI_API_KEY",
     azure_endpoint="$LUNARENV::AZURE_OPENAI_ENDPOINT",
+    model="$LUNARENV::AZURE_OPENAI_VECTORIZER_MODEL",
 ):
     def __init__(self, **kwargs):
         super().__init__(configuration=kwargs)
