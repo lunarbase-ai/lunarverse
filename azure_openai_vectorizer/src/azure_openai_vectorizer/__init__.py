@@ -5,15 +5,15 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from typing import Optional, List
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.typings.datatypes import EmbeddedText, DataType
+
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType, EmbeddedText
 from langchain_openai import AzureOpenAIEmbeddings
 
 
 class AzureOpenAIVectorizer(
-    BaseComponent,
+    LunarComponent,
     component_name="Azure Open AI vectorizer",
     component_description="""Encodes inputted texts as numerical vectors (embeddings) using Azure OpenAI models.
 Inputs:
@@ -29,8 +29,8 @@ Output (List[Dict]): A list of dictionaries -- one for each text in the input. "
     openai_api_key="$LUNARENV::OPENAI_API_KEY",
     azure_endpoint="$LUNARENV::AZURE_OPENAI_ENDPOINT",
 ):
-    def __init__(self, model: Optional[ComponentModel] = None, **kwargs):
-        super().__init__(model=model, configuration=kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(configuration=kwargs)
         self._client = AzureOpenAIEmbeddings(**self.configuration)
 
     def run(self, documents: List[str]):
