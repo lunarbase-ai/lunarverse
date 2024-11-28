@@ -16,13 +16,13 @@ The **Azure Open AI Vectorizer** component encodes inputted texts as numerical v
 
 ## Configuration Parameters
 
-To configure the Azure Open AI Vectorizer component, you need to provide the following parameters:
+To configure the Azure Open AI Vectorizer component, you need to provide the following parameters.
 
-- **openai_api_type**: The type of OpenAI API being used.
-- **openai_api_version**: The version of the OpenAI API.
-- **deployment**: The deployment configuration for your Azure OpenAI model.
+- **openai_api_version**: The version of the OpenAI API. 
+- **azure_deployment**: The deployment configuration for your Azure OpenAI model.
 - **openai_api_key**: The API key for accessing the OpenAI service.
 - **azure_endpoint**: The endpoint URL for your Azure OpenAI service.
+- **model**: The model to use at the vectorizer.
 
 Ensure that you have the necessary access and permissions to use the Azure OpenAI service and the corresponding API key.
 
