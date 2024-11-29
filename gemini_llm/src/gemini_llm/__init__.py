@@ -5,14 +5,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import os
-from typing import Any, Optional
+from typing import Any
 
 import requests
 
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.typings.datatypes import DataType
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 
 from langchain.prompts.prompt import PromptTemplate
 from langchain_core.messages import HumanMessage
@@ -21,7 +20,7 @@ from lunarcore.errors import ComponentError
 
 
 class GeminiAIPrompt(
-    BaseComponent,
+    LunarComponent,
     component_name="Gemini AI prompt",
     component_description="""Connects to Gemini's API, runs natural language prompts and outputs the result as text
     Output (str): The answer provided by the LLM to the prompt.""",
@@ -30,8 +29,8 @@ class GeminiAIPrompt(
     component_group=ComponentGroup.GENAI,
     api_key="$LUNARENV::GEMINI_API_KEY",
 ):
-    def __init__(self, model: Optional[ComponentModel] = None, **kwargs: Any):
-        super().__init__(model=model, configuration=kwargs)
+    def __init__(self, **kwargs: Any):
+        super().__init__(configuration=kwargs)
         if not self.configuration["api_key"]:
             self.configuration["api_key"] = os.environ.get("GEMINI_API_KEY", "")
 
