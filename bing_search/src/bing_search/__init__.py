@@ -9,6 +9,8 @@ from lunarcore.component.data_types import DataType
 
 from langchain_community.utilities import BingSearchAPIWrapper
 
+BING_SEARCH_URL = "https://api.bing.microsoft.com/v7.0/search"
+
 
 class BingSearch(
     LunarComponent,
@@ -17,7 +19,8 @@ class BingSearch(
     input_types={"query": DataType.TEXT},
     output_type=DataType.JSON,
     component_group=ComponentGroup.API_TOOLS,
-    bing_search_url="https://api.bing.microsoft.com/v7.0/search",
+    total_results=10,
+    bing_search_url=BING_SEARCH_URL,
     bing_subscription_key="$LUNARENV::BING_SUBSCRIPTION_KEY",
 ):
     def __init__(self, **kwargs: Any):
@@ -28,6 +31,9 @@ class BingSearch(
         )
 
     def run(self, query: str):
-        results = self._search.results(str(query).strip(), 10)
+        try:
+            results = self._search.results(str(query).strip(), self.configuration.get("total_results", 10))
 
-        return {"results": results}
+            return {"results": results}
+        except Exception as e:
+            raise RuntimeError(f"Failed to search for '{query}': {str(e)}")
