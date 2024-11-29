@@ -32,7 +32,9 @@ class GeminiAIPrompt(
     def __init__(self, **kwargs: Any):
         super().__init__(configuration=kwargs)
         if not self.configuration["api_key"]:
-            self.configuration["api_key"] = os.environ.get("GEMINI_API_KEY", "")
+            self.configuration["api_key"] = os.environ.get("GEMINI_API_KEY", None)
+        if not self.configuration["api_key"]:
+            raise ValueError("API key is missing. Please provide a valid API key.")
 
     def run(self, prompt: str):
         prompt_prefix: str = "Question: "
