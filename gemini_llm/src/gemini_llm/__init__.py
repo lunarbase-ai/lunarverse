@@ -16,7 +16,7 @@ from lunarcore.component.data_types import DataType
 from langchain.prompts.prompt import PromptTemplate
 from langchain_core.messages import HumanMessage
 
-from lunarcore.errors import ComponentError
+
 
 
 class GeminiAIPrompt(
@@ -62,6 +62,7 @@ class GeminiAIPrompt(
             else:
                 raise ValueError(f"Failed to parse Gemini's response: {data}")
         else:
-            raise ComponentError(f"Error: {response.status_code} {response.text}")
+            raise RuntimeError(f"Error: {response.status_code} {response.text}")
+    
 
         return str(result).strip("\n").strip().replace('"', "'")
