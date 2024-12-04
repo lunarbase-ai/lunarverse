@@ -1,0 +1,54 @@
+{
+    "id": "d6264f7f-5474-4127-8a6f-d42ac613a38b",
+    "name": "JSON Input",
+    "description": "JSON Input",
+    "version": null,
+    "components": [
+      {
+        "id": "bb22970d-4465-4255-9e34-9ebf6131a152",
+        "workflowId": "d6264f7f-5474-4127-8a6f-d42ac613a38b",
+        "name": "JSON Input",
+        "className": "JSONInput",
+        "description": "Allows the input of a JSON text (potentially with template variables) that can then be used in other downstream components. It can also be used as an output if useful.\nInputs:\n  `input` (str): A valid json.\n  Output (dict): The input json as a Python dict.",
+        "group": "IO",
+        "inputs": [
+          {
+            "key": "input",
+            "dataType": "TEMPLATE",
+            "value": "{}",
+            "templateVariables": {},
+            "componentId": "bb22970d-4465-4255-9e34-9ebf6131a152"
+          }
+        ],
+        "output": {
+          "dataType": "JSON",
+          "value": ":undef:"
+        },
+        "label": "JSONINPUT-0",
+        "configuration": {
+          "force_run": false
+        },
+        "version": null,
+        "isCustom": false,
+        "isTerminal": true,
+        "position": {
+          "x": 426,
+          "y": 197
+        },
+        "timeout": 600,
+        "componentCode": "json_input/json_input/__init__.py",
+        "componentCodeRequirements": [],
+        "componentExamplePath": "json_input/json_input/example.json",
+        "invalidErrors": []
+      }
+    ],
+    "dependencies": [],
+    "timeout": 3600,
+    "autoComponentSpacing": {
+      "dx": 450.0,
+      "dy": 350.0,
+      "x0": 0.0,
+      "y0": 0.0
+    },
+    "invalidErrors": []
+  }

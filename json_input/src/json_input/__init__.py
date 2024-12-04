@@ -11,14 +11,14 @@ This package defines a JSON Input Lunar component.
 """
 
 
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.typings.datatypes import DataType
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 import json
 
 
 class JSONInput(
-    BaseComponent,
+    LunarComponent,
     component_name="JSON Input",
     component_description="""Allows the input of a JSON text (potentially with template variables) that can then be used in other downstream components. It can also be used as an output if useful.
 Inputs:
