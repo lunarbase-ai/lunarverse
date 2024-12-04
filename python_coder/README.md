@@ -5,17 +5,14 @@
 The **Python Coder** component is designed to perform customized Python code execution. It processes a string of Python code provided as input, executes it, and outputs the value assigned to the variable `result` within the code. This component is particularly useful for dynamically evaluating Python expressions or performing operations that depend on runtime code execution.
 
 ## Inputs
+As mentioned above, the input consists of a `Code` field.
 
-- `Code` (str): A string of the Python code to execute. The Python code can be inputted manually by the user. Ensure that the code includes the assignment of a value to the variable `result`, as this is what the component will output.
+| input name | input data type | example value | description |
+|------------|-----------------|---------------|-------------|
+| code       | str             | `x = 5\ny = 10\nresult = x + y` | A string of the Python code to execute. Ensure that the code includes the assignment of a value to the variable `result`, as this is what the component will output. |
 
 ## Outputs
-
-- Output (Any): The value of the variable `result` in the Python code after execution. The output type can vary depending on the value assigned to `result` in the executed code.
-
-## Configuration Parameters
-
-- `openai_api_key` (str): The API key for authenticating with the OpenAI service, if required.
-- `openai_api_base` (str): The base URL for the OpenAI API, if different from the default.
+The component will output the value of the variable `result` in the Python code after execution. The output type can vary depending on the value assigned to `result` in the executed code.
 
 ## Usage
 
