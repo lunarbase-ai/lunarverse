@@ -6,13 +6,13 @@ Notes
 This package defines the Sleep Lunar component.
 """
 
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.typings.datatypes import DataType
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 
 
-class Range(
-    BaseComponent,
+class RangeGenerator(
+    LunarComponent,
     component_name="Range",
     component_description="""Generate a sequence of numbers, starting from 0 by default, and increments by 1 (by default), and stops before a specified number.
 Inputs:
