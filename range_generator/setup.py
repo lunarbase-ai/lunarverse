@@ -41,7 +41,7 @@ class ComponentSetupGenerator:
             return [line for line in lines if line and not line.startswith('#')]
 
 setup_generator = ComponentSetupGenerator(
-    name="range",
+    name="range_generator",
     version="0.1",
     description="Generate a sequence of numbers, starting from 0 by default, and increments by 1 (by default), and stops before a specified number."
 )

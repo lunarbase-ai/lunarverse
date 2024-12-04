@@ -1,9 +1,9 @@
 import pytest
-from range import Range
+from range_generator import RangeGenerator
 
 class TestRange:
     def setup_method(self):
-        self.component = Range()
+        self.component = RangeGenerator()
 
     def test_generates_standard_one_step_sequence(self):
         result = list(self.component.run(start=0, stop=5, step=1))

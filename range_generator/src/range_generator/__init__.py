@@ -11,7 +11,7 @@ from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
 
 
-class Range(
+class RangeGenerator(
     LunarComponent,
     component_name="Range",
     component_description="""Generate a sequence of numbers, starting from 0 by default, and increments by 1 (by default), and stops before a specified number.
