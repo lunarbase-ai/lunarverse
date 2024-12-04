@@ -195,3 +195,4 @@ settings.json
 tests/*/*.json
 
 pytest.ini
+**/local/

@@ -17,12 +17,6 @@ As mentioned above, the input consist of a text field that accepts _template var
 
 The component will output a text - the input value, with the template variables replaced in the text when they exist.
 
-## Configuration
-There is no configuration necessary for this component.
-When there is, please follow the following format.
-
-TABLE: | setting name | setting data type | example value | description | </TABLE>
-
 ## Example
 
 See [Lunar](lunar.lunarbase.ai) for an example of how to use this component in a workflow and much more.

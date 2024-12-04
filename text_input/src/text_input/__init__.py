@@ -10,16 +10,12 @@ Notes
 This package defines <COMPONENT NAME HERE> Lunar component.
 """
 
-from typing import Any
-
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.data_models import ComponentInput
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.typings.datatypes import DataType
-
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 
 class TextInput(
-    BaseComponent,
+    LunarComponent,
     component_name="Text Input",
     component_description="""Allows the input of text (potentially with template variables) that can then be used in other downstream components. It can also be used as an output if useful.
 Inputs:
