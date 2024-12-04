@@ -4,18 +4,13 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from typing import Any, Optional
 from black.parsing import parse_ast
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.typings.datatypes import DataType
-
-CODE_INPUT_NAME = "Code"
-
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 
 class PythonCoder(
-    BaseComponent,
+    LunarComponent,
     component_name="Python coder",
     component_description="""Performs customized Python code execution. Outputs the value that the Python variable `result` is set to during the execution of the Python code.
 Inputs:
@@ -24,21 +19,8 @@ Output (Any): The value of the variable `result` in the Python code after execut
     input_types={"code": DataType.CODE},
     output_type=DataType.ANY,
     component_group=ComponentGroup.CODERS,
-    openai_api_version="$LUNARENV::PYTHON_CODER_OPENAI_API_VERSION",
-    deployment_name="$LUNARENV::PYTHON_CODER_DEPLOYMENT_NAME",
-    openai_api_key="$LUNARENV::PYTHON_CODER_OPENAI_API_KEY",
-    azure_endpoint="$LUNARENV::PYTHON_CODER_AZURE_OPENAI_ENDPOINT",
 ):
-    def __init__(
-        self,
-        model: Optional[ComponentModel] = None,
-        **kwargs: Any,
-    ):
-        super().__init__(model=model, configuration=kwargs)
-        #TODO: Code generation needs to be handled from within the component.
-
-    @staticmethod
-    def execute(code: str):
+    def _execute(self, code: str):
         local_vars = {}
         exec(code, local_vars)
         return local_vars.get("result", None)
@@ -48,6 +30,6 @@ Output (Any): The value of the variable `result` in the Python code after execut
             parse_ast(code.strip())
         except SyntaxError as e:
             raise e
-        code_out = PythonCoder.execute(code)
+        code_out = self._execute(code)
 
         return code_out
