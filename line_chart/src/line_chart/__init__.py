@@ -33,11 +33,18 @@ Output (Dict): A dictionary with the key `data` (str) mapped to the original inp
 
     @staticmethod
     def plot_line_chart(input_dict):
+        if "x" not in input_dict or "y" not in input_dict:
+            raise KeyError("Input dictionary must contain both 'x' and 'y' keys")
+
         x_values = input_dict["x"]
         y_values = input_dict["y"]
 
+
         if len(x_values) != len(y_values):
             raise ValueError("x and y must have the same length")
+        
+        x_values = [0 if x is None else x for x in x_values]
+        y_values = [0 if y is None else y for y in y_values]
 
         matplotlib.use("agg")
 
