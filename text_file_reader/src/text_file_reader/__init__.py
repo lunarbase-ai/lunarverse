@@ -19,10 +19,10 @@ from lunarcore.component.data_types import DataType, File
 class TextFileReader(
     LunarComponent,
     component_name="Text File Reader",
-    component_description="""Allows for the upload (if necessary) and reading of a text file. 
+    component_description="""Reads a text file and returns its content.
 Inputs:
-  `input` (str): The file name.
-Output (str): The file content.""",
+  `input_file` (File or Dict): The file object as a File data type (a Lunar-specific File object) or a json object with the attributes expected by File.
+Output (str): The file content as string.""",
     input_types={"input_file": DataType.FILE},
     output_type=DataType.TEXT,
     component_group=ComponentGroup.IO,
