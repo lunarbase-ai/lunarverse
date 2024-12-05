@@ -8,16 +8,15 @@ import io
 import matplotlib
 import matplotlib.pyplot as plt
 
-from typing import Any, Optional, Dict
+from typing import Dict
 
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.typings.datatypes import DataType
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 
 
 class BarChart(
-    BaseComponent,
+    LunarComponent,
     component_name="Bar chart",
     component_description="""Plots a bar chart given a dictionary with numerical values. The output can be linked to a report component.
 Inputs:
@@ -29,8 +28,8 @@ Output (Dict): A dictionary with the key `data` (str) mapped to the original inp
     output_type=DataType.BAR_CHART,
     component_group=ComponentGroup.DATA_VISUALIZATION,
 ):
-    def __init__(self, model: Optional[ComponentModel] = None, **kwargs):
-        super().__init__(model=model, configuration=kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(configuration=kwargs)
 
     @staticmethod
     def plot_bar_chart(input_dict):
