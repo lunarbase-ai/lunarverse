@@ -34,5 +34,5 @@ Output (str): The file content as string.""",
         if not isinstance(input_file, File):
             input_file = File.model_validate(input_file)
 
-        with open(input_file.file_path, "r") as f:
+        with open(input_file.path, "r") as f:
             return f.read().rstrip()
