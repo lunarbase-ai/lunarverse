@@ -36,5 +36,5 @@ Output (str): NULL.""",
         if not isinstance(input_file, File):
             input_file = File.model_validate(input_file)
 
-        with open(input_file.path, "w") as f:
+        with open(input_file.path, "w+") as f:
             return f.write(input_text)
