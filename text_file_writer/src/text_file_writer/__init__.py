@@ -24,7 +24,7 @@ Inputs:
   `input_text` (str): The text to be written to the file.
   `input_file` (File or Dict): The file object as a File data type (a Lunar-specific File object) or a json object with the attributes expected by File.
 Output (str): NULL.""",
-    input_types={"input_file": DataType.FILE},
+    input_types={"input_text": DataType.TEXT, "input_file": DataType.FILE},
     output_type=DataType.NULL,
     component_group=ComponentGroup.IO,
 ):
