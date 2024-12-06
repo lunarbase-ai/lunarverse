@@ -46,7 +46,7 @@ Output (Dict): A dictionary with the key `data` (str) mapped to the original inp
         x_values = [0 if x is None else x for x in x_values]
         y_values = [0 if y is None else y for y in y_values]
 
-        matplotlib.use("agg")
+        matplotlib.use("agg") 
 
         plt.plot(x_values, y_values)
         plt.xlabel("X-axis")
