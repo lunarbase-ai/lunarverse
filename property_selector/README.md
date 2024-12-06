@@ -4,7 +4,7 @@
 The **Property Selector** component is designed to extract values of specified properties (keys) from an inputted dictionary. This component is particularly useful for retrieving nested properties from complex dictionaries.
 
 ## Inputs
-1. **Inputs** (`Dict[str, Any]`): 
+1. **data** (`Dict[str, Any]`): 
    - A dictionary from which values will be extracted.
    - Example: 
      ```json
@@ -14,7 +14,7 @@ The **Property Selector** component is designed to extract values of specified p
      }
      ```
 
-2. **Selected properties** (`str`): 
+2. **Selected_properties** (`str`): 
    - A comma-separated string of the properties (keys) to extract, using dots for nested properties.
    - Example: `keyA,keyC.keyD`
 
@@ -29,8 +29,8 @@ Returns a dictionary (`Dict`) containing the selected properties and their corre
   ```
 
 ## Input Types
-- **Inputs**: `AGGREGATED`
-- **Selected properties**: `PROPERTY_SELECTOR`
+- **data**: `AGGREGATED`
+- **selected_properties**: `PROPERTY_SELECTOR`
 
 ## Output Type
 - `JSON`
