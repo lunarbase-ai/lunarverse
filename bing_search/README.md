@@ -16,6 +16,7 @@ This component leverages the Bing Search API to perform data searches based on u
 To use the Bing Search Client, you need to provide the following configuration parameters:
 1. **bing_search_url**: The URL endpoint for the Bing Search API.
 2. **bing_subscription_key**: A valid subscription key for authentication with the Bing Search API.
+3. **total_results**: Total results to be returned by the search. Defaults to 10.
 
 ## Usage
 To use this component, ensure you have the correct configuration parameters set. Provide the search query as input, and the component will return the search results in JSON format.
