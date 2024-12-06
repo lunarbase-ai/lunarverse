@@ -36,7 +36,7 @@ Output (Dict): A dictionary with the key `data` (str) mapped to the original inp
         keys = list(map(lambda key: int(key), input_dict.keys()))
         values = list(input_dict.values())
 
-        matplotlib.use("agg")
+        matplotlib.use("agg") 
 
         plt.plot(keys, values)
         plt.xlabel("Keys")
