@@ -2,17 +2,17 @@
 
 ## Description
 
-The **Line Chart** component is designed to plot a line chart from a given dictionary with `x` and `y` arrays. The component processes the input data and generates a line chart image, which can be linked to a report component.
+The **Line Chart** component is designed to plot a line chart from a given dictionary with numerical keys and values. The component processes the input data and generates a line chart image, which can be linked to a report component.
 
 ## Inputs
 
-- **Data** (`Dict[str, List[Union[int, float]]`): A dictionary with keys `x` and `y` mapped to lists of numerical values (int or float). This dictionary represents the data points for the line chart.
+- **Data** (`Dict[Union[int, float], Union[int, float]]`): A dictionary where keys and values are either integers or floats. This dictionary represents the data points for the line chart.
 
 ## Outputs
 
 - **Output** (`Dict`): A dictionary containing two keys:
-  - `data` (`Dict[str, List[Union[int, float]]]`): The original input data.
-  - `images` (`List[str]`): A list with a single element, which is the produced line chart image encoded in base64 format. The image is encoded as `data:image/png;base64,{base64_encoded_image}`.
+  - `data` (`str`): The original input data represented as a string.
+  - `images` (`str`): A list with a single element, which is the produced line chart image encoded in base64 format. The image is encoded as `data:image/png;base64,{base64_encoded_image}`.
 
 ## Input Types
 
@@ -31,8 +31,13 @@ This component does not require any configuration parameters.
 Given the following input data:
 ```json
 {
-  "x": [1, 2, 3, 4, 5],
-  "y": [1, 2, 3, 4, 5]
+  "Data": {
+    "1": 10,
+    "2": 20,
+    "3": 30,
+    "4": 40,
+    "5": 50
+  }
 }
 ```
 
