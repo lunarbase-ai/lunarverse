@@ -37,4 +37,4 @@ Output (str): NULL.""",
             input_file = File.model_validate(input_file)
 
         with open(input_file.path, "w+") as f:
-            return f.write(input_text)
+            f.write(input_text)
