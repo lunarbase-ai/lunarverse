@@ -1,0 +1,10 @@
+# Copyright © 2024 Lunarbase (https://lunarbase.ai/) <contact@lunarbase.ai>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+bs4
+pandas
+requests
+aiohttp
+nest_asyncio
+lxml
+lunarcore @ git+https://github.com/lunarbase-ai/lunar.git@lunarbase#subdirectory=lunarbase/core

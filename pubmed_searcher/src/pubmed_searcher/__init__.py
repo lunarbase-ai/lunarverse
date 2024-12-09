@@ -6,17 +6,13 @@
 
 from typing import Optional, Any
 
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.typings.datatypes import DataType
-from lunarcore.component_library.pubmed_searcher import (
-    async_pubmed_scraper as pubmed_scraper,
-)
-
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.data_types import DataType
+import pubmed_searcher.pubmed_scraper as pubmed_scraper
 
 class PubmedSearcher(
-    BaseComponent,
+    LunarComponent,
     component_name="Pubmed Searcher",
     component_description="""Search article information from Pubmed by keywords
 Inputs:
@@ -34,8 +30,8 @@ Output (List[Dict]): a record formatted pandas dataframe with the search results
     output_type=DataType.LIST,
     component_group=ComponentGroup.BIOMEDICAL,
 ):
-    def __init__(self, model: Optional[ComponentModel] = None, **kwargs):
-        super().__init__(model, configuration=kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(configuration=kwargs)
 
     def run(self, keywords: str, from_year: int, to_year: int, max_pages: int):
         results = pubmed_scraper.main(max_pages, keywords, from_year, to_year)
