@@ -5,14 +5,14 @@
 from typing import Optional
 from langchain_community.tools.wikidata.tool import WikidataQueryRun
 
-from lunarcore.component_library.wikidata.wikidata.custom_api_wrapper import CustomWikidataAPIWrapper
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.typings.datatypes import DataType
+from wikidata.custom_api_wrapper import CustomWikidataAPIWrapper
+
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 
 class Wikidata(
-    BaseComponent,
+    LunarComponent,
     component_name="Wikidata client",
     component_description="""Retrieves data from Wikidata API (a knowledge graph / knowledge base).
 Inputs:
@@ -22,11 +22,13 @@ Output (Dict[str, List[Dict]]): A dictionary with the key `results` (str), mappe
     output_type=DataType.JSON,
     component_group=ComponentGroup.API_TOOLS,
 ):
-    def __init__(self, model: Optional[ComponentModel] = None, **kwargs):
-        super().__init__(model=model, configuration=kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(configuration=kwargs)
         self._wikidata = WikidataQueryRun(api_wrapper=CustomWikidataAPIWrapper())
 
     def run(self, query:str):
+        if not query:
+            return {"results": []}
         return {
             "results": self._wikidata.run(query)
         }
