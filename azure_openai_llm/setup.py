@@ -41,22 +41,9 @@ class ComponentSetupGenerator:
             return [line for line in lines if line and not line.startswith('#')]
 
 setup_generator = ComponentSetupGenerator(
-    name="bar_chart",
+    name="azure_openai_llm",
     version="0.1",
-    description="Plots a bar chart given a dictionary with numerical values"
+    description="Connects to Azure OpenAI's API (an LLM), runs an inputted natural language prompt (str), and output the result as text (str)"
 )
 
 setup(**setup_generator.generate())
-from setuptools import setup
-
-setup(
-    name='bar_chart',
-    version='0.1',
-    install_requires=['matplotlib~=3.8.0'],
-    tests_require=['pytest'],
-    extras_require={'dev': ['pytest']},
-    author='Lunarbase (https://lunarbase.ai/)',
-    author_email='contact@lunarbase.ai',
-    description='Plots a bar chart given a dictionary with numerical values. The output can be linked to a report component.',
-    license='SPDX-License-Identifier: GPL-3.0-or-later',
-)
