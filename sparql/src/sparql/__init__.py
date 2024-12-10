@@ -25,15 +25,15 @@ See https://sparqlwrapper.readthedocs.io/en/latest/main.html for more informatio
     output_type=DataType.JSON,
     component_group=ComponentGroup.DATABASES,
     datasource=None,
-    endpoint=None,
-    updateEndpoint=None,
-    user=None,
-    passwd=None,
-    http_auth="BASIC",
-    onlyConneg=False,
-    customHttpHeaders=None,
-    timeout=30,
-    parameters=None
+    # endpoint=None,
+    # updateEndpoint=None,
+    # user=None,
+    # passwd=None,
+    # http_auth="BASIC",
+    # onlyConneg=False,
+    # customHttpHeaders=None,
+    # timeout=30,
+    # parameters=None
 ):
     def __init__(self, configuration: Optional[Dict] = None):
         super().__init__(configuration=configuration)
