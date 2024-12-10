@@ -1,0 +1,100 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "SPARQL Query example",
+  "description": "SPARQL Query example",
+  "version": null,
+  "components": [
+    {
+      "id": "216f7113-3dec-4dd2-b480-fcb36f875bea",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "SPARQL Query",
+      "className": "SPARQLQuery",
+      "description": "Fetch data from a SPARQL endpoint.\n    Input (str): A string that is the SPARQL query.\n    Output (dict): A dictionary containing the response to the SPARQL query in the python SPARQLWrapper library format.",
+      "group": "DATABASES",
+      "inputs": [
+        {
+          "key": "query",
+          "dataType": "SPARQL",
+          "value": "SELECT ?item ?itemLabel\nWHERE {  \n  #P31 : \"Instance Of\" property\n  #Q5: \"Human\" entity \n  ?item wdt:P31 wd:Q5.\n  ?item ?label \"Bond\"@en. \n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }    \n} limit 10",
+          "templateVariables": {},
+          "componentId": "216f7113-3dec-4dd2-b480-fcb36f875bea"
+        }
+      ],
+      "output": {
+        "dataType": "JSON",
+        "value": {
+          "head": {
+            "vars": [
+              "item",
+              "itemLabel"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "item": {
+                  "type": "uri",
+                  "value": "http://www.wikidata.org/entity/Q16197511"
+                },
+                "itemLabel": {
+                  "xml:lang": "en",
+                  "type": "literal",
+                  "value": "Bond"
+                }
+              },
+              {
+                "item": {
+                  "type": "uri",
+                  "value": "http://www.wikidata.org/entity/Q19601650"
+                },
+                "itemLabel": {
+                  "xml:lang": "en",
+                  "type": "literal",
+                  "value": "William Bond"
+                }
+              },
+              {
+                "item": {
+                  "type": "uri",
+                  "value": "http://www.wikidata.org/entity/Q21506279"
+                },
+                "itemLabel": {
+                  "xml:lang": "en",
+                  "type": "literal",
+                  "value": "Pauline Bond"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "label": "SPARQLQUERY-0",
+      "configuration": {
+        "force_run": "false",
+        "endpoint": "https://query.wikidata.org/sparql"
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 536,
+        "y": 220
+      },
+      "timeout": 600,
+      "componentCode": "sparql/sparql/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}
