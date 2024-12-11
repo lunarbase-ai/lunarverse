@@ -17,18 +17,17 @@ The `HTML Reports Builder` component is designed to build HTML reports using a J
 
 ### Data (Dict[str, Dict[str, str]])
 
-- **Description**: A dictionary with labels (strings) as keys. Each label is mapped to a dictionary used for rendering the template. In this sub-dictionary, each key-value pair is a template variable and its corresponding value in the Jinja2 template.
+- **Description**: A dictionary with labels (strings) as keys. Each label is mapped to a dictionary used for rendering the template. In this sub-dictionary, each key-value pair represents a template variable and its value.
 - **Type**: JSON
 - **Example**:
   ```json
-  {
-    "william": {
-      "title": "William is cool"
+    {
+        "report1": {"title": "Report 1 Title"},
+        "report2": {"title": "Report 2 Title"}
     }
-  }
   ```
 
-## Output
+## Outputs
 
 ### Output (Dict[str, str])
 
@@ -36,9 +35,10 @@ The `HTML Reports Builder` component is designed to build HTML reports using a J
 - **Type**: JSON
 - **Example**:
   ```json
-  {
-    "william": "<html><head><title>William is cool</title></head></html>"
-  }
+    {
+        "report1": "<html><head><title>Report 1 Title</title></head></html>",
+        "report2": "<html><head><title>Report 2 Title</title></head></html>"
+    }
   ```
 
 ## Configuration Parameters
