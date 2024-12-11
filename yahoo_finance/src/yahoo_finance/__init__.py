@@ -4,18 +4,16 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from typing import Any, Optional, List
+from typing import Any, List
 
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.data_models import ComponentModel, ComponentInput
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.typings.datatypes import DataType
-
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 import yfinance as yf
 
 
 class YahooFinanceAPI(
-    BaseComponent,
+    LunarComponent,
     component_name="Yahoo Finance API",
     component_description="""Connects to Yahoo's public API (using Python package yfinance) and retrieves financial data about companies and their stocks.
     Input (List[str]): A list of strings of the tickers to the stocks to get data about.
@@ -24,8 +22,8 @@ class YahooFinanceAPI(
     output_type=DataType.JSON,
     component_group=ComponentGroup.API_TOOLS,
 ):
-    def __init__(self, model: Optional[ComponentModel] = None, **kwargs: Any):
-        super().__init__(model=model, configuration=kwargs)
+    def __init__(self, **kwargs: Any):
+        super().__init__(configuration=kwargs)
 
     def run(self, tickers: List[str]):
         _yf_tickers = yf.Tickers(tickers)
