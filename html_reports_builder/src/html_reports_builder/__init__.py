@@ -12,15 +12,16 @@ Output (dict): The rendered templates e.g {"william": "<html><head><title>Willia
 
 from typing import Any, Dict, List, Optional
 
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.typings.datatypes import DataType
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
+
 from jinja2 import Template
+from markupsafe import escape
 
 
 class HTMLReportsBuilder(
-    BaseComponent,
+    LunarComponent,
     component_name="HTML Reports Builder",
     component_description="""Builds HTML reports.
 Inputs:
@@ -33,14 +34,15 @@ Output (Dict[str, str]): A dictionary where each inputted label is mapped to the
 ):
     def __init__(
         self,
-        model: Optional[ComponentModel] = None,
         **kwargs: Any,
     ):
-        super().__init__(model=model, configuration=kwargs)
+        super().__init__(configuration=kwargs)
 
     def run(self, template_j2: str, data: Dict) -> Dict[str, str]:
         template_j2 = Template(template_j2)
         results: Dict[str, str] = dict()
         for key, sub_dict in data.items():
-            results[key] = template_j2.render(**sub_dict)
+            # Convert None values to empty strings and escape special characters
+            sanitized_sub_dict = {k: escape(v if v is not None else "") for k, v in sub_dict.items()}
+            results[key] = template_j2.render(**sanitized_sub_dict)
         return results
