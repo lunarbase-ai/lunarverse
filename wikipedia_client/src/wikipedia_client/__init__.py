@@ -2,20 +2,15 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from typing import Optional
-
-from langchain.tools import WikipediaQueryRun
-from langchain_community.utilities import WikipediaAPIWrapper
-
 import wikipedia
 
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.typings.datatypes import DataType
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
+
 
 class Wikipedia(
-    BaseComponent,
+    LunarComponent,
     component_name="Wikipedia client",
     component_description="""Retrieves data from Wikipedia API.
 Input:
@@ -26,14 +21,17 @@ Output (Dict[str, str]): A dictionary with the string `content` mapped to a stri
     component_group=ComponentGroup.API_TOOLS,
 ):
     def run(self, query: str):
-        page = None
+        if not query:
+            raise ValueError("Query cannot be empty")
         try:
             page = wikipedia.page(query)
+            return {
+                "content": page.content,
+                "summary": page.summary
+            }
         except wikipedia.exceptions.DisambiguationError as e:
-            pass
-
-        return {
-            # "results": wikipedia.search(inputs.value),
-            "content": page.content,
-            "summary": page.summary
-        }
+            raise e
+        except wikipedia.exceptions.PageError as e:
+            raise e
+        except Exception as e:
+            raise e
