@@ -2,15 +2,22 @@
 
 ## Description
 
-The Audio Player component is designed to handle audio data encoded in base64 format. It processes and returns the same base64-encoded audio string provided as input, making it suitable for applications where audio data needs to be played or transmitted without modification.
+
+The `AudioPlayer` component is designed to play audio encoded in base64 format. It accepts audio data in the format `data:{mime_type};base64,{base64_string}`, where `{mime_type}` represents the type of the audio (e.g., `audio/mpeg` for MP3), and `{base64_string}` is the actual base64-encoded audio data.
+
 
 ## Inputs
 
-- **Base64 encoded audio** (str): A string containing audio data encoded in base64. The format should be `data:{mime_type};base64,{base64_string}`, where `{mime_type}` represents the type of the audio (e.g., `audio/mpeg` for MP3), and `{base64_string}` is the actual base64-encoded audio data.
+- **audio_data** (str): A string containing audio data encoded in base64. The format should be `data:{mime_type};base64,{base64_string}`, where `{mime_type}` represents the type of the audio (e.g., `audio/mpeg` for MP3), and `{base64_string}` is the actual base64-encoded audio data.
 
-## Output
 
-- **Output** (str): The output is the same base64-encoded audio string provided as input. This allows the audio data to be easily handled, played, or transmitted in its encoded form without alteration.
+## Outputs
+- **Base64 encoded audio** (str): The same base64 audio string provided as input.
+
+## Supported MIME Types
+- `audio/wav`
+- `audio/mp3`
+- `audio/mpeg`
 
 ## Input Types
 
