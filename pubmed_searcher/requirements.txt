@@ -7,4 +7,3 @@ requests
 aiohttp
 nest_asyncio
 lxml
-lunarcore @ git+https://github.com/lunarbase-ai/lunar.git@lunarbase#subdirectory=lunarbase/core

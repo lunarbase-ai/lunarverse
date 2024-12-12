@@ -3,4 +3,3 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 jinja2
-lunarcore @ git+https://github.com/lunarbase-ai/lunar.git@lunarbase#subdirectory=lunarbase/core

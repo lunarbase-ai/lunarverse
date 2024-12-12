@@ -1,3 +1,2 @@
 psycopg2-binary
 SQLAlchemy
-lunarcore @ git+https://github.com/lunarbase-ai/lunar.git@lunarbase#subdirectory=lunarbase/core
