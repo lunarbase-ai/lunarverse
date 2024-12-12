@@ -34,7 +34,6 @@ See https://sparqlwrapper.readthedocs.io/en/latest/main.html for more informatio
 ):
     def __init__(self, configuration: Optional[Dict] = None):
         super().__init__(configuration=configuration)
-        self.configuration.pop("datasource")
 
         user = self.configuration.pop("user", None),
         passwd = self.configuration.pop("passwd", None)
@@ -59,13 +58,3 @@ See https://sparqlwrapper.readthedocs.io/en/latest/main.html for more informatio
             return result
         except Exception as e:
             raise ConnectionError(str(e))
-
-
-if __name__ == '__main__':
-    c = SPARQLQuery(configuration={"endpoint": "http://dbpedia.org/sparql"})
-    r = c.run(query="""
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-SELECT ?label WHERE { <http://dbpedia.org/resource/Asturias> rdfs:label ?label }
-""")
-
-    print(r)
