@@ -21,7 +21,7 @@ Outputs: The query result in JSON format
 Expected configuration includes: endpoint: str, defaultGraph: Optional[str] = None., etc.
 See https://sparqlwrapper.readthedocs.io/en/latest/main.html for more information.
 """,
-    input_types={"query": DataType.TEXT},
+    input_types={"query": DataType.TEMPLATE},
     output_type=DataType.JSON,
     component_group=ComponentGroup.DATABASES,
     datasource=None,
@@ -29,14 +29,17 @@ See https://sparqlwrapper.readthedocs.io/en/latest/main.html for more informatio
     updateEndpoint=None,
     user=None,
     passwd=None,
-    # http_auth="BASIC",
-    # onlyConneg=False,
-    # customHttpHeaders=None,
-    # timeout=30,
-    # parameters=None
+    http_auth="BASIC",
+    timeout=30,
 ):
     def __init__(self, configuration: Optional[Dict] = None):
         super().__init__(configuration=configuration)
+        self.configuration.pop("datasource")
+
+        user = self.configuration.pop("user", None),
+        passwd = self.configuration.pop("passwd", None)
+        http_auth = self.configuration.pop("http_auth", None)
+        timeout = self.configuration.pop("timeout", 30)
 
         self.sparql = SPARQLWrapper(
             endpoint=self.configuration.pop("endpoint", None),
@@ -44,11 +47,25 @@ See https://sparqlwrapper.readthedocs.io/en/latest/main.html for more informatio
             **self.configuration
         )
 
+        self.sparql.setCredentials(user=user, passwd=passwd)
+        self.sparql.setHTTPAuth(http_auth)
+        self.sparql.setTimeout(timeout)
+
     def run(self, query: str):
-        self.sparql.resetQuery()
-        self.sparql.setQuery(query=query)
+        # self.sparql.resetQuery()
+        self.sparql.setQuery(query=query.encode('utf-8', errors="ignore"))
         try:
             result = self.sparql.queryAndConvert()
             return result
         except Exception as e:
             raise ConnectionError(str(e))
+
+
+if __name__ == '__main__':
+    c = SPARQLQuery(configuration={"endpoint": "http://dbpedia.org/sparql"})
+    r = c.run(query="""
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?label WHERE { <http://dbpedia.org/resource/Asturias> rdfs:label ?label }
+""")
+
+    print(r)
