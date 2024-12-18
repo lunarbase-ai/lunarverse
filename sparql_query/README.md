@@ -1,28 +1,15 @@
-# SPARQL Query Component
+<!--
+Copyright © 2024 Lunarbase (https://lunarbase.ai/) <contact@lunarbase.ai>
 
-## Overview
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
 
-The **SPARQL Query** component is designed to fetch data from a SPARQL endpoint. It takes a SPARQL query as input and returns the response in JSON format using the SPARQLWrapper library.
+# Text-input
+A SPARQL component enables running SPARQL queries on configured SPARQL endpoints.
+## Inputs
 
-## Description
+## Output
 
-This component allows users to execute SPARQL queries against a specified SPARQL endpoint. It is particularly useful for interacting with RDF data stores and retrieving structured data based on the provided query.
+## Example
 
-- **Input (str):** A string that is the SPARQL query.
-- **Output (dict):** A dictionary containing the response to the SPARQL query in the Python SPARQLWrapper library format.
-
-## Input Types
-
-- **Query:** A string containing the SPARQL query.
-
-## Output Type
-
-- **JSON:** The output is a JSON object formatted as a dictionary, which includes the response from the SPARQL query.
-
-## Configuration Parameters
-
-- **endpoint:** The URL of the SPARQL endpoint from which the data will be fetched.
-
-## Usage
-
-To use the SPARQL Query component, you need to provide a valid SPARQL query and configure the endpoint parameter to point to the desired SPARQL endpoint URL. The component will process the query and return the results in JSON format.
+See [Lunar](lunar.lunarbase.ai) for an example of how to use this component in a workflow and much more.
