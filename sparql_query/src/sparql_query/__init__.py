@@ -4,31 +4,57 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from typing import Any, Optional
+from typing import Optional, Dict
 
-
-from lunarcore.connectors.sparql import SPARQLConnector
-from lunarcore.component.lunar_component import LunarComponent
+from SPARQLWrapper import SPARQLWrapper, JSON
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
+from lunarcore.component.lunar_component import LunarComponent
 
 
 class SPARQLQuery(
     LunarComponent,
     component_name="SPARQL Query",
-    component_description="""Fetch data from a SPARQL endpoint.
-    Input (str): A string that is the SPARQL query.
-    Output (dict): A dictionary containing the response to the SPARQL query in the python SPARQLWrapper library format.""",
-    input_types={"query": DataType.SPARQL},
+    component_description="""Runs a SPARQL query on a SPARQL endpoint.
+Inputs:  query: str
+Outputs: The query result in JSON format
+Expected configuration includes: endpoint: str, defaultGraph: Optional[str] = None., etc.
+See https://sparqlwrapper.readthedocs.io/en/latest/main.html for more information.
+""",
+    input_types={"query": DataType.TEMPLATE},
     output_type=DataType.JSON,
     component_group=ComponentGroup.DATABASES,
-    endpoint="",
+    datasource=None,
+    endpoint=None,
+    updateEndpoint=None,
+    user=None,
+    passwd=None,
+    http_auth="BASIC",
+    timeout=30,
 ):
-    def __init__(self, **kwargs):
-        super().__init__(configuration=kwargs)
-        endpoint = self.configuration.get("endpoint")
-        self.connector = SPARQLConnector(endpoint=endpoint)
+    def __init__(self, configuration: Optional[Dict] = None):
+        super().__init__(configuration=configuration)
+
+        user = self.configuration.pop("user", None),
+        passwd = self.configuration.pop("passwd", None)
+        http_auth = self.configuration.pop("http_auth", None)
+        timeout = self.configuration.pop("timeout", 30)
+
+        self.sparql = SPARQLWrapper(
+            endpoint=self.configuration.pop("endpoint", None),
+            returnFormat=JSON,
+            **self.configuration
+        )
+
+        self.sparql.setCredentials(user=user, passwd=passwd)
+        self.sparql.setHTTPAuth(http_auth)
+        self.sparql.setTimeout(timeout)
 
     def run(self, query: str):
-        result = self.connector.query(query_string=query)
-        return result
+        # self.sparql.resetQuery()
+        self.sparql.setQuery(query=query.encode('utf-8', errors="ignore"))
+        try:
+            result = self.sparql.queryAndConvert()
+            return result
+        except Exception as e:
+            raise ConnectionError(str(e))
