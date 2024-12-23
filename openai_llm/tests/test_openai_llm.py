@@ -1,10 +1,10 @@
 from unittest.mock import patch, MagicMock
-from openai_llm import OpenAiPrompt
+from openai_llm import OpenAiPrompt 
 
 class TestOpenAiPrompt:
 
     def setup_method(self):
-        self.env_atcher = patch.dict('os.environ', {
+        self.env_patcher = patch.dict('os.environ', {
             'OPENAI_API_KEY': 'openai_api_key',
             'OPENAI_MODEL': 'openai_model'
         })
@@ -12,9 +12,8 @@ class TestOpenAiPrompt:
         self.env_patcher.start()
 
         self.mock_openai_chat_ai = patch('openai.OpenAI')
-        self.MockOpenAI = self.mock_openai_chat_ai.start
+        self.MockOpenAI = self.mock_openai_chat_ai.start()  
         self.mock_client = self.MockOpenAI.return_value
-
 
     def teardown_method(self):
         self.env_patcher.stop()
@@ -25,7 +24,7 @@ class TestOpenAiPrompt:
         mock_response.content = "response"
         self.mock_client.chat.completions.create.return_value = mock_response
 
-        prompt = OpenAiPrompt()
+        prompt = OpenAiPrompt()  
         user_prompt = "Hello"
         system_prompt = "System prompt"
 
