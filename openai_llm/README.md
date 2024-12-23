@@ -14,7 +14,8 @@ The OpenAI Prompt component enables users to send prompts to OpenAI's language m
 
 ## Inputs
 
-- **Prompt (TEMPLATE):** A string template containing the natural language prompt to be sent to the OpenAI API.
+- **system_prompt (TEMPLATE):** A string template containing the natural language system prompt to be sent to the OpenAI API.
+- **user_prompt (TEMPLATE):**: A string template containing the natural language user prompt to be sent to the OpenAI API.
 
 ## Output
 
@@ -25,15 +26,4 @@ The OpenAI Prompt component enables users to send prompts to OpenAI's language m
 To use the OpenAI Prompt component, you need to configure the following parameters:
 
 - **openai_api_key:** Your API key for authenticating with the OpenAI API.
-- **model_name:** The name of the OpenAI model you wish to use for generating responses (e.g., `text-davinci-003`).
-- **openai_api_base:** The base URL for the OpenAI API endpoint.
-
-## Usage
-
-This component is designed for ease of use, allowing you to quickly integrate OpenAI's powerful language models into your applications. Simply provide the necessary configuration parameters, input your prompt, and retrieve the generated response text.
-
-## Notes
-
-- Ensure your OpenAI API key is kept secure and not exposed in your code.
-- Be mindful of the rate limits and usage policies set by OpenAI to avoid any disruptions in service.
-- The quality and relevance of the generated response can vary based on the prompt and the chosen model. Experiment with different prompts and models to achieve the best results for your use case.
+- **openai_model:** The name of the OpenAI model you wish to use for generating responses (e.g., `gpt-4o`).
