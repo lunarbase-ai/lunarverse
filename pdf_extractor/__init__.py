@@ -54,12 +54,23 @@ Output (Dict): A dictionary containing the key-value pairs:
         doc_info = self._pdfserv.extract(
             self._file_connector.get_absolute_path(file_path)
         )
-        result = {
-            "title": doc_info.title,
-            "sections": doc_info.sections,
-            "references": doc_info.references,
-            "tables": [table.astype(str).to_dict(orient="records") for table in doc_info.tables],
-            "text": doc_info.text,
-        }
+        
+        if (doc_info):
+            result = {
+                "title": doc_info.title,
+                "sections": doc_info.sections,
+                "references": doc_info.references,
+                "tables": [table.astype(str).to_dict(orient="records") for table in doc_info.tables],
+                "text": doc_info.text,
+            }
+        else:
+            result = {
+                "title": "",
+                "sections": [],
+                "references": [],
+                "tables": [],
+                "text": [],
+                "error": "There was a parsing problem with this document"
+            }
 
         return result
