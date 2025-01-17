@@ -1,0 +1,63 @@
+{
+  "id": "403b6ffe-6513-466e-be77-3d6755b6710a",
+  "userId": "",
+  "name": "NL2SQL",
+  "description": "ConnNL2SQL",
+  "version": null,
+  "components": [
+    {
+      "id": "dfe764ff-8301-4034-83bf-0a0d562d579d",
+      "workflowId": "403b6ffe-6513-466e-be77-3d6755b6710a",
+      "name": "NL2SQL",
+      "className": "NL2SQL",
+      "description": "ConNL2SQL",
+      "group": "NLP",
+      "inputs": [
+        {
+          "key": "question_file_path",
+          "dataType": "TEXT",
+          "value": "",
+          "templateVariables": {},
+          "componentId": "dfe764ff-8301-4034-83bf-0a0d562d579d"
+        },
+        {
+          "key": "dict_path_csv",
+          "dataType": "TEXT",
+          "value": "",
+          "templateVariables": {},
+          "componentId": "dfe764ff-8301-4034-83bf-0a0d562d579d"
+        }
+      ],
+      "output": {
+        "dataType": "TEXT",
+        "value": ":undef:"
+      },
+      "label": "NL2SQL-0",
+      "configuration": {
+        "force_run": false,
+        "openai_api_version": "",
+        "deployment_name": "DEPLOYMENT NAME",
+        "openai_api_key": "API KEY",
+        "azure_endpoint": "ENDPOINT"
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 185,
+        "y": 304
+      },
+      "timeout": 600,
+      "forceRun": false,
+      "componentCode": "nl2sql_new/nl2sql_new/__init__.py",
+      "componentCodeRequirements": [
+        "numpy",
+        "pandas",
+        "openai"
+      ],
+      "componentExamplePath": "nl2sql_new/nl2sql_new/example.json"
+    }
+  ],
+  "dependencies": [],
+  "timeout": 3600
+}
