@@ -16,7 +16,6 @@ from langchain_core.prompts.prompt import PromptTemplate
 from langchain_core.messages import HumanMessage, SystemMessage
 
 import re
-import os
 import json
 import numpy as np
 import pandas as pd
@@ -189,7 +188,7 @@ class NL2SQL(
     component_name="NL2SQL",
     component_description="""ConNL2SQL.""",
     input_types={"question_file_path": DataType.TEXT, "dict_path_csv": DataType.TEXT},
-    output_type=DataType.TEXT,
+    output_type=DataType.JSON,
     component_group=ComponentGroup.NLP,
     openai_api_version="$LUNARENV::OPENAI_API_VERSION",
     deployment_name="$LUNARENV::DEPLOYMENT_NAME",
@@ -209,6 +208,9 @@ class NL2SQL(
         description = {}
         table_summary = {}
         relevant_table = {}
+        step3 = {}
+        step4 = {}
+        step5 = {}
 
         for nl_query in questions:
             nl_query = nl_query[0].upper() + nl_query[1:]
@@ -247,10 +249,8 @@ class NL2SQL(
                 if i not in relevant_table:
                     relevant_table[i] = obj.generate(obj.get_prompt_relevant_tables(nl_query,list_of_tables),**self.configuration)
 
-            step3 = {}
             step3[nl_query] = obj.generate(obj.get_prompt_relevant_tables_and_attributes_table_filter(nl_query = nl_query, descriptions = description, tables="\n".join(list(relevant_table.values()))),**self.configuration)
 
-            step4 = {}
             prompt_chat = [
                 {"role": "user", "content": obj.get_prompt_relevant_tables_and_attributes_table_filter(nl_query = nl_query, descriptions = description, tables=step3[nl_query])},
                 {"role": "assistant", "content": step3[nl_query]},
@@ -258,6 +258,5 @@ class NL2SQL(
             ]
             step4[nl_query] = obj.generate_list_dict(prompt_chat,**self.configuration)
 
-            step5 = {}
             step5[nl_query] = obj.generate(obj.get_prompt_nl_to_sql(nl_query=nl_query,step3=step3[nl_query],step4=step4[nl_query],joins=posible_joins["table1_table2"]),**self.configuration)
-            return step5[nl_query]
+        return step5

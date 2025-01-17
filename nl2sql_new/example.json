@@ -29,8 +29,8 @@
         }
       ],
       "output": {
-        "dataType": "TEXT",
-        "value": ":undef:"
+        "dataType": "JSON",
+        "value": {}
       },
       "label": "NL2SQL-0",
       "configuration": {
