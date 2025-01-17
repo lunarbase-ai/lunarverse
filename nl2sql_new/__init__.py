@@ -22,11 +22,8 @@ import pandas as pd
 from io import StringIO
 from openai import AzureOpenAI
 
-def read_questions_from_file(question_file_path):
-    with open(question_file_path, 'r', encoding='utf-8') as file:
-        content = file.read()
-        
-        questions = re.findall(r"'(.*?)'", content, re.DOTALL)
+def read_questions_from_file(all_question:str):
+    questions = re.findall(r"'(.*?)'", all_question, re.DOTALL)
         
     return questions
 
@@ -187,7 +184,7 @@ class NL2SQL(
     BaseComponent,
     component_name="NL2SQL",
     component_description="""ConNL2SQL.""",
-    input_types={"question_file_path": DataType.TEXT, "dict_path_csv": DataType.TEXT},
+    input_types={"all_question": DataType.TEXT, "dict_path_csv": DataType.TEXT},
     output_type=DataType.JSON,
     component_group=ComponentGroup.NLP,
     openai_api_version="$LUNARENV::OPENAI_API_VERSION",
@@ -198,9 +195,9 @@ class NL2SQL(
     def __init__(self, model: Optional[ComponentModel] = None, **kwargs: Any):
         super().__init__(model=model, configuration=kwargs)
 
-    def run(self, question_file_path: str, dict_path_csv: str):
+    def run(self, all_question: str, dict_path_csv: str):
 
-        questions = read_questions_from_file(question_file_path)
+        questions = read_questions_from_file(all_question)
         
         with open(dict_path_csv, "r") as f:
             dict_path_csv = json.load(f)

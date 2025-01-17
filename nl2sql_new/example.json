@@ -14,7 +14,7 @@
       "group": "NLP",
       "inputs": [
         {
-          "key": "question_file_path",
+          "key": "all_question",
           "dataType": "TEXT",
           "value": "",
           "templateVariables": {},
