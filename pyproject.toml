@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "lunarverse"
+version = "0.1.0"
+description = ""
+authors = ["Danilo Miranda Gusicuma <danilo.m.gusicuma@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+lunarcore = {path = "/Users/danilomirandagusicuma/Developer/lunarbase/lunar/lunarbase/core"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
