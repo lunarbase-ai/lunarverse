@@ -1,0 +1,60 @@
+{
+    "id": "dbe8d5d7-8a8f-48a1-a0ad-ba492f3c4e60",
+    "name": "Outlook Attachment component example",
+    "description": "A one-component workflow illustrating the use of Outlook Attachment component.",
+    "version": null,
+    "components": [
+        {
+            "id": "1be3bb84-1f2f-4118-9ea6-bcf38790c8e9",
+            "workflow_id": null,
+            "name": "Outlook Attachment",
+            "class_name": "OutlookAttachment",
+            "description": "This component automates the process of retrieving email attachments from unread messages in an Outlook inbox. It scans for unread emails, downloads all available attachments, and marks the emails as read once processed.",
+            "group": "Data Extraction",
+            "inputs": [
+                {
+                    "id": "a4396377-0b28-4951-b980-c67a523322ed",
+                    "key": "email",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "1be3bb84-1f2f-4118-9ea6-bcf38790c8e9"
+                }
+            ],
+            "output": {
+                "data_type": "TEXT",
+                "value": ":undef:"
+            },
+            "label": "OutlookAttachment_1be3bb84-1f2f-4118-9ea6-bcf38790c8e9",
+            "configuration": {
+                "force_run": false,
+                "client_id": "$LUNARENV::OUTLOOK_CLIENT_ID",
+                "client_secret": "$LUNARENV::OUTLOOK_CLIENT_SECRET",
+                "tenant_id": "$LUNARENV::OUTLOOK_TENANT_ID"
+            },
+            "version": null,
+            "is_custom": false,
+            "is_terminal": true,
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "timeout": 600,
+            "component_code": "OutlookAttachment/OutlookAttachment/__init__.py",
+            "component_code_requirements": [
+                "msal"
+            ],
+            "component_example_path": null,
+            "invalid_errors": []
+        }
+    ],
+    "dependencies": [],
+    "timeout": 3600,
+    "auto_component_spacing": {
+        "dx": 450.0,
+        "dy": 350.0,
+        "x0": 0.0,
+        "y0": 0.0
+    },
+    "invalid_errors": []
+}
