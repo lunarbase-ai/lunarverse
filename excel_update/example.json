@@ -1,0 +1,76 @@
+{
+    "id": "722f4ec4-f523-46f1-82b9-601b955771f1",
+    "name": "Update Excel Component component example",
+    "description": "A one-component workflow illustrating the use of Update Excel Component component.",
+    "version": null,
+    "components": [
+        {
+            "id": "0de951dd-59d9-4901-9144-2d1fe008c389",
+            "workflow_id": null,
+            "name": "Update Excel Component",
+            "class_name": "UpdateExcel",
+            "description": "Updates a specified Excel workbook hosted on Microsoft SharePoint with input data.",
+            "group": "IO",
+            "inputs": [
+                {
+                    "id": "85a62029-5d4f-429b-9154-60a372b05c28",
+                    "key": "shared_url",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "0de951dd-59d9-4901-9144-2d1fe008c389"
+                },
+                {
+                    "id": "844dc77e-b5ca-4ded-bfc8-bf6d8b601526",
+                    "key": "input_string",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "0de951dd-59d9-4901-9144-2d1fe008c389"
+                },
+                {
+                    "id": "51cd1b73-8d5d-4229-8714-8e23191e1c25",
+                    "key": "sheet",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "0de951dd-59d9-4901-9144-2d1fe008c389"
+                }
+            ],
+            "output": {
+                "data_type": "TEXT",
+                "value": ":undef:"
+            },
+            "label": "UpdateExcel_0de951dd-59d9-4901-9144-2d1fe008c389",
+            "configuration": {
+                "force_run": false,
+                "client_id": "$LUNARENV::OUTLOOK_CLIENT_ID",
+                "client_secret": "$LUNARENV::OUTLOOK_CLIENT_SECRET",
+                "tenant_id": "$LUNARENV::OUTLOOK_TENANT_ID"
+            },
+            "version": null,
+            "is_custom": false,
+            "is_terminal": true,
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "timeout": 600,
+            "component_code": "UpdateExcel/UpdateExcel/__init__.py",
+            "component_code_requirements": [
+                "msal"
+            ],
+            "component_example_path": null,
+            "invalid_errors": []
+        }
+    ],
+    "dependencies": [],
+    "timeout": 3600,
+    "auto_component_spacing": {
+        "dx": 450.0,
+        "dy": 350.0,
+        "x0": 0.0,
+        "y0": 0.0
+    },
+    "invalid_errors": []
+}
