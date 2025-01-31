@@ -25,14 +25,18 @@ class Mumax(
         super().__init__(model, configuration=kwargs)
 
     def run(self, input_mx3_file: str):
-
+        url = "http://20.29.51.115:8000"
         # returned_value = os.system(f"./mumax3 {input_mx3_file} 2> {os.getcwd()}/error.txt")
-        file_content = {"file": (f"{input_mx3_file}", "mumax file content", "text/plain")}
-        response = requests.post("http://20.29.51.115:8000/upload/", files=file_content)
-        assert response.status_code == 200
+        with open(input_mx3_file, "rb") as file:
+            files = {"file": file}
+            headers = {"accept": "application/json"}
+            headers = {
+                'accept': 'application/json',
+            }
+            response = requests.post(url+"/upload/", headers=headers, files=files)
 
         file_name = input_mx3_file.split("/")[-1]
 
-        response = requests.get("http://20.29.51.115:8000/run-command/", params={"file_name": f"{file_name}"})
+        response = requests.get(url+"/run-command/", params={"file_name": f"{file_name}"})
 
         return "Success" if response.status_code == 200 else f"Failure {response.status_code}"
