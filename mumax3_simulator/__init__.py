@@ -11,7 +11,7 @@ from lunarcore.core.data_models import ComponentModel
 from lunarcore.core.component import BaseComponent
 from lunarcore.core.typings.datatypes import DataType
 
-import os
+import requests
 
 class Mumax(
     BaseComponent,
@@ -26,6 +26,13 @@ class Mumax(
 
     def run(self, input_mx3_file: str):
 
-        returned_value = os.system(f"./mumax3 {input_mx3_file} 2> {os.getcwd()}/error.txt")
+        # returned_value = os.system(f"./mumax3 {input_mx3_file} 2> {os.getcwd()}/error.txt")
+        file_content = {"file": (f"{input_mx3_file}", "mumax file content", "text/plain")}
+        response = requests.post("http://20.118.210.137:8000/upload/", files=file_content)
+        assert response.status_code == 200
 
-        return "Success" if returned_value == 0 else "Failure"
+        file_name = input_mx3_file.split("/")[-1]
+
+        response = requests.get("http://20.118.210.137:8000/run-command/", params={"file_name": f"{file_name}"})
+
+        return "Success" if response.status_code == 200 else f"Failure {response.status_code}"
