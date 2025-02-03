@@ -40,7 +40,9 @@
       },
       "timeout": 6000,
       "componentCode": "mumax3_simulator/mumax3_simulator/__init__.py",
-      "componentCodeRequirements": [],
+      "componentCodeRequirements": [
+        "requests"
+      ],
       "componentExamplePath": null,
       "invalidErrors": []
     }
