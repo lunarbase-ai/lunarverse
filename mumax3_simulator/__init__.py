@@ -38,5 +38,10 @@ class Mumax(
         file_name = input_mx3_file.split("/")[-1]
 
         response = requests.get(url+"/run-command/", params={"file_name": f"{file_name}"})
+        
+        if response.status_code != 200:
+            raise Exception(f'There has been an error {response.status_code}')
 
-        return "Success" if response.status_code == 200 else f"Failure {response.status_code}"
+        response = response.json()
+
+        return response["error"] if (response["error"] and "main.go" in response["error"]) else "Success"
