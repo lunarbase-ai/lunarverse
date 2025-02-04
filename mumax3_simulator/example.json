@@ -22,8 +22,8 @@
         }
       ],
       "output": {
-        "dataType": "DataType.TEXT",
-        "value": ""
+        "dataType": "DataType.JSON",
+        "value": {}
       },
       "label": "MUMAX3SIMULATOR-0",
       "configuration": {

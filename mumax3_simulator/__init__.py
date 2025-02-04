@@ -18,7 +18,7 @@ class Mumax(
     component_name="MuMax3 Simulator",
     component_description="""MuMax3 Simulator""",
     input_types={"input_mx3_file": DataType.TEXT},
-    output_type=DataType.TEXT,
+    output_type=DataType.JSON,
     component_group=ComponentGroup.SIMULATIONS
 ):
     def __init__(self, model: Optional[ComponentModel] = None, **kwargs):
@@ -44,4 +44,4 @@ class Mumax(
 
         response = response.json()
 
-        return response["error"] if (response["error"] and "main.go" in response["error"]) else "Success"
+        return {"result": response["error"].strip(),"images": []} if (response["error"] and "main.go" in response["error"]) else {"result": "Success","images": response['images']}
