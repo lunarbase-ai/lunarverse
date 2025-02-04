@@ -1,20 +1,20 @@
 {
   "id": "958a9148-923a-4160-966a-d2acd599137b",
   "userId": "",
-  "name": "MuMax3 Simulator",
-  "description": "MuMax3 Simulator ",
+  "name": "Base64 to PNG",
+  "description": "Base64 to PNG",
   "version": null,
   "components": [
     {
       "id": "0215071d-eee6-4383-887b-8760d505a963",
       "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
-      "name": "MuMax3 Simulator",
-      "className": "Mumax",
-      "description": "MuMax3 Simulator",
-      "group": "SIMULATIONS",
+      "name": "PNG to Base64",
+      "className": "PNG2Base64",
+      "description": "Convert PNG to Base64",
+      "group": "UTILS",
       "inputs": [
         {
-          "key": "input_mx3_file",
+          "key": "base64_text",
           "dataType": "TEXT",
           "value": "",
           "templateVariables": {},
@@ -22,10 +22,10 @@
         }
       ],
       "output": {
-        "dataType": "DataType.JSON",
-        "value": {}
+        "dataType": "DataType.IMAGE",
+        "value": ""
       },
-      "label": "MUMAX3SIMULATOR-0",
+      "label": "BASE642PNG-0",
       "configuration": {
         "force_run": false,
         "client_id": "None",
@@ -39,10 +39,8 @@
         "y": 635.6003442868345
       },
       "timeout": 6000,
-      "componentCode": "mumax3_simulator/mumax3_simulator/__init__.py",
-      "componentCodeRequirements": [
-        "requests"
-      ],
+      "componentCode": "base642PNG/base642PNG/__init__.py",
+      "componentCodeRequirements": [],
       "componentExamplePath": null,
       "invalidErrors": []
     }
