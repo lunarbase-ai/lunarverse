@@ -1,0 +1,100 @@
+{
+    "id": "0647e926-0ce3-47b5-810f-3c2b1b0a0fa2",
+    "name": "Outlook Email Sender component example",
+    "description": "A one-component workflow illustrating the use of Outlook Email Sender component.",
+    "version": null,
+    "components": [
+        {
+            "id": "eb3413bf-bede-447c-961b-c6dd877f41bd",
+            "workflow_id": null,
+            "name": "Outlook Email Sender",
+            "class_name": "OutlookEmailSender",
+            "description": "This component automates the process of sending emails using the Outlook API.",
+            "group": "Data Extraction",
+            "inputs": [
+                {
+                    "id": "ddf74ca7-6ff8-4918-b601-978f0c6dd812",
+                    "key": "email",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "eb3413bf-bede-447c-961b-c6dd877f41bd"
+                },
+                {
+                    "id": "f80132b2-1127-46e4-905f-9134328053fd",
+                    "key": "subject",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "eb3413bf-bede-447c-961b-c6dd877f41bd"
+                },
+                {
+                    "id": "61c2e9fd-70a1-4e24-8cde-0973776ee62c",
+                    "key": "body",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "eb3413bf-bede-447c-961b-c6dd877f41bd"
+                },
+                {
+                    "id": "2034a161-b7a8-4ec2-be2f-c895332c1302",
+                    "key": "to_recipients",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "eb3413bf-bede-447c-961b-c6dd877f41bd"
+                },
+                {
+                    "id": "04c481f4-5ee0-4c50-aae2-ccbe94eb38bd",
+                    "key": "cc_recipients",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "eb3413bf-bede-447c-961b-c6dd877f41bd"
+                },
+                {
+                    "id": "634bf994-ee4e-4f3f-b8b6-9466659ea0cb",
+                    "key": "bcc_recipients",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "eb3413bf-bede-447c-961b-c6dd877f41bd"
+                }
+            ],
+            "output": {
+                "data_type": "TEXT",
+                "value": ":undef:"
+            },
+            "label": "OutlookEmailSender_eb3413bf-bede-447c-961b-c6dd877f41bd",
+            "configuration": {
+                "force_run": false,
+                "client_id": "$LUNARENV::OUTLOOK_CLIENT_ID",
+                "client_secret": "$LUNARENV::OUTLOOK_CLIENT_SECRET",
+                "tenant_id": "$LUNARENV::OUTLOOK_TENANT_ID"
+            },
+            "version": null,
+            "is_custom": false,
+            "is_terminal": true,
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "timeout": 600,
+            "component_code": "OutlookEmailSender/OutlookEmailSender/__init__.py",
+            "component_code_requirements": [
+                "msal"
+            ],
+            "component_example_path": null,
+            "invalid_errors": []
+        }
+    ],
+    "dependencies": [],
+    "timeout": 3600,
+    "auto_component_spacing": {
+        "dx": 450.0,
+        "dy": 350.0,
+        "x0": 0.0,
+        "y0": 0.0
+    },
+    "invalid_errors": []
+}
