@@ -8,12 +8,9 @@ from typing import Any, Optional
 
 from lunarcore.core.component import BaseComponent
 from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
+from lunarcore.core.data_models import ComponentModel
 from lunarcore.core.typings.datatypes import DataType
 
-from langchain_openai import AzureChatOpenAI
-from langchain_core.prompts.prompt import PromptTemplate
-from langchain_core.messages import HumanMessage, SystemMessage
 
 import re
 import json
@@ -184,7 +181,7 @@ class NL2SQL(
     BaseComponent,
     component_name="NL2SQL",
     component_description="""ConNL2SQL.""",
-    input_types={"all_question": DataType.TEXT, "dict_path_csv": DataType.TEXT},
+    input_types={"all_question": DataType.TEXT, "dict_path_csv": DataType.JSON},
     output_type=DataType.JSON,
     component_group=ComponentGroup.NLP,
     openai_api_version="$LUNARENV::OPENAI_API_VERSION",
@@ -195,12 +192,11 @@ class NL2SQL(
     def __init__(self, model: Optional[ComponentModel] = None, **kwargs: Any):
         super().__init__(model=model, configuration=kwargs)
 
-    def run(self, all_question: str, dict_path_csv: str):
-
+    def run(self, all_question: str, dict_path_csv: dict):
         questions = read_questions_from_file(all_question)
         
-        with open(dict_path_csv, "r") as f:
-            dict_path_csv = json.load(f)
+        # with open(dict_path_csv, "r") as f:
+        #     dict_path_csv = json.load(f)
 
         description = {}
         table_summary = {}
