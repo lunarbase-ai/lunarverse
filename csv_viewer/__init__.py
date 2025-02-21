@@ -21,7 +21,6 @@ class CsvViewer(
     output_type=DataType.CSV,
     component_group=ComponentGroup.DATA_VISUALIZATION,
     sep=None,
-    lineterminator=None,
 ):
     def __init__(self, model: Optional[ComponentModel] = None, **kwargs: Any):
         super().__init__(model=model, configuration=kwargs)
@@ -31,7 +30,6 @@ class CsvViewer(
         df = pd.read_csv(
             csv_str,
             sep=self.configuration["sep"],
-            lineterminator=self.configuration["lineterminator"],
         )
 
         return df.to_csv()
