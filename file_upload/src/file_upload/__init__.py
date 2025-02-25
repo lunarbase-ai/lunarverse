@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from typing import Any, Dict
+from typing import Dict
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType, File
@@ -20,9 +20,6 @@ class FileUpload(
     output_type=DataType.TEXT,
     component_group=ComponentGroup.IO,
 ):
-    def __init__(self, **kwargs: Any):
-        super().__init__(configuration=kwargs)
-
     def run(self, input_file: Dict):
         if not isinstance(input_file, File):
             input_file = File.model_validate(input_file)
