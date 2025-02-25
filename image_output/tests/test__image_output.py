@@ -1,4 +1,8 @@
-import base64
+# SPDX-FileCopyrightText: Copyright © 2024 Lunarbase (https://lunarbase.ai/) <contact@lunarbase.ai>
+#
+# SPDX-FileContributor: Danilo Gusicuma <danilo@lunarbase.ai>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 import pytest
 from image_output.src.image_output import ImageOutput
 
