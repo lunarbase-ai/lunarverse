@@ -5,12 +5,13 @@ from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
 
+
 class SQLQuery(
     LunarComponent,
     component_name="SQL Query",
     component_description="""Connects to a SQL database and returns the result of a query
     Output (str): the query result.""",
-    input_types={"query": DataType.SQL},
+    input_types={"query": DataType.TEXT},
     output_type=DataType.CSV,
     component_group=ComponentGroup.DATABASES,
     driver_name="",

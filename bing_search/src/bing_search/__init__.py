@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from typing import Any, Optional
+from typing import Any
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
