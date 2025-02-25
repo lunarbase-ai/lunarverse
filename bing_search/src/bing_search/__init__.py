@@ -20,7 +20,7 @@ class BingSearch(
     output_type=DataType.JSON,
     component_group=ComponentGroup.API_TOOLS,
     total_results=10,
-    bing_search_url=BING_SEARCH_URL,
+    bing_search_url="$LUNARENV::BING_SEARCH_URL",
     bing_subscription_key="$LUNARENV::BING_SUBSCRIPTION_KEY",
 ):
     def __init__(self, **kwargs: Any):
