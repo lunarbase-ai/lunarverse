@@ -1,0 +1,57 @@
+{
+  "id": "958a9148-923a-4160-966a-d2acd599137b",
+  "userId": "",
+  "name": "Image Output",
+  "description": "Shows a PNG image from a base64 string",
+  "version": null,
+  "components": [
+    {
+      "id": "0215071d-eee6-4383-887b-8760d505a963",
+      "workflowId": "958a9148-923a-4160-966a-d2acd599137b",
+      "name": "Image Output",
+      "className": "ImageOutput",
+      "description": "Receives a base64 encoded image string and shows the image",
+      "group": "IO",
+      "inputs": [
+        {
+          "key": "base64_string",
+          "dataType": "TEXT",
+          "value": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII",
+          "templateVariables": {},
+          "componentId": "0215071d-eee6-4383-887b-8760d505a963"
+        }
+      ],
+      "output": {
+        "dataType": "DataType.IMAGE",
+        "value": ""
+      },
+      "label": "BASE642PNG-0",
+      "configuration": {
+        "force_run": false,
+        "client_id": "None",
+        "client_secret": "None"
+      },
+      "version": null,
+      "isCustom": false,
+      "isTerminal": true,
+      "position": {
+        "x": 1295.3366735368725,
+        "y": 635.6003442868345
+      },
+      "timeout": 6000,
+      "componentCode": "image_output/image_output/__init__.py",
+      "componentCodeRequirements": [],
+      "componentExamplePath": null,
+      "invalidErrors": []
+    }
+  ],
+  "dependencies": [],
+  "timeout": 3600,
+  "autoComponentSpacing": {
+    "dx": 450.0,
+    "dy": 350.0,
+    "x0": 0.0,
+    "y0": 0.0
+  },
+  "invalidErrors": []
+}
