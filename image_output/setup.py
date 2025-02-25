@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: Copyright © 2024 Lunarbase (https://lunarbase.ai/) <contact@lunarbase.ai>
+#
+# SPDX-FileContributor: Danilo Gusicuma <danilo@lunarbase.ai>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 from setuptools import find_packages, setup
 
 AUTHOR = "Lunarbase (https://lunarbase.ai/)"
@@ -46,7 +51,7 @@ class ComponentSetupGenerator:
 setup_generator = ComponentSetupGenerator(
     name="image_output",
     version="0.1",
-    description="Converts an audio file (.mp3 or .wav) to a base64 string"
+    description="Receives a base64 encoded image string and shows the image."
 )
 
 setup(**setup_generator.generate())
