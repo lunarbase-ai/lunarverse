@@ -4,7 +4,6 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import json
 
 import requests
 
@@ -18,7 +17,7 @@ class GraphQLQuery(
     component_name="GraphQL",
     component_description="""Fetches data from a GraphQL endpoint
     Output (dict): The response for the query""",
-    input_types={"query": DataType.GRAPHQL},
+    input_types={"query": DataType.TEXT},
     output_type=DataType.JSON,
     component_group=ComponentGroup.DATABASES,
     endpoint="",
