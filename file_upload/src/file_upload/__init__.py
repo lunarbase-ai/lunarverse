@@ -20,7 +20,5 @@ class FileUpload(
     output_type=DataType.TEXT,
     component_group=ComponentGroup.IO,
 ):
-    def run(self, input_file: Dict):
-        if not isinstance(input_file, File):
-            input_file = File.model_validate(input_file)
-        return self._file_connector.get_absolute_path(input_file.get("path"))
+    def run(self, input_file: File):
+        return input_file.path

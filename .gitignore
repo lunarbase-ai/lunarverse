@@ -187,6 +187,7 @@ log/
 resources/jars
 *.sqlite3
 
+pyproject.toml
 poetry.lock
 create/
 

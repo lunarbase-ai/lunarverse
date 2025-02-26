@@ -14,6 +14,7 @@ EXTRAS_REQUIREMENTS = {
 
 REQUIREMENTS_FILE_PATH = 'requirements.txt'
 
+
 class ComponentSetupGenerator:
     def __init__(self, name, version, description):
         self.name = name
