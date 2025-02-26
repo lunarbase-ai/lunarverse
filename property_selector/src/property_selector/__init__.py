@@ -22,7 +22,7 @@ Inputs:
   `Selected properties` (str): A comma separated string of the properties (keys) to extract, using dots for nested properties. E.g. `keyA,keyC.keyD`
 Output (Dict): A dictionary of the selected properties and their values. E.g. `{`keyA`: {`keyB`: 123}, `keyC.keyD`: 456}`""",
     input_types={
-        "inputs": DataType.AGGREGATED,
+        "data": DataType.AGGREGATED,
         "selected_properties": DataType.PROPERTY_SELECTOR,
     },
     output_type=DataType.JSON,
