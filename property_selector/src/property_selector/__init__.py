@@ -5,8 +5,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 
-from typing import Dict
-
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
@@ -22,7 +20,7 @@ Inputs:
   `Selected properties` (str): A comma separated string of the properties (keys) to extract, using dots for nested properties. E.g. `keyA,keyC.keyD`
 Output (Dict): A dictionary of the selected properties and their values. E.g. `{`keyA`: {`keyB`: 123}, `keyC.keyD`: 456}`""",
     input_types={
-        "data": DataType.AGGREGATED,
+        "inputs": DataType.AGGREGATED,
         "selected_properties": DataType.PROPERTY_SELECTOR,
     },
     output_type=DataType.JSON,
@@ -33,7 +31,7 @@ Output (Dict): A dictionary of the selected properties and their values. E.g. `{
 
     def run(
         self,
-        data: Dict,
+        inputs: dict,
         selected_properties: str,
     ):
         if not selected_properties:
@@ -45,7 +43,7 @@ Output (Dict): A dictionary of the selected properties and their values. E.g. `{
         for prop in selected_properties_list:
             keys = prop.split('.')
             try:
-                result[prop] = get_nested_value_from_dict(data, keys)
+                result[prop] = get_nested_value_from_dict(inputs, keys)
             except KeyError:
                 result[prop] = None
 
