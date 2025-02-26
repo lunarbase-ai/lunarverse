@@ -4,6 +4,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+from typing import Dict
 
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
@@ -31,7 +32,7 @@ Output (Dict): A dictionary of the selected properties and their values. E.g. `{
 
     def run(
         self,
-        inputs: dict,
+        inputs: Dict,
         selected_properties: str,
     ):
         if not selected_properties:
