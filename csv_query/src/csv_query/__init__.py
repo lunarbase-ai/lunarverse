@@ -12,7 +12,7 @@ class CsvQuery(
     component_name="CsvQuery",
     component_group=ComponentGroup.DATA_EXTRACTION,
     component_description="Query CSV files using SQL",
-    output_type=DataType.JSON, 
+    output_type=DataType.TEXT, 
     description="Query a CSV file using SQL",
     input_types={"query": DataType.TEXT, "csv_files": DataType.JSON},
 ):
