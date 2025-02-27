@@ -1,1 +1,3 @@
-sqlparse~=0.5.1
+numpy
+pandas
+openai
