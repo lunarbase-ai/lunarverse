@@ -4,16 +4,15 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from typing import Any, Optional, Dict
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.typings.datatypes import DataType, File
+from typing import Dict
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType, File
 import pandas as pd
 
 
 class Report(
-    BaseComponent,
+    LunarComponent,
     component_name="Report",
     component_description="""Creates an editable report from the input it gets.
 Inputs:
@@ -23,8 +22,8 @@ Output (Dict): A dictionary containing instructions for building the report usin
     output_type=DataType.REPORT,
     component_group=ComponentGroup.UTILS,
 ):
-    def __init__(self, model: Optional[ComponentModel] = None, **kwargs):
-        super().__init__(model=model, configuration=kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(configuration=kwargs)
 
     def run(
         self, inputs: Dict
