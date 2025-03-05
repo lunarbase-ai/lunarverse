@@ -5,12 +5,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import os
-from typing import Optional, Any
 
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.component import BaseComponent
-from lunarcore.core.typings.datatypes import DataType
+from lunarcore.component.lunar_component import LunarComponent
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
+
 from pdf_extract.pdfservices import PDFServices
 
 
@@ -18,7 +17,7 @@ CONFIG_FILE = "./resources/controller.conf"
 
 
 class PDFExtractor(
-    BaseComponent,
+    LunarComponent,
     component_name="PDF extractor",
     component_description="""Extracts title, sections, references, tables and text from PDF files.
 Inputs:
@@ -35,8 +34,8 @@ Output (Dict): A dictionary containing the key-value pairs:
     client_id="$LUNARENV::PDFEXTRACTOR_CLIENT_ID",
     client_secret="$LUNARENV::PDFEXTRACTOR_CLIENT_SECRET",
 ):
-    def __init__(self, model: Optional[ComponentModel] = None, **kwargs):
-        super().__init__(model, configuration=kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(configuration=kwargs)
         path = self._file_connector.get_absolute_path("")
         credentials = {
             "client_id": self.configuration.get("client_id") or os.environ.get('ADOBE_PDF_CLIENT_ID'),
