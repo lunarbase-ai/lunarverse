@@ -13,9 +13,6 @@ from lunarcore.component.data_types import DataType
 from pdf_extract.pdfservices import PDFServices
 
 
-CONFIG_FILE = "./resources/controller.conf"
-
-
 class PDFExtractor(
     LunarComponent,
     component_name="PDF extractor",
