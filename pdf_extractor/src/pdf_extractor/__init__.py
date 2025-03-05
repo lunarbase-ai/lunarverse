@@ -33,13 +33,12 @@ Output (Dict): A dictionary containing the key-value pairs:
 ):
     def __init__(self, **kwargs):
         super().__init__(configuration=kwargs)
-        path = self._file_connector.get_absolute_path("")
         credentials = {
             "client_id": self.configuration.get("client_id") or os.environ.get('ADOBE_PDF_CLIENT_ID'),
             "client_secret": self.configuration.get("client_secret") or os.environ.get('ADOBE_PDF_API_KEY')
         }
 
-        self._pdfserv = PDFServices(path, credentials)
+        self._pdfserv = PDFServices(credentials)
 
     def run(
         self, file_path: str
@@ -47,9 +46,7 @@ Output (Dict): A dictionary containing the key-value pairs:
         if not isinstance(file_path, str) or not file_path.endswith('.pdf'):
             raise ValueError("Input is not a pdf file!")
         
-        doc_info = self._pdfserv.extract(
-            self._file_connector.get_absolute_path(file_path)
-        )
+        doc_info = self._pdfserv.extract(file_path)
         result = {
             "title": doc_info.title,
             "sections": doc_info.sections,
