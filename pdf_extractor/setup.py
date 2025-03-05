@@ -1,4 +1,5 @@
 from setuptools import find_packages, setup
+import re
 
 AUTHOR = "Lunarbase (https://lunarbase.ai/)"
 AUTHOR_EMAIL = "contact@lunarbase.ai"
@@ -39,7 +40,18 @@ class ComponentSetupGenerator:
     def _load_requirements(self):
         with open(REQUIREMENTS_FILE_PATH, 'r') as file:
             lines = file.read().splitlines()
-            return [line for line in lines if line and not line.startswith('#') and not line.startswith('git+')]
+            requirements = []
+            for line in lines:
+                if line and not line.startswith('#'):
+                    if line.startswith('git+'):
+                        # Extract the package name from the URL
+                        match = re.search(r'git\+https://[^/]+/[^/]+/([^@]+)@', line)
+                        if match:
+                            package_name = match.group(1).replace('-', '_')
+                            requirements.append(package_name)
+                    else:
+                        requirements.append(line)
+            return requirements
 
     def _load_dependency_links(self):
         with open(REQUIREMENTS_FILE_PATH, 'r') as file:
