@@ -33,12 +33,10 @@ Output (Dict): A dictionary containing the key-value pairs:
 ):
     def __init__(self, **kwargs):
         super().__init__(configuration=kwargs)
-        credentials = {
-            "client_id": self.configuration.get("client_id") or os.environ.get('ADOBE_PDF_CLIENT_ID'),
-            "client_secret": self.configuration.get("client_secret") or os.environ.get('ADOBE_PDF_API_KEY')
-        }
-
-        self._pdfserv = PDFServices(credentials)
+        self._pdfserv = PDFServices(credentials={
+            "client_id": self.configuration.get("client_id"),
+            "client_secret": self.configuration.get("client_secret")
+        })
 
     def run(
         self, file_path: str
