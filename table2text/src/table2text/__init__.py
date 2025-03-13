@@ -2,18 +2,16 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from lunarcore.core.component import BaseComponent
-from lunarcore.component_library.table2text.table2text.metadata import TableMetadata
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentModel, ComponentInput
-from lunarcore.core.typings.datatypes import DataType
+from lunarcore.component.lunar_component import LunarComponent
+from table2text.metadata import TableMetadata
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType
 
 from io import StringIO
-from typing import Any, Optional
 import pandas as pd
 
 class Table2Text(
-    BaseComponent,
+    LunarComponent,
     component_name="Table2Text",
     component_description="""Takes a CSV formatted table as input and converts it to a text by sentencifying each row.
 Inputs:
@@ -27,9 +25,6 @@ Output (Dict): A dictionary containing only the key `results` which is mapped to
     Table component is used to represent tabular data in Lunarverse.
     It is a wrapper around the TableMetadata Class, that takes as input a pandas dataframe and a row to generate a phrase.
     """
-
-    def __init__(self, model: Optional[ComponentModel] = None, **kwargs: Any):
-        super().__init__(model=model, configuration=kwargs)
 
     def add_table_str(self, table_str: str):
         # convert string csv to pandas dataframe
