@@ -4,7 +4,6 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import os
 from typing import Any
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
@@ -46,8 +45,8 @@ Output (str): The answer provided by the LLM to the prompt.""",
         ]
 
         # Call the OpenAI Chat Completion endpoint.
-        response = openai.ChatCompletion.create(
-            engine=self.configuration["deployment_name"],
+        response = openai.chat.completions.create(
+            model=self.configuration["deployment_name"],
             messages=messages,
         )
         # Extract the assistant's reply from the response.
