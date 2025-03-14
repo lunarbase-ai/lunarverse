@@ -50,7 +50,7 @@ Output (str): The answer provided by the LLM to the prompt.""",
             messages=messages,
         )
         # Extract the assistant's reply from the response.
-        result = response["choices"][0]["message"]["content"]
+        result = response.choices[0].message.content
 
         # Clean up the result string and return it.
         return str(result).strip("\n").strip().replace('"', "'")
