@@ -40,7 +40,7 @@ class NL2SQL(
             model=self.configuration["deployment_name"]
         )
 
-        description = obj.get_nl_schema()
+        description = obj.get_nl_db_schema()
         table_summary = {}
         relevant_table = {}
         step3 = {}
@@ -68,7 +68,7 @@ class NL2SQL(
                 for table_name, table_path in table_batch:
                     list_of_tables += f"Table name: {table_name}\n"
                     list_of_tables += f"Description: {description[table_name]}\n"
-                    list_of_tables += f"Attributes: {', '.join(obj.get_attributes(table_name))}\n\n"
+                    list_of_tables += f"Attributes: {', '.join(obj.get_table_attributes(table_name))}\n\n"
                 if i not in relevant_table:
                     relevant_table[i] = obj.generate(obj.get_prompt_relevant_tables(nl_query,list_of_tables))
 
