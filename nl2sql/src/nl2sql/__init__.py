@@ -37,20 +37,21 @@ class NL2SQL(
         step5 = {}
 
         obj = NaturalLanguageToSQL(dict_path_csv=dict_path_csv)
-        for nl_query in questions:
-            # nl_query = nl_query[0].upper() + nl_query[1:]
-            print(f"Processing: {nl_query}")
 
-            for table in dict_path_csv:
-                if table not in description:
-                    prompt = [
-                        {"role": "user", "content": obj.get_sample_prompt(5)[table]},
-                    ]
-                    description[table] = obj.generate_list_dict(prompt,**self.configuration)
-                    missing = obj.check_all_columns(description[table], table)
-                    if len(missing):
-                        prompt.append({"role": "assistant", "content": description[table]})
-                        prompt.append({"role": "user", "content": f"You are missing: {','.join(missing)}\nWrite only about the columns not already described"})
+        # Part 1: Indexing / Preprocessing
+        for table in dict_path_csv:
+            if table not in description:
+                prompt = [
+                    {"role": "user", "content": obj.get_sample_prompt(5)[table]},
+                ]
+                description[table] = obj.generate_list_dict(prompt,**self.configuration)
+                missing = obj.check_all_columns(description[table], table)
+                if len(missing):
+                    prompt.append({"role": "assistant", "content": description[table]})
+                    prompt.append({"role": "user", "content": f"You are missing: {','.join(missing)}\nWrite only about the columns not already described"})
+
+        for nl_query in questions:
+            print(f"Processing: {nl_query}")
 
             posible_joins = {}
             posible_joins["table1_table2"] = ""

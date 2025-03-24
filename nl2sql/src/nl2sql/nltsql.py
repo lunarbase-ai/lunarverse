@@ -4,11 +4,16 @@ from io import StringIO
 from openai import AzureOpenAI
 
 class NaturalLanguageToSQL:
-    def __init__(self, dict_path_csv,encoding="latin-1",separator=",",has_header=True,ignore_errors=True):
+    def __init__(self, dict_path_csv,encoding="utf-8",separator=",",has_header=True,ignore_errors=True):
         
-        # self.data = {table_name: pl.read_csv(dict_path_csv[table_name], ignore_errors=ignore_errors, has_header=has_header, separator=separator, encoding=encoding) for table_name in dict_path_csv}
+        # Importer
         self.data = {table_name: pd.read_csv(dict_path_csv[table_name], sep=separator, encoding=encoding) for table_name in dict_path_csv}
+
         self.string_columns_df = {table_name: self.data[table_name].select_dtypes(include=['object']) for table_name in dict_path_csv}
+        print(self.string_columns_df)
+
+
+    # Indexer
 
     def get_attributes(self, table_name:str) -> list:
         return list(self.data[table_name].columns.tolist())
