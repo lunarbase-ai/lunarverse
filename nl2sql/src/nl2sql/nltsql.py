@@ -4,13 +4,14 @@ from io import StringIO
 from openai import AzureOpenAI
 
 class NaturalLanguageToSQL:
-    def __init__(self, dict_path_csv,encoding="utf-8",separator=",",has_header=True,ignore_errors=True):
-        
+    def __init__(self, openai_client: AzureOpenAI, model: str, dict_path_csv,encoding="utf-8",separator=",",has_header=True,ignore_errors=True):
+        self.openai_client = openai_client
+        self.model = model
+
         # Importer
         self.data = {table_name: pd.read_csv(dict_path_csv[table_name], sep=separator, encoding=encoding) for table_name in dict_path_csv}
 
         self.string_columns_df = {table_name: self.data[table_name].select_dtypes(include=['object']) for table_name in dict_path_csv}
-        print(self.string_columns_df)
 
 
     # Indexer
@@ -59,28 +60,15 @@ Important:
                 missing.append(c)
         return missing
     
-    def generate_list_dict(self,prompt:list,openai_api_version,deployment_name,openai_api_key,azure_endpoint):
-        client = AzureOpenAI(
-            api_key=openai_api_key,
-            api_version=openai_api_version,
-            azure_endpoint=azure_endpoint
-        )
-    
-        response = client.chat.completions.create(model=deployment_name, messages=prompt)
+    def generate_list_dict(self,prompt:list):
+        response = self.openai_client.chat.completions.create(messages=prompt, model=self.model)
         
         return response.choices[0].message.content.strip()
 
-    def generate(self,prompt:str,openai_api_version,deployment_name,openai_api_key,azure_endpoint):
-    
-        client = AzureOpenAI(
-            api_key=openai_api_key,
-            api_version=openai_api_version,
-            azure_endpoint=azure_endpoint
-        )
-    
-        response = client.chat.completions.create(model=deployment_name, messages=[
+    def generate(self,prompt:str):
+        response = self.openai_client.chat.completions.create(messages=[
             {"role": "user", "content": prompt},
-        ])
+        ], model=self.model)
 
         return response.choices[0].message.content.strip()
 
