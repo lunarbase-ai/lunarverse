@@ -8,7 +8,9 @@ class NaturalLanguageToSQL:
     """
     A Natural Language schema description for each table and table attributes of the provided database. 
     """
-    _nl_schema: Optional[dict[str, str]] = None
+    _nl_db_schema: Optional[dict[str, str]] = None
+    _nl_tables_summary: Optional[dict[str, str]] = None
+
 
     def __init__(self, openai_client: AzureOpenAI, model: str, dict_path_csv,encoding="utf-8",separator=",",has_header=True,ignore_errors=True):
         self.openai_client = openai_client
@@ -24,14 +26,15 @@ class NaturalLanguageToSQL:
         self.sample_data = {table_name: self.get_sample(table_name, 5) for table_name in self.tables}
 
     # Indexer
-    def get_nl_schema(self) -> dict[str, str]:
-        if not self._nl_schema:
-            self._nl_schema = {table_name: self.generate_list_dict([
+    def get_nl_db_schema(self) -> dict[str, str]:
+        if not self._nl_db_schema:
+            self._nl_db_schema = {table_name: self.generate_list_dict([
                 {"role": "user", "content": self.get_sample_prompt(table_name)},
             ]) for table_name in self.tables}
-        return self._nl_schema
+        return self._nl_db_schema
 
-    def get_attributes(self, table_name:str) -> list:
+    # Utils, Data Layer
+    def get_table_attributes(self, table_name:str) -> list:
         return list(self.data[table_name].columns.tolist())
     
     def filter_values(self, column: str, value: str):
@@ -71,11 +74,13 @@ Important:
                 missing.append(c)
         return missing
     
+    # Caller
     def generate_list_dict(self,prompt:list):
         response = self.openai_client.chat.completions.create(messages=prompt, model=self.model)
         
         return response.choices[0].message.content.strip()
 
+    # Caller
     def generate(self,prompt:str):
         response = self.openai_client.chat.completions.create(messages=[
             {"role": "user", "content": prompt},
