@@ -52,13 +52,9 @@ class NL2SQL(
         for table in dict_path_csv:
             if table not in description:
                 prompt = [
-                    {"role": "user", "content": obj.get_sample_prompt(5)[table]},
+                    {"role": "user", "content": obj.get_sample_prompt(table)},
                 ]
                 description[table] = obj.generate_list_dict(prompt)
-                missing = obj.check_all_columns(description[table], table)
-                if len(missing):
-                    prompt.append({"role": "assistant", "content": description[table]})
-                    prompt.append({"role": "user", "content": f"You are missing: {','.join(missing)}\nWrite only about the columns not already described"})
 
         for nl_query in questions:
             print(f"Processing: {nl_query}")

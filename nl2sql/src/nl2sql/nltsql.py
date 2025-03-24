@@ -13,6 +13,10 @@ class NaturalLanguageToSQL:
 
         self.string_columns_df = {table_name: self.data[table_name].select_dtypes(include=['object']) for table_name in dict_path_csv}
 
+        # Indexer
+        self.tables = list(self.data.keys())
+        self.sample_data = {table_name: self.get_sample(table_name, 5) for table_name in self.tables}
+
 
     # Indexer
 
@@ -28,13 +32,11 @@ class NaturalLanguageToSQL:
         sample_df.to_csv(output, index=False)  # Write the DataFrame to the stream without the index
         return output.getvalue()  # Return the CSV content as a string
 
-    def get_sample_prompt(self, number_of_samples: int) -> list:
-        prompts = {}
-        for table in self.data:
-            prompt = f"""Given the table sample below:
+    def get_sample_prompt(self, table_name: str) -> str:
+        prompt = f"""Given the table sample below:
 
-Table name: {table}
-{self.get_sample(table,number_of_samples)}
+Table name: {table_name}
+{self.sample_data.get(table_name)}
 
 Create a list of with a description of the the table and attribute in the following format:
     Table name; natural language description of the table
@@ -48,9 +50,7 @@ where:
 Important: 
     Must do it for all attributes. Just return the list.
     Do not return the original table sample."""
-            prompts[table] = prompt
-            
-        return prompts
+        return prompt
 
     def check_all_columns(self, model_reponse:str, table:str) -> list:
         missing = []
