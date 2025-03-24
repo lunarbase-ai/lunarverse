@@ -11,6 +11,7 @@ from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
 
 from .nltsql import NaturalLanguageToSQL
+from openai import AzureOpenAI
 
 class NL2SQL(
     LunarComponent,
@@ -26,8 +27,18 @@ class NL2SQL(
 ):
     def __init__(self, **kwargs: Any):
         super().__init__(configuration=kwargs)
+        self.openai_client = AzureOpenAI(
+            api_key=self.configuration["openai_api_key"],
+            api_version=self.configuration["openai_api_version"],
+            azure_endpoint=self.configuration["azure_endpoint"],
+        )
 
     def run(self, questions: List[str], dict_path_csv: dict):
+        obj = NaturalLanguageToSQL(
+            dict_path_csv=dict_path_csv,
+            openai_client=self.openai_client,
+            model=self.configuration["deployment_name"]
+        )
 
         description = {}
         table_summary = {}
@@ -36,7 +47,6 @@ class NL2SQL(
         step4 = {}
         step5 = {}
 
-        obj = NaturalLanguageToSQL(dict_path_csv=dict_path_csv)
 
         # Part 1: Indexing / Preprocessing
         for table in dict_path_csv:
@@ -44,7 +54,7 @@ class NL2SQL(
                 prompt = [
                     {"role": "user", "content": obj.get_sample_prompt(5)[table]},
                 ]
-                description[table] = obj.generate_list_dict(prompt,**self.configuration)
+                description[table] = obj.generate_list_dict(prompt)
                 missing = obj.check_all_columns(description[table], table)
                 if len(missing):
                     prompt.append({"role": "assistant", "content": description[table]})
@@ -58,7 +68,7 @@ class NL2SQL(
 
             for table in dict_path_csv:
                 if table not in table_summary:
-                    table_summary[f"{table}"] = obj.generate(obj.get_prompt_summary_prompt(description[table]),**self.configuration)
+                    table_summary[f"{table}"] = obj.generate(obj.get_prompt_summary_prompt(description[table]))
 
             list_of_tables = ""
 
@@ -73,16 +83,16 @@ class NL2SQL(
                     list_of_tables += f"Description: {description[table_name]}\n"
                     list_of_tables += f"Attributes: {', '.join(obj.get_attributes(table_name))}\n\n"
                 if i not in relevant_table:
-                    relevant_table[i] = obj.generate(obj.get_prompt_relevant_tables(nl_query,list_of_tables),**self.configuration)
+                    relevant_table[i] = obj.generate(obj.get_prompt_relevant_tables(nl_query,list_of_tables))
 
-            step3[nl_query] = obj.generate(obj.get_prompt_relevant_tables_and_attributes_table_filter(nl_query = nl_query, descriptions = description, tables="\n".join(list(relevant_table.values()))),**self.configuration)
+            step3[nl_query] = obj.generate(obj.get_prompt_relevant_tables_and_attributes_table_filter(nl_query = nl_query, descriptions = description, tables="\n".join(list(relevant_table.values()))))
 
             prompt_chat = [
                 {"role": "user", "content": obj.get_prompt_relevant_tables_and_attributes_table_filter(nl_query = nl_query, descriptions = description, tables=step3[nl_query])},
                 {"role": "assistant", "content": step3[nl_query]},
                 {"role": "user", "content": obj.get_prompt_get_instances(nl_query=nl_query)}
             ]
-            step4[nl_query] = obj.generate_list_dict(prompt_chat,**self.configuration)
+            step4[nl_query] = obj.generate_list_dict(prompt_chat)
 
-            step5[nl_query] = obj.generate(obj.get_prompt_nl_to_sql(nl_query=nl_query,step3=step3[nl_query],step4=step4[nl_query],joins=posible_joins["table1_table2"]),**self.configuration)
+            step5[nl_query] = obj.generate(obj.get_prompt_nl_to_sql(nl_query=nl_query,step3=step3[nl_query],step4=step4[nl_query],joins=posible_joins["table1_table2"]))
         return step5
