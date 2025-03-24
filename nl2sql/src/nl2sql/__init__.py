@@ -40,21 +40,12 @@ class NL2SQL(
             model=self.configuration["deployment_name"]
         )
 
-        description = {}
+        description = obj.get_nl_schema()
         table_summary = {}
         relevant_table = {}
         step3 = {}
         step4 = {}
         step5 = {}
-
-
-        # Part 1: Indexing / Preprocessing
-        for table in dict_path_csv:
-            if table not in description:
-                prompt = [
-                    {"role": "user", "content": obj.get_sample_prompt(table)},
-                ]
-                description[table] = obj.generate_list_dict(prompt)
 
         for nl_query in questions:
             print(f"Processing: {nl_query}")
