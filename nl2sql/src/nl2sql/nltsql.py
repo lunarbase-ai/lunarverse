@@ -81,7 +81,6 @@ class NaturalLanguageToSQL:
     # Caller
     def generate_list_dict(self,prompt:list):
         response = self.ai_service.run(messages=prompt)
-    
         return response.choices[0].message.content.strip()
 
     # Caller
@@ -91,21 +90,10 @@ class NaturalLanguageToSQL:
         ])
         return response.choices[0].message.content.strip()
 
+    # Context Retrieval
     def get_query_relevant_tables(self, nl_query:str) -> dict:
         prompt = RetrieveRelevantTablesPrompt(self.ai_service)
         return prompt.run(nl_query, self.get_nl_db_schema())
-    
-    # Context Retrieval
-    def get_prompt_relevant_tables(self, nl_query:str, list_of_tables:str):
-        prompt = f"""Select from the list of tables below, the tables which are relevant to answer the following natural language query: {nl_query} 
-
-Instructions:
-Just return the list of table names.
-
-List of Tables:
-{list_of_tables}
-"""
-        return prompt
     
     # Consultant
     def get_prompt_correct_sqlquery(self, error:str):

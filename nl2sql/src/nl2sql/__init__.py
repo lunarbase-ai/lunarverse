@@ -51,11 +51,6 @@ class NL2SQL(
         step5 = {}
 
         for nl_query in questions:
-
-
-            posible_joins = {}
-            posible_joins["table1_table2"] = ""
-
             # ContextRetrieval  
             relevant_tables = obj.get_query_relevant_tables(nl_query)
 
@@ -68,5 +63,7 @@ class NL2SQL(
             ]
             step4[nl_query] = obj.generate_list_dict(prompt_chat)
 
+            posible_joins = {}
+            posible_joins["table1_table2"] = ""
             step5[nl_query] = obj.generate(obj.get_prompt_nl_to_sql(nl_query=nl_query,step3=step3[nl_query],step4=step4[nl_query],joins=posible_joins["table1_table2"]))
         return step5
