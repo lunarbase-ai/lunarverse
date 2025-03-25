@@ -2,7 +2,10 @@ import numpy as np
 import pandas as pd
 from io import StringIO
 from nl2sql.services.ai import AIService
-from nl2sql.prompts import NLDBSchemaDescriptionPrompt
+from nl2sql.prompts import (
+    NLDBSchemaDescriptionPrompt, 
+    NLTableSummaryPrompt
+)
 
 class NaturalLanguageToSQL:
     """
@@ -40,10 +43,9 @@ class NaturalLanguageToSQL:
     # Indexer / Preprocessing
     def get_nl_tables_summary(self) -> dict[str, str]:
         if not self._nl_tables_summary:
+            prompt = NLTableSummaryPrompt(self.ai_service)
             for table_name in self.tables:
-                self._nl_tables_summary[table_name] = self.generate(
-                    self.get_prompt_summary_prompt(self.get_nl_db_schema()[table_name])
-                )
+                self._nl_tables_summary[table_name] = prompt.run(self.get_nl_db_schema()[table_name])
         return self._nl_tables_summary
 
     # Utils, Data Layer
@@ -94,11 +96,6 @@ List of Tables:
 """
         return prompt
     
-    def get_prompt_summary_prompt(self, schema_description:str):
-        prompt = f"""Given the schema description below, provide a summary description of the table limited to 3 sentences.
-{schema_description}
-"""
-        return prompt
     
     def get_prompt_correct_sqlquery(self, error:str):
         prompt = f"""Correct this sql query:
