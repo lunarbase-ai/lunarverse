@@ -40,14 +40,21 @@ class NL2SQL(
             ai_service=self.ai_service,
         )
 
+        # Indexing / Preprocessing
         description = obj.get_nl_db_schema()
         table_summary = obj.get_nl_tables_summary()
+
+        # ContextRetrieval
         relevant_table = {}
+
+        # Generation
         step3 = {}
         step4 = {}
         step5 = {}
 
         for nl_query in questions:
+            relevant_testing = obj.get_query_relevant_tables(nl_query)
+            print(relevant_testing)
             print(f"Processing: {nl_query}")
 
             posible_joins = {}

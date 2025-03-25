@@ -4,7 +4,8 @@ from io import StringIO
 from nl2sql.services.ai import AIService
 from nl2sql.prompts import (
     NLDBSchemaDescriptionPrompt, 
-    NLTableSummaryPrompt
+    NLTableSummaryPrompt,
+    RetrieveRelevantTablesPrompt
 )
 
 class NaturalLanguageToSQL:
@@ -18,6 +19,11 @@ class NaturalLanguageToSQL:
     """
     _nl_tables_summary: dict[str, str] = {}
 
+    """
+    List of table names.
+    """
+    table_names: list[str] = []
+
 
     def __init__(self, ai_service: AIService, dict_path_csv,encoding="utf-8",separator=",",has_header=True,ignore_errors=True):
         self.ai_service = ai_service
@@ -28,15 +34,15 @@ class NaturalLanguageToSQL:
         self.string_columns_df = {table_name: self.data[table_name].select_dtypes(include=['object']) for table_name in dict_path_csv}
 
         # Indexer / Preprocessing
-        self.tables = list(self.data.keys())
-        self.sample_data = {table_name: self.get_sample(table_name, 5) for table_name in self.tables}
+        self.table_names = list(self.data.keys())
+        self.sample_data = {table_name: self.get_sample(table_name, 5) for table_name in self.table_names}
 
     # Indexer / Preprocessing
     def get_nl_db_schema(self) -> dict[str, str]:
         if not self._nl_db_schema:
             prompt = NLDBSchemaDescriptionPrompt(self.ai_service)
             self._nl_db_schema = {
-                table_name: prompt.run(table_name, self.sample_data.get(table_name)) for table_name in self.tables
+                table_name: prompt.run(table_name, self.sample_data.get(table_name)) for table_name in self.table_names
             }
         return self._nl_db_schema
     
@@ -44,13 +50,13 @@ class NaturalLanguageToSQL:
     def get_nl_tables_summary(self) -> dict[str, str]:
         if not self._nl_tables_summary:
             prompt = NLTableSummaryPrompt(self.ai_service)
-            for table_name in self.tables:
+            for table_name in self.table_names:
                 self._nl_tables_summary[table_name] = prompt.run(self.get_nl_db_schema()[table_name])
         return self._nl_tables_summary
 
     # Utils, Data Layer
     def get_table_attributes(self, table_name:str) -> list:
-        return list(self.data[table_name].columns.tolist())
+        return self.data[table_name].columns.tolist()
     
     # Utils, Data Layer
     def filter_values(self, column: str, value: str):
@@ -85,6 +91,11 @@ class NaturalLanguageToSQL:
         ])
         return response.choices[0].message.content.strip()
 
+    def get_query_relevant_tables(self, nl_query:str) -> dict:
+        prompt = RetrieveRelevantTablesPrompt(self.ai_service)
+        return prompt.run(nl_query, self.get_nl_db_schema())
+    
+    # Context Retrieval
     def get_prompt_relevant_tables(self, nl_query:str, list_of_tables:str):
         prompt = f"""Select from the list of tables below, the tables which are relevant to answer the following natural language query: {nl_query} 
 
@@ -96,7 +107,7 @@ List of Tables:
 """
         return prompt
     
-    
+    # Consultant
     def get_prompt_correct_sqlquery(self, error:str):
         prompt = f"""Correct this sql query:
 {error}
@@ -104,6 +115,7 @@ List of Tables:
 Ouput only the new sql query"""
         return prompt
     
+    # Utils, Data Layer
     def get_unique_values(self) -> dict:
         unique_values = {}
         for table_name in self.string_columns_df:
@@ -112,6 +124,7 @@ Ouput only the new sql query"""
                 unique_values[table_name][col] = self.string_columns_df[table_name][col].unique()
         return unique_values
     
+    # Consultant
     def get_prompt_relevant_tables_and_attributes_table_filter(self, nl_query:str, descriptions:dict, tables:str):
         prompt = f"""Select the relevant tables and attributes given the natural language query below. Return only the list of tables and attributes.
 {nl_query} 
@@ -121,13 +134,15 @@ And the set of tables:
             if table in tables:
                 prompt += f"{descriptions[table]}\n\n"
         return prompt
-    
+
+    # Consultant
     def get_prompt_get_instances(self, nl_query:str):
         prompt = f"""Given the following natural language query to be mapped to an SQL query:
 {nl_query} 
 Determine the set of references to values in the table, i.e. terms which are likely to map to VALUES in a WHERE = ‘VALUE’ clause."""
         return prompt
     
+    # Consultant
     def get_prompt_nl_to_sql(self,nl_query:str,step3:str,step4:str,joins,num_examples:int=3):
         query_plan_context = f"{step3}\n{step4}\n"
         should_add_where = True

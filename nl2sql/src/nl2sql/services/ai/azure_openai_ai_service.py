@@ -16,7 +16,27 @@ class AzureOpenAIService(AIService):
                 azure_endpoint=self.configuration["azure_endpoint"],
             )
 
-    def run(self, messages: List[Dict[str, str]], **kwargs):
+    def run(self, messages: List[Dict[str, str]], type: str = "text", **kwargs):
+        if type == "text":
+            return self.run_text(messages, **kwargs)
+
+        elif type == "json":
+            return self.run_json(messages, **kwargs)
+
+        else:
+            return self.run_text(messages, **kwargs)
+
+    def run_json(self, messages: List[Dict[str, str]], **kwargs):
+        try:
+            return self.client.beta.chat.completions.parse(
+                messages=messages, 
+                model=self.configuration["model"],
+                **kwargs
+            )
+        except Exception as e:
+            raise e
+    
+    def run_text(self, messages: List[Dict[str, str]], **kwargs):
         try:
             return self.client.chat.completions.create(
                 messages=messages, 
