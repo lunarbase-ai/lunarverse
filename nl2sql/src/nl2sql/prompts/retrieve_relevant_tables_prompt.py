@@ -7,7 +7,7 @@ class ResponseFormat(BaseModel):
 
 class RetrieveRelevantTablesPrompt:
     USER_MESSAGE="""
-    Select from the natural language schema description of the tables and its attributes, the tables which are relevant to answer the following natural language query: {nl_query}
+    Select from a json where the keys are the tables, and the values are the natural language schema description of the table and its attributes, the tables which are relevant to answer the following natural language query: {nl_query}
 
     Instructions:
     Just return the list of table names in a json object.
