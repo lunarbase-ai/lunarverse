@@ -44,8 +44,6 @@ class NL2SQL(
         description = obj.get_nl_db_schema()
         table_summary = obj.get_nl_tables_summary()
 
-        # ContextRetrieval
-        relevant_table = {}
 
         # Generation
         step3 = {}
@@ -53,30 +51,15 @@ class NL2SQL(
         step5 = {}
 
         for nl_query in questions:
-            relevant_testing = obj.get_query_relevant_tables(nl_query)
-            print(relevant_testing)
-            print(f"Processing: {nl_query}")
+
 
             posible_joins = {}
             posible_joins["table1_table2"] = ""
 
+            # ContextRetrieval  
+            relevant_tables = obj.get_query_relevant_tables(nl_query)
 
-            list_of_tables = ""
-
-            table_items = list(dict_path_csv.items())
-
-            for i in range(0, len(table_items), 20):
-
-                table_batch = table_items[i:i + 20]
-
-                for table_name, table_path in table_batch:
-                    list_of_tables += f"Table name: {table_name}\n"
-                    list_of_tables += f"Description: {description[table_name]}\n"
-                    list_of_tables += f"Attributes: {', '.join(obj.get_table_attributes(table_name))}\n\n"
-                if i not in relevant_table:
-                    relevant_table[i] = obj.generate(obj.get_prompt_relevant_tables(nl_query,list_of_tables))
-
-            step3[nl_query] = obj.generate(obj.get_prompt_relevant_tables_and_attributes_table_filter(nl_query = nl_query, descriptions = description, tables="\n".join(list(relevant_table.values()))))
+            step3[nl_query] = obj.generate(obj.get_prompt_relevant_tables_and_attributes_table_filter(nl_query = nl_query, descriptions = description, tables="\n".join(relevant_tables)))
 
             prompt_chat = [
                 {"role": "user", "content": obj.get_prompt_relevant_tables_and_attributes_table_filter(nl_query = nl_query, descriptions = description, tables=step3[nl_query])},
