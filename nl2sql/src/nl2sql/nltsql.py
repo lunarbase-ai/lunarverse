@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from io import StringIO
 from nl2sql.services.ai import AIService
+from nl2sql.prompts import NLDBSchemaDescriptionPrompt
 
 class NaturalLanguageToSQL:
     """
@@ -30,9 +31,10 @@ class NaturalLanguageToSQL:
     # Indexer / Preprocessing
     def get_nl_db_schema(self) -> dict[str, str]:
         if not self._nl_db_schema:
-            self._nl_db_schema = {table_name: self.generate_list_dict([
-                {"role": "user", "content": self.get_sample_prompt(table_name)},
-            ]) for table_name in self.tables}
+            prompt = NLDBSchemaDescriptionPrompt(self.ai_service)
+            self._nl_db_schema = {
+                table_name: prompt.run(table_name, self.sample_data.get(table_name)) for table_name in self.tables
+            }
         return self._nl_db_schema
     
     # Indexer / Preprocessing
@@ -59,27 +61,6 @@ class NaturalLanguageToSQL:
         sample_df.to_csv(output, index=False)  # Write the DataFrame to the stream without the index
         return output.getvalue()  # Return the CSV content as a string
 
-    # Indexer / Preprocessing
-    def get_sample_prompt(self, table_name: str) -> str:
-        prompt = f"""Given the table sample below:
-
-Table name: {table_name}
-{self.sample_data.get(table_name)}
-
-Create a list of with a description of the the table and attribute in the following format:
-    Table name; natural language description of the table
-    Attribute name; natural language description of the table; attribute type; format; primary key
-
-where:
-    Attribute type contains the basic type of the attribute.
-    Format contains a description of the value format (e.g. date format, separators, etc).
-    Primary key: a boolean true | false in case the attribute is likely to be a primary key.
-
-Important: 
-    Must do it for all attributes. Just return the list.
-    Do not return the original table sample."""
-        return prompt
-
     # Utils, Data Layer
     def check_all_columns(self, model_reponse:str, table:str) -> list:
         missing = []
@@ -91,13 +72,16 @@ Important:
     
     # Caller
     def generate_list_dict(self,prompt:list):
-        return self.ai_service.run(messages=prompt)
+        response = self.ai_service.run(messages=prompt)
+    
+        return response.choices[0].message.content.strip()
 
     # Caller
     def generate(self,prompt:str):
-        return self.ai_service.run(messages=[
+        response = self.ai_service.run(messages=[
             {"role": "user", "content": prompt},
         ])
+        return response.choices[0].message.content.strip()
 
     def get_prompt_relevant_tables(self, nl_query:str, list_of_tables:str):
         prompt = f"""Select from the list of tables below, the tables which are relevant to answer the following natural language query: {nl_query} 

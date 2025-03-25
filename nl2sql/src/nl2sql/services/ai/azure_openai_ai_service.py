@@ -18,11 +18,10 @@ class AzureOpenAIService(AIService):
 
     def run(self, messages: List[Dict[str, str]], **kwargs):
         try:
-            response = self.client.chat.completions.create(
+            return self.client.chat.completions.create(
                 messages=messages, 
                 model=self.configuration["model"],
                 **kwargs
             )
-            return response.choices[0].message.content.strip()
         except Exception as e:
             raise e
