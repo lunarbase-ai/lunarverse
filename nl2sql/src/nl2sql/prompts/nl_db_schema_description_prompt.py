@@ -1,7 +1,5 @@
 from nl2sql.services.ai import AIService
 
-
-
 class NLDBSchemaDescriptionPrompt:
     USER_MESSAGE="""
     Given the table sample below:
