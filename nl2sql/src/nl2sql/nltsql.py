@@ -8,8 +8,8 @@ class NaturalLanguageToSQL:
     """
     A Natural Language schema description for each table and table attributes of the provided database. 
     """
-    _nl_db_schema: Optional[dict[str, str]] = None
-    _nl_tables_summary: Optional[dict[str, str]] = None
+    _nl_db_schema: dict[str, str] = {}
+    _nl_tables_summary: dict[str, str] = {}
 
 
     def __init__(self, openai_client: AzureOpenAI, model: str, dict_path_csv,encoding="utf-8",separator=",",has_header=True,ignore_errors=True):
@@ -21,31 +21,43 @@ class NaturalLanguageToSQL:
 
         self.string_columns_df = {table_name: self.data[table_name].select_dtypes(include=['object']) for table_name in dict_path_csv}
 
-        # Indexer
+        # Indexer / Preprocessing
         self.tables = list(self.data.keys())
         self.sample_data = {table_name: self.get_sample(table_name, 5) for table_name in self.tables}
 
-    # Indexer
+    # Indexer / Preprocessing
     def get_nl_db_schema(self) -> dict[str, str]:
         if not self._nl_db_schema:
             self._nl_db_schema = {table_name: self.generate_list_dict([
                 {"role": "user", "content": self.get_sample_prompt(table_name)},
             ]) for table_name in self.tables}
         return self._nl_db_schema
+    
+    # Indexer / Preprocessing
+    def get_nl_tables_summary(self) -> dict[str, str]:
+        if not self._nl_tables_summary:
+            for table_name in self.tables:
+                self._nl_tables_summary[table_name] = self.generate(
+                    self.get_prompt_summary_prompt(self.get_nl_db_schema()[table_name])
+                )
+        return self._nl_tables_summary
 
     # Utils, Data Layer
     def get_table_attributes(self, table_name:str) -> list:
         return list(self.data[table_name].columns.tolist())
     
+    # Utils, Data Layer
     def filter_values(self, column: str, value: str):
         return {table_name: df[df[column].str.contains(value, na=False)] for table_name, df in self.data.items()}
     
+    # Indexer / Preprocessing
     def get_sample(self, table_name: str, n: int = 5) -> str:
         sample_df = self.data[table_name].sample(n=n, random_state=0)  # Sample n rows with a fixed random state
         output = StringIO()  # Create an in-memory text stream
         sample_df.to_csv(output, index=False)  # Write the DataFrame to the stream without the index
         return output.getvalue()  # Return the CSV content as a string
 
+    # Indexer / Preprocessing
     def get_sample_prompt(self, table_name: str) -> str:
         prompt = f"""Given the table sample below:
 
@@ -66,6 +78,7 @@ Important:
     Do not return the original table sample."""
         return prompt
 
+    # Utils, Data Layer
     def check_all_columns(self, model_reponse:str, table:str) -> list:
         missing = []
         for c in self.data[table].columns:

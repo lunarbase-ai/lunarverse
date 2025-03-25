@@ -41,7 +41,7 @@ class NL2SQL(
         )
 
         description = obj.get_nl_db_schema()
-        table_summary = {}
+        table_summary = obj.get_nl_tables_summary()
         relevant_table = {}
         step3 = {}
         step4 = {}
@@ -53,9 +53,6 @@ class NL2SQL(
             posible_joins = {}
             posible_joins["table1_table2"] = ""
 
-            for table in dict_path_csv:
-                if table not in table_summary:
-                    table_summary[f"{table}"] = obj.generate(obj.get_prompt_summary_prompt(description[table]))
 
             list_of_tables = ""
 
