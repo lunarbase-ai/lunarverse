@@ -1,5 +1,6 @@
 from .base import AIService
 from openai import AzureOpenAI
+from typing import List, Dict, Any
 
 
 class AzureOpenAIService(AIService):
@@ -12,10 +13,10 @@ class AzureOpenAIService(AIService):
             self._client = AzureOpenAI(
                 api_key=self.configuration["openai_api_key"],
                 api_version=self.configuration["openai_api_version"],
-                endpoint=self.configuration["azure_endpoint"],
+                azure_endpoint=self.configuration["azure_endpoint"],
             )
 
-    def run(self, messages: List[Dict[str, str]], **kwargs) -> Dict[str, Any]:
+    def run(self, messages: List[Dict[str, str]], **kwargs):
         try:
             response = self.client.chat.completions.create(
                 messages=messages, 

@@ -1,8 +1,7 @@
 import numpy as np
 import pandas as pd
 from io import StringIO
-from openai import AzureOpenAI
-from typing import Optional
+from nl2sql.services.ai import AIService
 
 class NaturalLanguageToSQL:
     """
@@ -16,9 +15,8 @@ class NaturalLanguageToSQL:
     _nl_tables_summary: dict[str, str] = {}
 
 
-    def __init__(self, openai_client: AzureOpenAI, model: str, dict_path_csv,encoding="utf-8",separator=",",has_header=True,ignore_errors=True):
-        self.openai_client = openai_client
-        self.model = model
+    def __init__(self, ai_service: AIService, dict_path_csv,encoding="utf-8",separator=",",has_header=True,ignore_errors=True):
+        self.ai_service = ai_service
 
         # Importer
         self.data = {table_name: pd.read_csv(dict_path_csv[table_name], sep=separator, encoding=encoding) for table_name in dict_path_csv}
@@ -93,17 +91,13 @@ Important:
     
     # Caller
     def generate_list_dict(self,prompt:list):
-        response = self.openai_client.chat.completions.create(messages=prompt, model=self.model)
-        
-        return response.choices[0].message.content.strip()
+        return self.ai_service.run(messages=prompt)
 
     # Caller
     def generate(self,prompt:str):
-        response = self.openai_client.chat.completions.create(messages=[
+        return self.ai_service.run(messages=[
             {"role": "user", "content": prompt},
-        ], model=self.model)
-
-        return response.choices[0].message.content.strip()
+        ])
 
     def get_prompt_relevant_tables(self, nl_query:str, list_of_tables:str):
         prompt = f"""Select from the list of tables below, the tables which are relevant to answer the following natural language query: {nl_query} 

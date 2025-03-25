@@ -11,7 +11,7 @@ from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
 
 from .nltsql import NaturalLanguageToSQL
-from openai import AzureOpenAI
+from nl2sql.services.ai import AzureOpenAIService
 
 class NL2SQL(
     LunarComponent,
@@ -27,17 +27,17 @@ class NL2SQL(
 ):
     def __init__(self, **kwargs: Any):
         super().__init__(configuration=kwargs)
-        self.openai_client = AzureOpenAI(
-            api_key=self.configuration["openai_api_key"],
-            api_version=self.configuration["openai_api_version"],
-            azure_endpoint=self.configuration["azure_endpoint"],
-        )
+        self.ai_service = AzureOpenAIService({
+            "openai_api_key": self.configuration["openai_api_key"],
+            "openai_api_version": self.configuration["openai_api_version"],
+            "azure_endpoint": self.configuration["azure_endpoint"],
+            "model": self.configuration["deployment_name"]
+        })
 
     def run(self, questions: List[str], dict_path_csv: dict):
         obj = NaturalLanguageToSQL(
             dict_path_csv=dict_path_csv,
-            openai_client=self.openai_client,
-            model=self.configuration["deployment_name"]
+            ai_service=self.ai_service,
         )
 
         description = obj.get_nl_db_schema()
