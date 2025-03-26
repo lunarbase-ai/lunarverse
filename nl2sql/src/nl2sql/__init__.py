@@ -52,9 +52,6 @@ class NL2SQL(
 
             # Generation
             sql_query = obj.generate_sql_query(nl_query, relevant_tables, relevant_attributes, reference_values)
-
-            # Double Check
-            sql_query = obj.double_check_sql_query(nl_query, sql_query)
             
             result[nl_query] = sql_query
         return result

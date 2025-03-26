@@ -121,7 +121,9 @@ class NaturalLanguageToSQL:
         for entry in reference_values:
             reference_values_context += f"`{entry['table']}.{entry['attribute']}` = {', '.join([f'{value}' for value in entry['values']])}\n"
 
-        return prompt.run(nl_query, table_attributes_context, reference_values_context, sample_data_context)
+        sql_query = prompt.run(nl_query, table_attributes_context, reference_values_context, sample_data_context)
+
+        return self.double_check_sql_query(nl_query, sql_query)
 
     # Generator
     def double_check_sql_query(self, nl_query: str, sql_query: str,):
