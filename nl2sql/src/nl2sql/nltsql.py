@@ -6,7 +6,8 @@ from nl2sql.prompts import (
     NLDBSchemaDescriptionPrompt, 
     NLTableSummaryPrompt,
     RetrieveRelevantTablesPrompt,
-    RetrieveRelevantTableAttributesPrompt
+    RetrieveRelevantTableAttributesPrompt,
+    RetrieveReferenceValuesPrompt
 )
 
 class NaturalLanguageToSQL:
@@ -111,11 +112,18 @@ class NaturalLanguageToSQL:
         prompt = RetrieveRelevantTablesPrompt(self.ai_service)
         return prompt.run(nl_query, self.get_nl_db_schema())
 
+    # Context Retrieval
     def retrieve_relevant_table_attributes(self, nl_query:str, relevant_tables: list[str]) -> dict:
 
         nl_description_filtered = {table: self.get_nl_db_schema()[table] for table in relevant_tables}
         prompt = RetrieveRelevantTableAttributesPrompt(self.ai_service)
         return prompt.run(nl_query, nl_description_filtered)
+
+    def retrieve_reference_values(self, nl_query:str, relevant_tables: list[str], relevant_attributes: dict[str, list[str]]):
+        nl_description_filtered = {table: self.get_nl_db_schema()[table] for table in relevant_tables}
+        prompt = RetrieveReferenceValuesPrompt(self.ai_service)
+        return prompt.run(nl_query, nl_description_filtered, relevant_attributes)
+        
     
     # Consultant
     def get_prompt_correct_sqlquery(self, error:str):
