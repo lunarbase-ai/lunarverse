@@ -35,7 +35,7 @@ Output (str): The answer provided by the LLM to the prompt.""",
         self._client = AzureOpenAI(
             api_key=self.configuration["openai_api_key"],
             api_version=self.configuration["openai_api_version"],
-            base_url=self.configuration["azure_endpoint"]
+            azure_endpoint=self.configuration["azure_endpoint"]
         )
 
     def run(self, user_prompt: str, system_prompt: str = SYSTEM_PROMPT):
@@ -44,7 +44,6 @@ Output (str): The answer provided by the LLM to the prompt.""",
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
         ]
-
         # Call the OpenAI Chat Completion endpoint.
         response = self._client.chat.completions.create(
             model=self.configuration["deployment_name"],
