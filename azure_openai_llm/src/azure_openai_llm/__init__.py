@@ -9,7 +9,7 @@ from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
 
-import openai
+from openai import AzureOpenAI
 
 SYSTEM_PROMPT = "You are a helpful AI assistant. Your name is AI Rover."
 
@@ -32,10 +32,11 @@ Output (str): The answer provided by the LLM to the prompt.""",
     def __init__(self, **kwargs: Any):
         super().__init__(configuration=kwargs)
         # Configure the OpenAI library for Azure OpenAI usage.
-        openai.api_type = "azure"
-        openai.api_key = self.configuration["openai_api_key"]
-        openai.api_base = self.configuration["azure_endpoint"]
-        openai.api_version = self.configuration["openai_api_version"]
+        self._client = AzureOpenAI(
+            api_key=self.configuration["openai_api_key"],
+            api_version=self.configuration["openai_api_version"],
+            base_url=self.configuration["azure_endpoint"]
+        )
 
     def run(self, user_prompt: str, system_prompt: str = SYSTEM_PROMPT):
         # Create the messages list in the required format.
@@ -45,7 +46,7 @@ Output (str): The answer provided by the LLM to the prompt.""",
         ]
 
         # Call the OpenAI Chat Completion endpoint.
-        response = openai.chat.completions.create(
+        response = self._client.chat.completions.create(
             model=self.configuration["deployment_name"],
             messages=messages,
         )
