@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 class ReferenceValue(BaseModel):
     table: str
+    attribute: str
     values: list[str]
 
 class ResponseFormat(BaseModel):
@@ -18,6 +19,7 @@ class ResponseFormat(BaseModel):
                         "type": "object",
                         "properties": {
                             "table": {"type": "string"},
+                            "attribute": {"type": "string"},
                             "values": {
                                 "type": "array",
                                 "items": {"type": "string"}
@@ -48,8 +50,9 @@ class RetrieveReferenceValuesPrompt:
     {{
     
         "references": [
-            {{"table": "table_1", "values": ["value_1", "value_2"]}},
-            {{"table": "table_2", "values": ["value_3"]}}
+            {{"table": "table_1", "attribute": "attribute_1", "values": ["value_1", "value_2"]}},
+            {{"table": "table_1", "attribute": "attribute_2", "values": ["value_3", "value_4"]}},
+            {{"table": "table_2", "attribute": "attribute_3", "values": ["value_5"]}}
         ]
     }}
     """

@@ -40,15 +40,7 @@ class NL2SQL(
             ai_service=self.ai_service,
         )
 
-        # Indexing / Preprocessing
-        description = obj.get_nl_db_schema()
-        table_summary = obj.get_nl_tables_summary()
-
-
-        # Generation
-        step3 = {}
-        step4 = {}
-        step5 = {}
+        result = {}
 
         for nl_query in questions:
             # ContextRetrieval  
@@ -58,17 +50,9 @@ class NL2SQL(
 
             reference_values = obj.retrieve_reference_values(nl_query, relevant_tables, relevant_attributes)
 
-            # step3[nl_query] = obj.generate(obj.get_prompt_relevant_tables_and_attributes_table_filter(nl_query = nl_query, descriptions = description, tables="\n".join(relevant_tables)))
 
-
-            # prompt_chat = [
-            #     {"role": "user", "content": obj.get_prompt_relevant_tables_and_attributes_table_filter(nl_query = nl_query, descriptions = description, tables=step3[nl_query])},
-            #     {"role": "assistant", "content": step3[nl_query]},
-            #     {"role": "user", "content": obj.get_prompt_get_instances(nl_query=nl_query)}
-            # ]
-            # step4[nl_query] = obj.generate_list_dict(prompt_chat)
-
-            # posible_joins = {}
-            # posible_joins["table1_table2"] = ""
-            # step5[nl_query] = obj.generate(obj.get_prompt_nl_to_sql(nl_query=nl_query,step3=step3[nl_query],step4=step4[nl_query],joins=posible_joins["table1_table2"]))
-        return {}
+            # Generation
+            sql_query = obj.generate_sql_query(nl_query, relevant_tables, relevant_attributes, reference_values)
+            
+            result[nl_query] = sql_query
+        return result
