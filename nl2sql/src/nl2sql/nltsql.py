@@ -7,7 +7,8 @@ from nl2sql.prompts import (
     NLTableSummaryPrompt,
     RetrieveRelevantTablesPrompt,
     RetrieveRelevantTableAttributesPrompt,
-    RetrieveReferenceValuesPrompt
+    RetrieveReferenceValuesPrompt,
+    GenerateSQLQueryPrompt
 )
 
 class NaturalLanguageToSQL:
@@ -29,7 +30,7 @@ class NaturalLanguageToSQL:
     """
     Sample data for each table.
     """
-    sample_data: dict[str, str] = {}
+    sample_data: dict[str, pd.DataFrame] = {}
 
     """
     Imported data for each table.
@@ -71,41 +72,11 @@ class NaturalLanguageToSQL:
                 self._nl_tables_summary[table_name] = prompt.run(self.get_nl_db_schema()[table_name])
         return self._nl_tables_summary
 
-    # Utils, Data Layer
-    def get_table_attributes(self, table_name:str) -> list:
-        return self.data[table_name].columns.tolist()
-    
-    # Utils, Data Layer
-    def filter_values(self, column: str, value: str):
-        return {table_name: df[df[column].str.contains(value, na=False)] for table_name, df in self.data.items()}
-    
     # Indexer / Preprocessing
-    def get_sample(self, table_name: str, n: int = 5) -> str:
-        sample_df = self.data[table_name].sample(n=n, random_state=0)  # Sample n rows with a fixed random state
-        output = StringIO()  # Create an in-memory text stream
-        sample_df.to_csv(output, index=False)  # Write the DataFrame to the stream without the index
-        return output.getvalue()  # Return the CSV content as a string
+    def get_sample(self, table_name: str, n: int = 5) -> pd.DataFrame:
+        sample_df = self.data[table_name].sample(n=n, random_state=0)
+        return sample_df
 
-    # Utils, Data Layer
-    def check_all_columns(self, model_reponse:str, table:str) -> list:
-        missing = []
-        for c in self.data[table].columns:
-            c = c.strip()
-            if c not in model_reponse:
-                missing.append(c)
-        return missing
-    
-    # Caller
-    def generate_list_dict(self,prompt:list):
-        response = self.ai_service.run(messages=prompt)
-        return response.choices[0].message.content.strip()
-
-    # Caller
-    def generate(self,prompt:str):
-        response = self.ai_service.run(messages=[
-            {"role": "user", "content": prompt},
-        ])
-        return response.choices[0].message.content.strip()
 
     # Context Retrieval
     def retrieve_relevant_tables(self, nl_query:str) -> dict:
@@ -119,72 +90,42 @@ class NaturalLanguageToSQL:
         prompt = RetrieveRelevantTableAttributesPrompt(self.ai_service)
         return prompt.run(nl_query, nl_description_filtered)
 
+    # Context Retrieval
     def retrieve_reference_values(self, nl_query:str, relevant_tables: list[str], relevant_attributes: dict[str, list[str]]):
         nl_description_filtered = {table: self.get_nl_db_schema()[table] for table in relevant_tables}
         prompt = RetrieveReferenceValuesPrompt(self.ai_service)
         return prompt.run(nl_query, nl_description_filtered, relevant_attributes)
+
+    # Generator
+    def generate_sql_query(self, nl_query:str, relevant_tables: list[str], relevant_attributes: dict[str, list[str]], reference_values: dict[str, list[str]]):
+        prompt = GenerateSQLQueryPrompt(self.ai_service)
+
+        table_attributes_context = ""
+        sample_data_context = ""
+
+        for table in relevant_tables:
+            sample_table_data = self.sample_data[table]
+
+            table_attributes_context += f"- Table: `{table}` "
+
+            attributes = []
+            for value in relevant_attributes:
+                if value["table"] == table:
+                    for attribute in value["attributes"]:
+                        attributes.append(f"`{attribute}`")
+
+                        attribute_sample_data = sample_table_data[attribute].to_list()
+                        sample_data_context += f"`{table}.{attribute}` = {', '.join([f'{value}' for value in attribute_sample_data])}\n"
+                        
+            if len(attributes) > 0:
+                table_attributes_context += f"; Attributes: {', '.join(attributes)}"
+
+            table_attributes_context += "\n"
+
+        reference_values_context = ""
+
+        for entry in reference_values:
+            reference_values_context += f"`{entry['table']}.{entry['attribute']}` = {', '.join([f'{value}' for value in entry['values']])}\n"
+
+        return prompt.run(nl_query, table_attributes_context, reference_values_context, sample_data_context)
         
-    
-    # Consultant
-    def get_prompt_correct_sqlquery(self, error:str):
-        prompt = f"""Correct this sql query:
-{error}
-
-Ouput only the new sql query"""
-        return prompt
-    
-    # Utils, Data Layer
-    def get_unique_values(self) -> dict:
-        unique_values = {}
-        for table_name in self.string_columns_df:
-            unique_values[table_name] = {}
-            for col in self.string_columns_df[table_name].columns:
-                unique_values[table_name][col] = self.string_columns_df[table_name][col].unique()
-        return unique_values
-    
-    # Consultant
-    def get_prompt_relevant_tables_and_attributes_table_filter(self, nl_query:str, descriptions:dict, tables:str):
-        prompt = f"""Select the relevant tables and attributes given the natural language query below. Return only the list of tables and attributes.
-{nl_query} 
-And the set of tables:
-"""
-        for table in descriptions:
-            if table in tables:
-                prompt += f"{descriptions[table]}\n\n"
-        return prompt
-
-    # Consultant
-    def get_prompt_get_instances(self, nl_query:str):
-        prompt = f"""Given the following natural language query to be mapped to an SQL query:
-{nl_query} 
-Determine the set of references to values in the table, i.e. terms which are likely to map to VALUES in a WHERE = ‘VALUE’ clause."""
-        return prompt
-    
-    # Consultant
-    def get_prompt_nl_to_sql(self,nl_query:str,step3:str,step4:str,joins,num_examples:int=3):
-        query_plan_context = f"{step3}\n{step4}\n"
-        should_add_where = True
-        unique_values = self.get_unique_values()
-        for table in unique_values:
-            # print(f"Keys: {unique_values[table].keys()}")
-            for column in unique_values[table]:
-                if (table.strip() in step4 or table.strip() in step3) and (column.strip() in step3 or column.strip() in step4):
-                    if should_add_where:
-                        query_plan_context += "Here are examples of the style of data stored in the database:\n"
-                        should_add_where = False
-                    # print(unique_values[table][column])
-                    # print(','.join(np.random.choice(unique_values[table][column], 2, replace=False)))
-                    query_plan_context += f"{table}.{column}: {','.join(np.random.choice(unique_values[table][column], num_examples if len(unique_values[table][column])>=num_examples else len(unique_values[table][column]), replace=False))}\n"
-        query_plan_context += f"{joins}\n"
-        prompt = f"""Given the natural language query: 
-{nl_query}
-and the set of relevant tables, attributes, target values and joins in:
-{query_plan_context}
-Write the corresponding SQL query.
-Build the SQL query in a step-wise manner:
-    Determine the table and the projection attributes.
-    Determine the select statement clauses.
-    Determine the joins.
-    Define the aggregation operations (if applicable).
-Return only the SQL query."""
-        return prompt
