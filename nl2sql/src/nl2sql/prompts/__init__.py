@@ -4,11 +4,14 @@ from .retrieve_relevant_tables_prompt import RetrieveRelevantTablesPrompt
 from .retrieve_relevant_attributes_prompt import RetrieveRelevantTableAttributesPrompt
 from .retrieve_reference_values_prompt import RetrieveReferenceValuesPrompt
 from .generate_sql_query_prompt import GenerateSQLQueryPrompt
+from .double_check_query_prompt import DoubleCheckQueryPrompt
 
 __all__ = [
     "NLDBSchemaDescriptionPrompt",
     "NLTableSummaryPrompt",
     "RetrieveRelevantTablesPrompt",
     "RetrieveRelevantTableAttributesPrompt",
-    "RetrieveReferenceValuesPrompt"
+    "RetrieveReferenceValuesPrompt",
+    "GenerateSQLQueryPrompt",
+    "DoubleCheckQueryPrompt"
 ]
