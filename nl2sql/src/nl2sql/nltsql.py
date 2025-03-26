@@ -8,7 +8,8 @@ from nl2sql.prompts import (
     RetrieveRelevantTablesPrompt,
     RetrieveRelevantTableAttributesPrompt,
     RetrieveReferenceValuesPrompt,
-    GenerateSQLQueryPrompt
+    GenerateSQLQueryPrompt,
+    DoubleCheckQueryPrompt
 )
 
 class NaturalLanguageToSQL:
@@ -37,19 +38,12 @@ class NaturalLanguageToSQL:
     """
     data: dict[str, pd.DataFrame] = {}
 
-    """
-    String columns for each table.
-    """
-    string_columns_df: dict[str, pd.DataFrame] = {}
-
 
     def __init__(self, ai_service: AIService, dict_path_csv,encoding="utf-8",separator=",",has_header=True,ignore_errors=True):
         self.ai_service = ai_service
 
         # Importer
         self.data = {table_name: pd.read_csv(dict_path_csv[table_name], sep=separator, encoding=encoding) for table_name in dict_path_csv}
-
-        self.string_columns_df = {table_name: self.data[table_name].select_dtypes(include=['object']) for table_name in dict_path_csv}
 
         # Indexer / Preprocessing
         self.table_names = list(self.data.keys())
@@ -128,4 +122,10 @@ class NaturalLanguageToSQL:
             reference_values_context += f"`{entry['table']}.{entry['attribute']}` = {', '.join([f'{value}' for value in entry['values']])}\n"
 
         return prompt.run(nl_query, table_attributes_context, reference_values_context, sample_data_context)
+
+    # Generator
+    def double_check_sql_query(self, nl_query: str, sql_query: str,):
+        prompt = DoubleCheckQueryPrompt(self.ai_service)
+        return prompt.run(nl_query, sql_query, self.get_nl_db_schema())
+        
         
