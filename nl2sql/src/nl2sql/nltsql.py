@@ -5,7 +5,8 @@ from nl2sql.services.ai import AIService
 from nl2sql.prompts import (
     NLDBSchemaDescriptionPrompt, 
     NLTableSummaryPrompt,
-    RetrieveRelevantTablesPrompt
+    RetrieveRelevantTablesPrompt,
+    RetrieveRelevantTableAttributesPrompt
 )
 
 class NaturalLanguageToSQL:
@@ -23,6 +24,21 @@ class NaturalLanguageToSQL:
     List of table names.
     """
     table_names: list[str] = []
+
+    """
+    Sample data for each table.
+    """
+    sample_data: dict[str, str] = {}
+
+    """
+    Imported data for each table.
+    """
+    data: dict[str, pd.DataFrame] = {}
+
+    """
+    String columns for each table.
+    """
+    string_columns_df: dict[str, pd.DataFrame] = {}
 
 
     def __init__(self, ai_service: AIService, dict_path_csv,encoding="utf-8",separator=",",has_header=True,ignore_errors=True):
@@ -91,9 +107,15 @@ class NaturalLanguageToSQL:
         return response.choices[0].message.content.strip()
 
     # Context Retrieval
-    def get_query_relevant_tables(self, nl_query:str) -> dict:
+    def retrieve_relevant_tables(self, nl_query:str) -> dict:
         prompt = RetrieveRelevantTablesPrompt(self.ai_service)
         return prompt.run(nl_query, self.get_nl_db_schema())
+
+    def retrieve_relevant_table_attributes(self, nl_query:str, relevant_tables: list[str]) -> dict:
+
+        nl_description_filtered = {table: self.get_nl_db_schema()[table] for table in relevant_tables}
+        prompt = RetrieveRelevantTableAttributesPrompt(self.ai_service)
+        return prompt.run(nl_query, nl_description_filtered)
     
     # Consultant
     def get_prompt_correct_sqlquery(self, error:str):
