@@ -52,9 +52,11 @@ class NL2SQL(
 
         for nl_query in questions:
             # ContextRetrieval  
-            relevant_tables = obj.get_query_relevant_tables(nl_query)
+            relevant_tables = obj.retrieve_relevant_tables(nl_query)
+            relevant_attributes = obj.retrieve_relevant_table_attributes(nl_query, relevant_tables)
 
             step3[nl_query] = obj.generate(obj.get_prompt_relevant_tables_and_attributes_table_filter(nl_query = nl_query, descriptions = description, tables="\n".join(relevant_tables)))
+
 
             prompt_chat = [
                 {"role": "user", "content": obj.get_prompt_relevant_tables_and_attributes_table_filter(nl_query = nl_query, descriptions = description, tables=step3[nl_query])},
