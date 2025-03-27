@@ -1,4 +1,5 @@
-from pandas import DataFrame
+from nl2sql.services.ai import AIService
+from nl2sql.data_sources.data_source import DataSource
 
 class Indexer:
     """
@@ -10,3 +11,7 @@ class Indexer:
     A short summary description of each table.
     """
     _nl_tables_summary: dict[str, str] = {}
+
+    def __init__(self, ai_service: AIService, data_source: DataSource):
+        self.ai_service = ai_service
+        self.data_source = data_source
