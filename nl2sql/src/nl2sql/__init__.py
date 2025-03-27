@@ -14,7 +14,7 @@ from .nltsql import NaturalLanguageToSQL
 from nl2sql.services.ai import AzureOpenAIService
 
 from .data_sources.csv_data_source import CsvDataSource
-# from .indexers import Indexer
+from .indexers import Indexer
 
 class NL2SQL(
     LunarComponent,
@@ -44,10 +44,10 @@ class NL2SQL(
         # )
 
         data_source = CsvDataSource(dict_path_csv)
-        # indexer = Indexer(self.ai_service, data_source)
+        indexer = Indexer(self.ai_service, data_source)
 
-        print(data_source.tables)
-        print(data_source.samples)
+        print(indexer.nl_db_schema)
+        print(indexer.nl_tables_summary)
 
         result = {}
 
