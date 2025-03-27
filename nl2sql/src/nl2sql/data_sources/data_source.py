@@ -9,12 +9,12 @@ class DataSource(ABC):
     _tables: Optional[list[str]] = None
     _samples: Optional[dict[str, DataFrame]] = None
     
-    @abstractmethod
     @property
+    @abstractmethod
     def samples(self) -> dict[str, DataFrame]:
         pass
 
-    @abstractmethod
     @property
+    @abstractmethod
     def tables(self) -> list[str]:
         pass
