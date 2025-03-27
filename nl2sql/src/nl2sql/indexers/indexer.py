@@ -17,8 +17,6 @@ class Indexer:
     """
     _nl_tables_summary: dict[str, str] = {}
 
-    _samples: dict[str, pd.DataFrame] = {}
-
     def __init__(self, ai_service: AIService, data_source: DataSource):
         self.ai_service = ai_service
         self.data_source = data_source
@@ -41,6 +39,4 @@ class Indexer:
 
     @property
     def samples(self) -> dict[str, pd.DataFrame]:
-        if not self._samples:
-            self._samples = self.data_source.samples
-        return self._samples
+        return self.data_source.samples
