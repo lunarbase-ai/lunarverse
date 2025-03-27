@@ -40,7 +40,7 @@ class NL2SQL(
     def run(self, questions: List[str], dict_path_csv: dict):
         data_source = CsvDataSource(dict_path_csv)
         indexer = Indexer(self.ai_service, data_source)
-        context_retriever = ContextRetriever(self.ai_service, data_source, indexer)
+        context_retriever = ContextRetriever(self.ai_service, indexer)
 
         generator = Generator(self.ai_service, context_retriever)
 

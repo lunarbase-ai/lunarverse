@@ -4,6 +4,7 @@ from nl2sql.prompts import (
 )
 from nl2sql.services.ai import AIService
 from nl2sql.data_sources.data_source import DataSource
+import pandas as pd
 
 class Indexer:
     """
@@ -15,6 +16,8 @@ class Indexer:
     A short summary description of each table.
     """
     _nl_tables_summary: dict[str, str] = {}
+
+    _samples: dict[str, pd.DataFrame] = {}
 
     def __init__(self, ai_service: AIService, data_source: DataSource):
         self.ai_service = ai_service
@@ -35,3 +38,9 @@ class Indexer:
             for table_name in self.data_source.tables:
                 self._nl_tables_summary[table_name] = prompt.run(self.nl_db_schema.get(table_name))
         return self._nl_tables_summary
+
+    @property
+    def samples(self) -> dict[str, pd.DataFrame]:
+        if not self._samples:
+            self._samples = self.data_source.samples
+        return self._samples
