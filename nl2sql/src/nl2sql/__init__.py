@@ -15,6 +15,7 @@ from nl2sql.services.ai import AzureOpenAIService
 
 from .data_sources.csv_data_source import CsvDataSource
 from .indexers import Indexer
+from .retrievers import ContextRetriever
 
 class NL2SQL(
     LunarComponent,
@@ -45,11 +46,17 @@ class NL2SQL(
 
         data_source = CsvDataSource(dict_path_csv)
         indexer = Indexer(self.ai_service, data_source)
+        retriever = ContextRetriever(self.ai_service, indexer)
 
-        print(indexer.nl_db_schema)
-        print(indexer.nl_tables_summary)
 
         result = {}
+
+        for nl_query in questions:
+            context = retriever.retrieve(nl_query)
+            print(nl_query)
+            print(context["relevant_tables"])
+            print(context["relevant_attributes"])
+            print(context["reference_values"])
 
         # for nl_query in questions:
         #     # ContextRetrieval  
