@@ -10,12 +10,12 @@ from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
 
-from .nltsql import NaturalLanguageToSQL
 from nl2sql.services.ai import AzureOpenAIService
 
-from .data_sources.csv_data_source import CsvDataSource
-from .indexers import Indexer
-from .retrievers import ContextRetriever
+from nl2sql.data_sources.csv_data_source import CsvDataSource
+from nl2sql.indexers.indexer import Indexer
+from nl2sql.retrievers.context_retriever import ContextRetriever
+from nl2sql.generators.generator import Generator
 
 class NL2SQL(
     LunarComponent,
@@ -39,35 +39,16 @@ class NL2SQL(
         })
 
     def run(self, questions: List[str], dict_path_csv: dict):
-        # obj = NaturalLanguageToSQL(
-        #     dict_path_csv=dict_path_csv,
-        #     ai_service=self.ai_service,
-        # )
-
         data_source = CsvDataSource(dict_path_csv)
+
         indexer = Indexer(self.ai_service, data_source)
-        retriever = ContextRetriever(self.ai_service, indexer)
+        context_retriever = ContextRetriever(self.ai_service, data_source, indexer)
+
+        generator = Generator(self.ai_service, indexer, context_retriever)
 
 
         result = {}
 
         for nl_query in questions:
-            context = retriever.retrieve(nl_query)
-            print(nl_query)
-            print(context["relevant_tables"])
-            print(context["relevant_attributes"])
-            print(context["reference_values"])
-
-        # for nl_query in questions:
-        #     # ContextRetrieval  
-        #     relevant_tables = obj.retrieve_relevant_tables(nl_query)
-
-        #     relevant_attributes = obj.retrieve_relevant_table_attributes(nl_query, relevant_tables)
-
-        #     reference_values = obj.retrieve_reference_values(nl_query, relevant_tables, relevant_attributes)
-
-        #     # Generation
-        #     sql_query = obj.generate_sql_query(nl_query, relevant_tables, relevant_attributes, reference_values)
-            
-        #     result[nl_query] = sql_query
+            result[nl_query] = generator.generate(nl_query)
         return result
