@@ -1,14 +1,12 @@
 from nl2sql.services.ai import AIService
-from nl2sql.indexers.indexer import Indexer
 from nl2sql.retrievers.context_retriever import ContextRetriever
 from nl2sql.prompts import GenerateSQLQueryPrompt, DoubleCheckQueryPrompt
 
 
 
 class Generator:
-    def __init__(self, ai_service: AIService, indexer: Indexer, context_retriever: ContextRetriever) -> None:
+    def __init__(self, ai_service: AIService, context_retriever: ContextRetriever) -> None:
         self.ai_service = ai_service
-        self.indexer = indexer
         self.context_retriever = context_retriever
 
         self.generator_prompt = GenerateSQLQueryPrompt(self.ai_service)
