@@ -8,7 +8,8 @@ from lunarcore.component.lunar_component import LunarComponent
 class FileToText(
     LunarComponent,
     component_name="File to Text",
-    component_description="""Converts a file to text using Docling. It receives the file path as input.""",
+    component_description="""Converts a file to text using Docling. It receives the file path as input. Supported input
+    file types are PDF, DOCX, XLSX, HTML, images, and more. """,
     input_types={"file_input": DataType.TEXT},
     output_type=DataType.TEXT,
     component_group=ComponentGroup.UTILS,
