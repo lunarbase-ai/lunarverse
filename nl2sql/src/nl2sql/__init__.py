@@ -10,11 +10,11 @@ from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
 
-from nl2sql.services.ai import AzureOpenAIService
-from nl2sql.data_sources.csv_data_source import CsvDataSource
-from nl2sql.indexers.indexer import Indexer
-from nl2sql.retrievers.context_retriever import ContextRetriever
-from nl2sql.generators.generator import Generator
+from lunar_nl2sql.services.ai import AzureOpenAIService
+from lunar_nl2sql.data_sources.csv_data_source import CsvDataSource
+from lunar_nl2sql.indexers.indexer import Indexer
+from lunar_nl2sql.retrievers.context_retriever import ContextRetriever
+from lunar_nl2sql.generators.generator import Generator
 
 class NL2SQL(
     LunarComponent,
