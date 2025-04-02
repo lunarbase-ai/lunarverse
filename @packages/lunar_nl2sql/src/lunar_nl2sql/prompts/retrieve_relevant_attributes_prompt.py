@@ -2,9 +2,11 @@ from lunar_nl2sql.services.ai import AIService
 from pydantic import BaseModel
 from typing import List, Dict, Any
 
+
 class TableAttributePair(BaseModel):
     table: str
     attributes: List[str]
+
 
 class ResponseFormat(BaseModel):
     table_attributes: List[TableAttributePair]
@@ -21,15 +23,16 @@ class ResponseFormat(BaseModel):
                             "table": {"type": "string"},
                             "attributes": {
                                 "type": "array",
-                                "items": {"type": "string"}
-                            }
+                                "items": {"type": "string"},
+                            },
                         },
-                        "required": ["table", "attributes"]
-                    }
+                        "required": ["table", "attributes"],
+                    },
                 }
             },
-            "required": ["table_attributes"]
+            "required": ["table_attributes"],
         }
+
 
 class RetrieveRelevantTableAttributesPrompt:
     USER_MESSAGE = """
@@ -56,7 +59,7 @@ class RetrieveRelevantTableAttributesPrompt:
         response = self.ai_service.run(
             messages=[{"role": "user", "content": prompt}],
             type="json",
-            response_format=ResponseFormat
+            response_format=ResponseFormat,
         )
 
         value = response.choices[0].message.parsed

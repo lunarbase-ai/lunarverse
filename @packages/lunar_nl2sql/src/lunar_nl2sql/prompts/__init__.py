@@ -13,5 +13,5 @@ __all__ = [
     "RetrieveRelevantTableAttributesPrompt",
     "RetrieveReferenceValuesPrompt",
     "GenerateSQLQueryPrompt",
-    "DoubleCheckQueryPrompt"
+    "DoubleCheckQueryPrompt",
 ]
