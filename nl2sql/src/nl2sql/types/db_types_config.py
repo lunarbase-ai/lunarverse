@@ -9,5 +9,7 @@ class DBTypesConfig(BaseModel):
 class CsvConfig(BaseModel):
     csv_paths: dict[str, str]
 
+class SqliteConfig(BaseModel):
+    db_path: str
 
-__all__ = ["DBTypesConfig", "CsvConfig"]
+__all__ = ["DBTypesConfig", "CsvConfig", "SqliteConfig"]
