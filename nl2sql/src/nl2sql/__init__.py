@@ -20,7 +20,7 @@ class NL2SQL(
     LunarComponent,
     component_name="NL2SQL",
     component_description="""Transforms natural language queries into SQL queries.""",
-    input_types={"questions": DataType.LIST, "dict_path_csv": DataType.JSON},
+    input_types={"questions": DataType.LIST, "db_type": DataType.STRING, "config": DataType.JSON},
     output_type=DataType.JSON,
     component_group=ComponentGroup.NLP,
     openai_api_version="$LUNARENV::OPENAI_API_VERSION",
