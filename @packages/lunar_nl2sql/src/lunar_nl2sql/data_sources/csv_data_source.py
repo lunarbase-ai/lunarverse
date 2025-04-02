@@ -4,8 +4,8 @@ import pandas as pd
 class CsvDataSource(DataSource):
     _data: dict[str, pd.DataFrame] = {}
     
-    def __init__(self, dict_path_csv: dict,encoding="utf-8",separator=",",has_header=True,ignore_errors=True):
-        self._data = {table_name: pd.read_csv(dict_path_csv[table_name], sep=separator, encoding=encoding) for table_name in dict_path_csv}
+    def __init__(self, csv_paths: dict,encoding="utf-8",separator=",",has_header=True,ignore_errors=True):
+        self._data = {table_name: pd.read_csv(csv_paths[table_name], sep=separator, encoding=encoding) for table_name in csv_paths}
 
     @property
     def tables(self) -> list[str]:
