@@ -1,11 +1,24 @@
 from lunar_nl2sql.data_sources.data_source import DataSource
 import pandas as pd
 
+
 class CsvDataSource(DataSource):
     _data: dict[str, pd.DataFrame] = {}
-    
-    def __init__(self, csv_paths: dict,encoding="utf-8",separator=",",has_header=True,ignore_errors=True):
-        self._data = {table_name: pd.read_csv(csv_paths[table_name], sep=separator, encoding=encoding) for table_name in csv_paths}
+
+    def __init__(
+        self,
+        csv_paths: dict,
+        encoding="utf-8",
+        separator=",",
+        has_header=True,
+        ignore_errors=True,
+    ):
+        self._data = {
+            table_name: pd.read_csv(
+                csv_paths[table_name], sep=separator, encoding=encoding
+            )
+            for table_name in csv_paths
+        }
 
     @property
     def tables(self) -> list[str]:
@@ -16,9 +29,11 @@ class CsvDataSource(DataSource):
     @property
     def samples(self) -> dict[str, pd.DataFrame]:
         if not self._samples:
-            self._samples = {table_name: self._get_sample(table_name, 5) for table_name in self._tables}
+            self._samples = {
+                table_name: self._get_sample(table_name, 5)
+                for table_name in self._tables
+            }
         return self._samples
-
 
     def _get_sample(self, table_name: str, n: int = 5) -> pd.DataFrame:
         sample_df = self._data[table_name].sample(n=n, random_state=0)

@@ -4,6 +4,7 @@ from typing import List, Dict, Any
 
 class AIService(ABC):
     _client = None
+
     def __init__(self):
         pass
 

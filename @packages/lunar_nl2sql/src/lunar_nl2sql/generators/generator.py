@@ -3,16 +3,15 @@ from lunar_nl2sql.retrievers.context_retriever import ContextRetriever
 from lunar_nl2sql.prompts import GenerateSQLQueryPrompt, DoubleCheckQueryPrompt
 
 
-
 class Generator:
-    def __init__(self, ai_service: AIService, context_retriever: ContextRetriever) -> None:
+    def __init__(
+        self, ai_service: AIService, context_retriever: ContextRetriever
+    ) -> None:
         self.ai_service = ai_service
         self.context_retriever = context_retriever
 
         self.generator_prompt = GenerateSQLQueryPrompt(self.ai_service)
         self.double_check_prompt = DoubleCheckQueryPrompt(self.ai_service)
-
-
 
     def generate(self, nl_query: str) -> str:
         context = self.context_retriever.retrieve(nl_query)
@@ -45,17 +44,12 @@ class Generator:
             reference_values_context += f"`{entry['table']}.{entry['attribute']}` = {', '.join([f'{value}' for value in entry['values']])}\n"
 
         sql_query = self.generator_prompt.run(
-            nl_query, table_attributes_context, reference_values_context, sample_data_context
+            nl_query,
+            table_attributes_context,
+            reference_values_context,
+            sample_data_context,
         )
 
         return self.double_check_prompt.run(
             nl_query, sql_query, context["relevant_nl_db_schema"]
         )
-            
-
-
-            
-            
-                        
-        
-        

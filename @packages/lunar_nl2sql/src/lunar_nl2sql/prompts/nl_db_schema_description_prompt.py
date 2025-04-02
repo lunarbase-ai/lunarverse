@@ -1,7 +1,8 @@
 from lunar_nl2sql.services.ai import AIService
 
+
 class NLDBSchemaDescriptionPrompt:
-    USER_MESSAGE="""
+    USER_MESSAGE = """
     Given the table sample below:
     Table name: {table_name}
     {sample}
@@ -20,13 +21,20 @@ class NLDBSchemaDescriptionPrompt:
     Do not return the original table sample.
     
     """
+
     def __init__(self, ai_service: AIService):
         self.ai_service = ai_service
 
-
     def run(self, table_name: str, sample: str) -> str:
-        response = self.ai_service.run(messages=[
-            {"role": "user", "content": self.USER_MESSAGE.format(table_name=table_name, sample=sample)},
-        ])
+        response = self.ai_service.run(
+            messages=[
+                {
+                    "role": "user",
+                    "content": self.USER_MESSAGE.format(
+                        table_name=table_name, sample=sample
+                    ),
+                },
+            ]
+        )
 
         return response.choices[0].message.content.strip()

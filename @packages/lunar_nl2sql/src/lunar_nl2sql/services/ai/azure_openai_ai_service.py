@@ -4,7 +4,7 @@ from typing import List, Dict, Any
 
 
 class AzureOpenAIService(AIService):
-    def __init__(self, configuration: dict):    
+    def __init__(self, configuration: dict):
         super().__init__()
         self.configuration = configuration
 
@@ -29,19 +29,15 @@ class AzureOpenAIService(AIService):
     def run_json(self, messages: List[Dict[str, str]], **kwargs):
         try:
             return self.client.beta.chat.completions.parse(
-                messages=messages, 
-                model=self.configuration["model"],
-                **kwargs
+                messages=messages, model=self.configuration["model"], **kwargs
             )
         except Exception as e:
             raise e
-    
+
     def run_text(self, messages: List[Dict[str, str]], **kwargs):
         try:
             return self.client.chat.completions.create(
-                messages=messages, 
-                model=self.configuration["model"],
-                **kwargs
+                messages=messages, model=self.configuration["model"], **kwargs
             )
         except Exception as e:
             raise e

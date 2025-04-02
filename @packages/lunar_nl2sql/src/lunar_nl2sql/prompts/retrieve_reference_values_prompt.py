@@ -1,10 +1,12 @@
 from lunar_nl2sql.services.ai import AIService
 from pydantic import BaseModel
 
+
 class ReferenceValue(BaseModel):
     table: str
     attribute: str
     values: list[str]
+
 
 class ResponseFormat(BaseModel):
     references: list[ReferenceValue]
@@ -20,16 +22,13 @@ class ResponseFormat(BaseModel):
                         "properties": {
                             "table": {"type": "string"},
                             "attribute": {"type": "string"},
-                            "values": {
-                                "type": "array",
-                                "items": {"type": "string"}
-                            }
+                            "values": {"type": "array", "items": {"type": "string"}},
                         },
-                        "required": ["table", "values"]
-                    }
+                        "required": ["table", "values"],
+                    },
                 }
             },
-            "required": ["references"]
+            "required": ["references"],
         }
 
 
@@ -56,17 +55,27 @@ class RetrieveReferenceValuesPrompt:
         ]
     }}
     """
-    
+
     def __init__(self, ai_service: AIService):
         self.ai_service = ai_service
 
-    def run(self, nl_query: str, description: dict[str, str], relevant_tables_and_attributes: dict[str, list[str]]):
-        prompt = self.USER_MESSAGE.format(nl_query=nl_query, description=description, relevant_tables_and_attributes=relevant_tables_and_attributes)
-        response = self.ai_service.run(messages=[
-            {"role": "user", "content": prompt},
-        ], type="json", response_format=ResponseFormat)
+    def run(
+        self,
+        nl_query: str,
+        description: dict[str, str],
+        relevant_tables_and_attributes: dict[str, list[str]],
+    ):
+        prompt = self.USER_MESSAGE.format(
+            nl_query=nl_query,
+            description=description,
+            relevant_tables_and_attributes=relevant_tables_and_attributes,
+        )
+        response = self.ai_service.run(
+            messages=[
+                {"role": "user", "content": prompt},
+            ],
+            type="json",
+            response_format=ResponseFormat,
+        )
         value = response.choices[0].message.parsed
         return [item.model_dump() for item in value.references]
-
-
-
