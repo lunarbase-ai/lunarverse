@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from lunar_nl2sql.data_access.typing import TableSamples, Tables
+from lunar_nl2sql.data_access.types import TableSamples, Tables
 
 
 class DataAccess(ABC):

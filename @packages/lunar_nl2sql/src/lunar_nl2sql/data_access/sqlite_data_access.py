@@ -1,7 +1,7 @@
 import sqlite3
 import pandas as pd
 from .data_access import DataAccess
-from lunar_nl2sql.data_access.typing import Tables, TableSamples
+from lunar_nl2sql.data_access.types import Tables, TableSamples
 
 
 class SqliteDataAccess(DataAccess):

@@ -1,6 +1,6 @@
 from .data_access import DataAccess
 import pandas as pd
-from lunar_nl2sql.data_access.typing import TableSamples, Tables
+from lunar_nl2sql.data_access.types import TableSamples, Tables
 
 
 class CsvDataAccess(DataAccess):
