@@ -1,8 +1,8 @@
-from lunar_nl2sql.data_sources.data_source import DataSource
+from .data_access import DataAccess
 import pandas as pd
 
 
-class CsvDataSource(DataSource):
+class CsvDataSource(DataAccess):
     _data: dict[str, pd.DataFrame] = {}
 
     def __init__(

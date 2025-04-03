@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from pandas import DataFrame
 
 
-class DataSource(ABC):
+class DataAccess(ABC):
     _tables: list[str] = []
     _samples: dict[str, DataFrame] = {}
 
