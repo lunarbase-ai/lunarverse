@@ -2,6 +2,7 @@ from lunar_nl2sql.prompts import NLDBSchemaDescriptionPrompt, NLTableSummaryProm
 from lunar_nl2sql.services.ai import AIService
 from lunar_nl2sql.data_access.data_access import DataAccess
 import pandas as pd
+from lunar_nl2sql.data_access.typing import TableSamples
 
 
 class Indexer:
@@ -26,7 +27,7 @@ class Indexer:
             prompt = NLDBSchemaDescriptionPrompt(self.ai_service)
             for table_name in self.data_access.tables:
                 self._nl_db_schema[table_name] = prompt.run(
-                    table_name, self.data_access.samples.get(table_name)
+                    table_name, self.data_access.samples[table_name]
                 )
         return self._nl_db_schema
 
@@ -41,5 +42,5 @@ class Indexer:
         return self._nl_tables_summary
 
     @property
-    def samples(self) -> dict[str, pd.DataFrame]:
+    def samples(self) -> TableSamples:
         return self.data_access.samples
