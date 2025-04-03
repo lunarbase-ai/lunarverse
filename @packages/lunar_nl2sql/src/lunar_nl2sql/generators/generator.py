@@ -20,13 +20,13 @@ class Generator:
         table_attributes_context = ""
         sample_data_context = ""
 
-        for table in context["relevant_tables"]:
-            sample_table_data = context["relevant_sample_data"][table]
+        for table in context.relevant_tables:
+            sample_table_data = context.relevant_sample_data[table]
 
             table_attributes_context += f"- Table: {table}"
 
             attributes = []
-            for value in context["relevant_attributes"]:
+            for value in context.relevant_attributes:
                 if value.table == table:
                     for attribute in value.attributes:
                         attributes.append(f"`{attribute}`")
@@ -41,8 +41,8 @@ class Generator:
 
         reference_values_context = ""
 
-        for entry in context["reference_values"]:
-            reference_values_context += f"`{entry['table']}.{entry['attribute']}` = {', '.join([f'{value}' for value in entry['values']])}\n"
+        for entry in context.reference_values:
+            reference_values_context += f"`{entry.table}.{entry.attribute}` = {', '.join([f'{value}' for value in entry.values])}\n"
 
         sql_query = self.generator_prompt.run(
             nl_query,
@@ -52,5 +52,5 @@ class Generator:
         )
 
         return self.double_check_prompt.run(
-            nl_query, sql_query, context["relevant_nl_db_schema"]
+            nl_query, sql_query, context.relevant_nl_db_schema
         )
