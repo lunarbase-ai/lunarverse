@@ -1,6 +1,6 @@
 from lunar_nl2sql.prompts import NLDBSchemaDescriptionPrompt, NLTableSummaryPrompt
 from lunar_nl2sql.services.ai import AIService
-from lunar_nl2sql.data_sources.data_source import DataSource
+from lunar_nl2sql.data_access.data_access import DataAccess
 import pandas as pd
 
 
@@ -16,17 +16,17 @@ class Indexer:
     """
     _nl_tables_summary: dict[str, str] = {}
 
-    def __init__(self, ai_service: AIService, data_source: DataSource):
+    def __init__(self, ai_service: AIService, data_access: DataAccess):
         self.ai_service = ai_service
-        self.data_source = data_source
+        self.data_access = data_access
 
     @property
     def nl_db_schema(self) -> dict[str, str]:
         if not self._nl_db_schema:
             prompt = NLDBSchemaDescriptionPrompt(self.ai_service)
-            for table_name in self.data_source.tables:
+            for table_name in self.data_access.tables:
                 self._nl_db_schema[table_name] = prompt.run(
-                    table_name, self.data_source.samples.get(table_name)
+                    table_name, self.data_access.samples.get(table_name)
                 )
         return self._nl_db_schema
 
@@ -34,7 +34,7 @@ class Indexer:
     def nl_tables_summary(self) -> dict[str, str]:
         if not self._nl_tables_summary:
             prompt = NLTableSummaryPrompt(self.ai_service)
-            for table_name in self.data_source.tables:
+            for table_name in self.data_access.tables:
                 self._nl_tables_summary[table_name] = prompt.run(
                     self.nl_db_schema.get(table_name)
                 )
@@ -42,4 +42,4 @@ class Indexer:
 
     @property
     def samples(self) -> dict[str, pd.DataFrame]:
-        return self.data_source.samples
+        return self.data_access.samples

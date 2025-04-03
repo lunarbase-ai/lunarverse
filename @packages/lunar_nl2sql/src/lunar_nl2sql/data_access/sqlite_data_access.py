@@ -1,9 +1,8 @@
 import sqlite3
 import pandas as pd
-from .data_source import DataSource
+from .data_access import DataAccess
 
-
-class SqliteDataSource(DataSource):
+class SqliteDataAccess(DataAccess):
 
     def __init__(self, db_path: str):
         self.connection = sqlite3.connect(db_path)
