@@ -6,6 +6,7 @@
 
 from typing import Any, List
 
+from lunar_nl2sql import data_access
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
@@ -14,7 +15,7 @@ from lunar_nl2sql.services.ai import AzureOpenAIService
 from lunar_nl2sql.indexers.indexer import Indexer
 from lunar_nl2sql.retrievers.context_retriever import ContextRetriever
 from lunar_nl2sql.generators.generator import Generator
-from nl2sql.data_source_factory import data_source_factory
+from nl2sql.data_access_factory import data_access_factory
 
 
 class NL2SQL(
@@ -45,9 +46,9 @@ class NL2SQL(
         )
 
     def run(self, questions: List[str], db_type: str, db_config: dict) -> dict:
-        data_source = data_source_factory(db_type, db_config)
+        data_access = data_access_factory(db_type, db_config)
 
-        indexer = Indexer(self.ai_service, data_source)
+        indexer = Indexer(self.ai_service, data_access)
         context_retriever = ContextRetriever(self.ai_service, indexer)
 
         generator = Generator(self.ai_service, context_retriever)

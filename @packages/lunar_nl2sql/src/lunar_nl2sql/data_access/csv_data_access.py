@@ -2,7 +2,7 @@ from .data_access import DataAccess
 import pandas as pd
 
 
-class CsvDataSource(DataAccess):
+class CsvDataAccess(DataAccess):
     _data: dict[str, pd.DataFrame] = {}
 
     def __init__(

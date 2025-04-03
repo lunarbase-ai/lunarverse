@@ -1,5 +1,5 @@
-from .data_source import DataSource
-from .csv_data_source import CsvDataSource
-from .sqlite_data_source import SqliteDataSource
+from .data_access import DataAccess
+from .csv_data_access import CsvDataAccess
+from .sqlite_data_access import SqliteDataAccess
 
-__all__ = ["DataSource", "CsvDataSource", "SqliteDataSource"]
+__all__ = ["DataAccess", "CsvDataAccess", "SqliteDataAccess"]
