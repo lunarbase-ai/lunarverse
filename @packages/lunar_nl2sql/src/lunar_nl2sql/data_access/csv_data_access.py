@@ -1,5 +1,6 @@
 from .data_access import DataAccess
 import pandas as pd
+from lunar_nl2sql.data_access.typing import TableSamples, Tables
 
 
 class CsvDataAccess(DataAccess):
@@ -21,18 +22,20 @@ class CsvDataAccess(DataAccess):
         }
 
     @property
-    def tables(self) -> list[str]:
+    def tables(self) -> Tables:
         if not self._tables:
-            self._tables = list(self._data.keys())
+            self._tables = Tables(list(self._data.keys()))
         return self._tables
 
     @property
-    def samples(self) -> dict[str, pd.DataFrame]:
+    def samples(self) -> TableSamples:
         if not self._samples:
-            self._samples = {
-                table_name: self._get_sample(table_name, 5)
-                for table_name in self._tables
-            }
+            self._samples = TableSamples(
+                {
+                    table_name: self._get_sample(table_name, 5)
+                    for table_name in self._tables
+                }
+            )
         return self._samples
 
     def _get_sample(self, table_name: str, n: int = 5) -> pd.DataFrame:

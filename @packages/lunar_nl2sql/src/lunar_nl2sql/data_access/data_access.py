@@ -1,17 +1,17 @@
 from abc import ABC, abstractmethod
-from pandas import DataFrame
+from lunar_nl2sql.data_access.typing import TableSamples, Tables
 
 
 class DataAccess(ABC):
-    _tables: list[str] = []
-    _samples: dict[str, DataFrame] = {}
+    _tables: Tables = []
+    _samples: TableSamples = {}
 
     @property
     @abstractmethod
-    def samples(self) -> dict[str, DataFrame]:
+    def samples(self) -> TableSamples:
         pass
 
     @property
     @abstractmethod
-    def tables(self) -> list[str]:
+    def tables(self) -> Tables:
         pass

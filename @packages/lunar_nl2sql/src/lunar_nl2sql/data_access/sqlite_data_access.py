@@ -1,6 +1,8 @@
 import sqlite3
 import pandas as pd
 from .data_access import DataAccess
+from lunar_nl2sql.data_access.typing import Tables, TableSamples
+
 
 class SqliteDataAccess(DataAccess):
 
@@ -8,25 +10,27 @@ class SqliteDataAccess(DataAccess):
         self.connection = sqlite3.connect(db_path)
 
     @property
-    def tables(self) -> list[str]:
+    def tables(self) -> Tables:
         if not self._tables:
             self._tables = self._get_tables()
         return self._tables
 
-    def _get_tables(self) -> list[str]:
+    def _get_tables(self) -> Tables:
         cursor = self.connection.cursor()
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
         tables = [row[0] for row in cursor.fetchall()]
         cursor.close()
-        return tables
+        return Tables(tables)
 
     @property
-    def samples(self) -> dict[str, pd.DataFrame]:
+    def samples(self) -> TableSamples:
         if not self._samples:
-            self._samples = {
-                table_name: self._get_sample(table_name, 5)
-                for table_name in self._tables
-            }
+            self._samples = TableSamples(
+                {
+                    table_name: self._get_sample(table_name, 5)
+                    for table_name in self._tables
+                }
+            )
         return self._samples
 
     def _get_sample(self, table_name: str, n: int = 5) -> pd.DataFrame:
