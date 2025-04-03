@@ -1,3 +1,5 @@
+from lunar_nl2sql.data_access.types import Tables
+from lunar_nl2sql.indexers.types import NLDBSchema
 from lunar_nl2sql.services.ai import AIService
 from lunar_nl2sql.indexers.indexer import Indexer
 from lunar_nl2sql.prompts import (
@@ -5,6 +7,7 @@ from lunar_nl2sql.prompts import (
     RetrieveRelevantTableAttributesPrompt,
     RetrieveReferenceValuesPrompt,
 )
+from lunar_nl2sql.retrievers.types import TableAttributesCollection
 
 
 class ContextRetriever:
@@ -16,9 +19,7 @@ class ContextRetriever:
     def retrieve(self, nl_query: str) -> dict[str, str]:
         relevant_tables = self._retrieve_relevant_tables(nl_query)
 
-        relevant_nl_db_schema = {
-            table: self.indexer.nl_db_schema[table] for table in relevant_tables
-        }
+        relevant_nl_db_schema = self._retrieve_relevant_nl_db_schema(relevant_tables)
 
         relevant_attributes = self._retrieve_relevant_table_attributes(
             nl_query, relevant_nl_db_schema
@@ -37,27 +38,30 @@ class ContextRetriever:
             "relevant_nl_db_schema": relevant_nl_db_schema,
         }
 
-    def _retrieve_relevant_tables(self, nl_query: str) -> dict[str, str]:
+    def _retrieve_relevant_tables(self, nl_query: str) -> Tables:
         prompt = RetrieveRelevantTablesPrompt(self.ai_service)
-        return prompt.run(nl_query, self.indexer.nl_db_schema)
+        return Tables(prompt.run(nl_query, self.indexer.nl_db_schema))
+
+    def _retrieve_relevant_nl_db_schema(self, relevant_tables: Tables) -> NLDBSchema:
+        return NLDBSchema({table: self.indexer.nl_db_schema[table] for table in relevant_tables})
 
     def _retrieve_relevant_table_attributes(
-        self, nl_query: str, relevant_nl_db_schema: dict[str, str]
-    ) -> dict[str, str]:
+        self, nl_query: str, relevant_nl_db_schema: NLDBSchema
+    ) -> TableAttributesCollection:
         prompt = RetrieveRelevantTableAttributesPrompt(self.ai_service)
-        return prompt.run(nl_query, relevant_nl_db_schema)
-
+        return TableAttributesCollection(prompt.run(nl_query, relevant_nl_db_schema))
+    
     def _retrieve_reference_values(
         self,
         nl_query: str,
         relevant_attributes: dict[str, str],
-        relevant_nl_db_schema: dict[str, str],
+        relevant_nl_db_schema: NLDBSchema,
     ) -> dict[str, str]:
         prompt = RetrieveReferenceValuesPrompt(self.ai_service)
         return prompt.run(nl_query, relevant_nl_db_schema, relevant_attributes)
 
     def _retrieve_relevant_sample_data(
-        self, relevant_tables: list[str]
+        self, relevant_tables: Tables
     ) -> dict[str, str]:
         relevant_sample_data = {
             table: self.indexer.samples[table] for table in relevant_tables

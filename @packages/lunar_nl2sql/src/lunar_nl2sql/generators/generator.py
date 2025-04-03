@@ -15,6 +15,7 @@ class Generator:
 
     def generate(self, nl_query: str) -> str:
         context = self.context_retriever.retrieve(nl_query)
+        print(context)
 
         table_attributes_context = ""
         sample_data_context = ""
@@ -26,8 +27,8 @@ class Generator:
 
             attributes = []
             for value in context["relevant_attributes"]:
-                if value["table"] == table:
-                    for attribute in value["attributes"]:
+                if value.table == table:
+                    for attribute in value.attributes:
                         attributes.append(f"`{attribute}`")
 
                         attribute_sample_data = sample_table_data[attribute].to_list()
