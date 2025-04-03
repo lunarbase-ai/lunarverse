@@ -4,8 +4,6 @@ from pydantic import RootModel, ConfigDict
 
 
 class Tables(RootModel):
-    model_config = ConfigDict(arbitrary_types_allowed=True)
-
     root: List[str]
 
     def __iter__(self):
