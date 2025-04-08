@@ -39,9 +39,7 @@ class Indexer:
             prompt = NLTableSummaryPrompt(self.ai_service)
             summary = {}
             for table_name in self.data_access.tables:
-                summary[table_name] = prompt.run(
-                    self.nl_db_schema.get(table_name)
-                )
+                summary[table_name] = prompt.run(self.nl_db_schema.get(table_name))
             self._nl_tables_summary = NLTablesSummary(summary)
         return self._nl_tables_summary
 
