@@ -1,0 +1,111 @@
+{
+    "id": "231cf738-805a-4f5c-b614-878c0483c0ac",
+    "name": "Gmail Attachment component example",
+    "description": "A one-component workflow illustrating the use of Gmail Attachment component.",
+    "version": null,
+    "components": [
+        {
+            "id": "1171bfa3-92e0-4023-86b3-629aa2129319",
+            "workflow_id": null,
+            "name": "Gmail Attachment",
+            "class_name": "GmailAttachment",
+            "description": "This component automates the process of retrieving email attachments from unread messages in the primary Gmail inbox. It scans for unread emails, downloads all available attachments, and marks the emails as read once processed.",
+            "group": "Data Extraction",
+            "inputs": [
+                {
+                    "id": "3488a200-51b5-4168-b294-49dec8fcc8af",
+                    "key": "username",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "1171bfa3-92e0-4023-86b3-629aa2129319"
+                },
+                {
+                    "id": "2b5df80a-349a-43a6-b909-44bc73f5797c",
+                    "key": "password",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "1171bfa3-92e0-4023-86b3-629aa2129319"
+                },
+                {
+                    "id": "3dba0d02-408c-43de-b9bc-d09fbb646ffb",
+                    "key": "status_filter",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "1171bfa3-92e0-4023-86b3-629aa2129319"
+                },
+                {
+                    "id": "cb368602-1948-4282-88fe-fc724d10bd07",
+                    "key": "start_date",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "1171bfa3-92e0-4023-86b3-629aa2129319"
+                },
+                {
+                    "id": "9bb29533-c8cf-47cd-8e45-a1dec1435be9",
+                    "key": "sender",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "1171bfa3-92e0-4023-86b3-629aa2129319"
+                },
+                {
+                    "id": "04ce4017-46ff-4d4a-bf1d-2da15056bd23",
+                    "key": "recipient",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "1171bfa3-92e0-4023-86b3-629aa2129319"
+                },
+                {
+                    "id": "2283077b-e43c-4fd1-872e-69920561579d",
+                    "key": "subject",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "1171bfa3-92e0-4023-86b3-629aa2129319"
+                },
+                {
+                    "id": "83b03e9f-a351-4bf5-877a-51a422263bd0",
+                    "key": "content",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "1171bfa3-92e0-4023-86b3-629aa2129319"
+                }
+            ],
+            "output": {
+                "data_type": "TEXT",
+                "value": ":undef:"
+            },
+            "label": "GmailAttachment_1171bfa3-92e0-4023-86b3-629aa2129319",
+            "configuration": {
+                "force_run": false
+            },
+            "version": null,
+            "is_custom": false,
+            "is_terminal": true,
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "timeout": 600,
+            "component_code": "gmail_attachment/gmail_attachment/__init__.py",
+            "component_code_requirements": [],
+            "component_example_path": null,
+            "invalid_errors": []
+        }
+    ],
+    "dependencies": [],
+    "timeout": 3600,
+    "auto_component_spacing": {
+        "dx": 450.0,
+        "dy": 350.0,
+        "x0": 0.0,
+        "y0": 0.0
+    },
+    "invalid_errors": []
+}
