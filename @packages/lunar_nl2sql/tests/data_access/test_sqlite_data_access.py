@@ -7,7 +7,6 @@ from lunar_nl2sql.data_access.types import Tables, TableSamples
 
 @pytest.fixture
 def sqlite_data_access(tmp_path):
-    """Fixture that creates a SqliteDataAccess instance with a temporary database containing test data."""
     db_path = tmp_path / "test.db"
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
