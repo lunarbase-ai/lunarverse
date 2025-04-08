@@ -1,6 +1,10 @@
 from lunar_nl2sql.data_access.types import Tables, TableSamples
 from lunar_nl2sql.indexers.types import NLDBSchema
-from lunar_nl2sql.retrievers.types import TableAttributesCollection, TableReferenceValuesCollection, Context
+from lunar_nl2sql.retrievers.types import (
+    TableAttributesCollection,
+    TableReferenceValuesCollection,
+    Context,
+)
 from lunar_nl2sql.services.ai import AIService
 from lunar_nl2sql.indexers.indexer import Indexer
 from lunar_nl2sql.prompts import (
@@ -43,14 +47,16 @@ class ContextRetriever:
         return Tables(prompt.run(nl_query, self.indexer.nl_db_schema))
 
     def _retrieve_relevant_nl_db_schema(self, relevant_tables: Tables) -> NLDBSchema:
-        return NLDBSchema({table: self.indexer.nl_db_schema[table] for table in relevant_tables})
+        return NLDBSchema(
+            {table: self.indexer.nl_db_schema[table] for table in relevant_tables}
+        )
 
     def _retrieve_relevant_table_attributes(
         self, nl_query: str, relevant_nl_db_schema: NLDBSchema
     ) -> TableAttributesCollection:
         prompt = RetrieveRelevantTableAttributesPrompt(self.ai_service)
         return TableAttributesCollection(prompt.run(nl_query, relevant_nl_db_schema))
-    
+
     def _retrieve_reference_values(
         self,
         nl_query: str,
@@ -58,11 +64,11 @@ class ContextRetriever:
         relevant_nl_db_schema: NLDBSchema,
     ) -> TableReferenceValuesCollection:
         prompt = RetrieveReferenceValuesPrompt(self.ai_service)
-        return TableReferenceValuesCollection(prompt.run(nl_query, relevant_nl_db_schema, relevant_attributes))
+        return TableReferenceValuesCollection(
+            prompt.run(nl_query, relevant_nl_db_schema, relevant_attributes)
+        )
 
-    def _retrieve_relevant_sample_data(
-        self, relevant_tables: Tables
-    ) -> TableSamples:
+    def _retrieve_relevant_sample_data(self, relevant_tables: Tables) -> TableSamples:
         relevant_sample_data = {
             table: self.indexer.samples[table] for table in relevant_tables
         }
