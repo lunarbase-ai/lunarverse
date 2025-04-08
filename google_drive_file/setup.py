@@ -41,9 +41,9 @@ class ComponentSetupGenerator:
             return [line for line in lines if line and not line.startswith('#')]
 
 setup_generator = ComponentSetupGenerator(
-    name="milvusdb",
+    name="google_drive_file",
     version="0.1",
-    description='Store embeddings on a Milvus server'
+    description="Get file in Google Drive"
 )
 
 setup(**setup_generator.generate())
