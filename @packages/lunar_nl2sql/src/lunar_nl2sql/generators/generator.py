@@ -15,7 +15,6 @@ class Generator:
 
     def generate(self, nl_query: str) -> str:
         context = self.context_retriever.retrieve(nl_query)
-        print(context)
 
         table_attributes_context = ""
         sample_data_context = ""
