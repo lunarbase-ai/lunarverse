@@ -41,9 +41,9 @@ class ComponentSetupGenerator:
             return [line for line in lines if line and not line.startswith('#')]
 
 setup_generator = ComponentSetupGenerator(
-    name="milvusdb",
+    name="gmail_attachment",
     version="0.1",
-    description='Store embeddings on a Milvus server'
+    description="A package that defines the GmailAttachment component"
 )
 
 setup(**setup_generator.generate())

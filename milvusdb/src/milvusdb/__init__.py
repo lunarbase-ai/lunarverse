@@ -5,15 +5,14 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from typing import Any, List, Optional
-from lunarcore.core.connectors.milvus import MilvusConnector
-from lunarcore.core.typings.components import ComponentGroup
-from lunarcore.core.data_models import ComponentInput, ComponentModel
-from lunarcore.core.typings.datatypes import DataType, EmbeddedText
-from lunarcore.core.component import BaseComponent
+from lunarcore.connectors.milvus import MilvusConnector
+from lunarcore.component.component_group import ComponentGroup
+from lunarcore.component.data_types import DataType, EmbeddedText
+from lunarcore.component.lunar_component import LunarComponent
 
 
 class MilvusVectorstore(
-    BaseComponent,
+    LunarComponent,
     component_name="Milvus vectorstore",
     component_description="""Store embeddings on a Milvus server
     Output (dict): a dictionary with a single key (stored), containing the number of stored embeddings.""",
@@ -28,8 +27,8 @@ class MilvusVectorstore(
     password="$LUNARENV::MILVUS_PASSWORD",
     token="$LUNARENV::MILVUS_TOKEN",
 ):
-    def __init__(self, model: Optional[ComponentModel] = None, **kwargs):
-        super().__init__(model=model, configuration=kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(configuration=kwargs)
         connection_args = dict()
         if self.configuration.get("host") is not None:
             connection_args["host"] = self.configuration.get("host")

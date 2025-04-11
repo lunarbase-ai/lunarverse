@@ -1,0 +1,67 @@
+{
+    "id": "92554237-5b53-4244-9f01-f807bb654902",
+    "name": "Google Drive File component example",
+    "description": "A one-component workflow illustrating the use of Google Drive File component.",
+    "version": null,
+    "components": [
+        {
+            "id": "4b65c0a2-6bda-4dec-bd34-6fe23169abff",
+            "workflow_id": null,
+            "name": "Google Drive File",
+            "class_name": "GoogleDriveFile",
+            "description": "This component replaces the xlsx file in Google Drive.",
+            "group": "Data Extraction",
+            "inputs": [
+                {
+                    "id": "fcd4d669-b5b7-4322-8ebc-0c59a4b8d105",
+                    "key": "file_link",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "4b65c0a2-6bda-4dec-bd34-6fe23169abff"
+                },
+                {
+                    "id": "9a0001c7-4f9a-4133-8cbc-5b29ba74be00",
+                    "key": "credentials_json",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "4b65c0a2-6bda-4dec-bd34-6fe23169abff"
+                }
+            ],
+            "output": {
+                "data_type": "TEXT",
+                "value": ":undef:"
+            },
+            "label": "GoogleDriveFile_4b65c0a2-6bda-4dec-bd34-6fe23169abff",
+            "configuration": {
+                "force_run": false
+            },
+            "version": null,
+            "is_custom": false,
+            "is_terminal": true,
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "timeout": 600,
+            "component_code": "google_drive_file/google_drive_file/__init__.py",
+            "component_code_requirements": [
+                "google-api-python-client",
+                "googleapiclient",
+                "google-auth"
+            ],
+            "component_example_path": null,
+            "invalid_errors": []
+        }
+    ],
+    "dependencies": [],
+    "timeout": 3600,
+    "auto_component_spacing": {
+        "dx": 450.0,
+        "dy": 350.0,
+        "x0": 0.0,
+        "y0": 0.0
+    },
+    "invalid_errors": []
+}
