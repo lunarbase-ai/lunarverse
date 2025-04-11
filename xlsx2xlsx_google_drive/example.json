@@ -1,0 +1,74 @@
+{
+    "id": "961ae91b-fac2-4b4f-969b-dbbd755c2896",
+    "name": "xlsx2xlsx Google Drive component example",
+    "description": "A one-component workflow illustrating the use of xlsx2xlsx Google Drive component.",
+    "version": null,
+    "components": [
+        {
+            "id": "0348988e-04bb-4ab7-9131-d6007e9535a5",
+            "workflow_id": null,
+            "name": "xlsx2xlsx Google Drive",
+            "class_name": "Xlsx2XlsxGoogleDrive",
+            "description": "This component downloads, updates, and re-uploads files from Google Drive.",
+            "group": "Data Extraction",
+            "inputs": [
+                {
+                    "id": "11da393f-6ffe-41b8-8734-45e261fc5d57",
+                    "key": "file_link",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "0348988e-04bb-4ab7-9131-d6007e9535a5"
+                },
+                {
+                    "id": "c6d36464-79a9-451c-8b91-608e71cc2209",
+                    "key": "credentials_json",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "0348988e-04bb-4ab7-9131-d6007e9535a5"
+                },
+                {
+                    "id": "6b45bd6b-fac5-4dcc-9b34-885cf2d3affe",
+                    "key": "excel_file",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "0348988e-04bb-4ab7-9131-d6007e9535a5"
+                }
+            ],
+            "output": {
+                "data_type": "TEXT",
+                "value": ":undef:"
+            },
+            "label": "Xlsx2XlsxGoogleDrive_0348988e-04bb-4ab7-9131-d6007e9535a5",
+            "configuration": {
+                "force_run": false
+            },
+            "version": null,
+            "is_custom": false,
+            "is_terminal": true,
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "timeout": 600,
+            "component_code": "xlsx2xlsx_google_drive/xlsx2xlsx_google_drive/__init__.py",
+            "component_code_requirements": [
+                "openpyxl",
+                "googleapiclient"
+            ],
+            "component_example_path": null,
+            "invalid_errors": []
+        }
+    ],
+    "dependencies": [],
+    "timeout": 3600,
+    "auto_component_spacing": {
+        "dx": 450.0,
+        "dy": 350.0,
+        "x0": 0.0,
+        "y0": 0.0
+    },
+    "invalid_errors": []
+}
