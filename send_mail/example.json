@@ -1,0 +1,103 @@
+{
+    "id": "1b7a1fc0-ea31-427d-9a32-1ab123c535fc",
+    "name": "Send Email component example",
+    "description": "A one-component workflow illustrating the use of Send Email component.",
+    "version": null,
+    "components": [
+        {
+            "id": "ef9c6815-e403-4b2a-a589-3b4a5289fa82",
+            "workflow_id": null,
+            "name": "Send Email",
+            "class_name": "SendEmail",
+            "description": "This component sends an email with optional attachments using SMTP.",
+            "group": "Utilities",
+            "inputs": [
+                {
+                    "id": "acc836e4-f0a9-4c0f-a368-bc24917e3e8d",
+                    "key": "smtp_server",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "ef9c6815-e403-4b2a-a589-3b4a5289fa82"
+                },
+                {
+                    "id": "659736f9-def3-4472-872f-5f0aa60a22cb",
+                    "key": "smtp_port",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "ef9c6815-e403-4b2a-a589-3b4a5289fa82"
+                },
+                {
+                    "id": "b7cf5666-177d-456b-b92a-02514c8dc8db",
+                    "key": "email_sender",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "ef9c6815-e403-4b2a-a589-3b4a5289fa82"
+                },
+                {
+                    "id": "082d0efb-9ae3-4e92-afba-a996ad5f8260",
+                    "key": "password",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "ef9c6815-e403-4b2a-a589-3b4a5289fa82"
+                },
+                {
+                    "id": "a11db732-26d3-461c-b718-bfaacb94525a",
+                    "key": "recipient",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "ef9c6815-e403-4b2a-a589-3b4a5289fa82"
+                },
+                {
+                    "id": "f9372ec6-99ea-442e-a4f8-f908110a6366",
+                    "key": "subject",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "ef9c6815-e403-4b2a-a589-3b4a5289fa82"
+                },
+                {
+                    "id": "81cff005-a5c6-4ec6-8d86-1c3005f842f3",
+                    "key": "body",
+                    "data_type": "TEXT",
+                    "value": ":undef:",
+                    "template_variables": {},
+                    "component_id": "ef9c6815-e403-4b2a-a589-3b4a5289fa82"
+                }
+            ],
+            "output": {
+                "data_type": "TEXT",
+                "value": ":undef:"
+            },
+            "label": "SendEmail_ef9c6815-e403-4b2a-a589-3b4a5289fa82",
+            "configuration": {
+                "force_run": false
+            },
+            "version": null,
+            "is_custom": false,
+            "is_terminal": true,
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "timeout": 600,
+            "component_code": "send_mail/send_mail/__init__.py",
+            "component_code_requirements": [],
+            "component_example_path": null,
+            "invalid_errors": []
+        }
+    ],
+    "dependencies": [],
+    "timeout": 3600,
+    "auto_component_spacing": {
+        "dx": 450.0,
+        "dy": 350.0,
+        "x0": 0.0,
+        "y0": 0.0
+    },
+    "invalid_errors": []
+}
