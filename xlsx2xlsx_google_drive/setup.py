@@ -41,9 +41,9 @@ class ComponentSetupGenerator:
             return [line for line in lines if line and not line.startswith('#')]
 
 setup_generator = ComponentSetupGenerator(
-    name="milvusdb",
+    name="xlsx2xlsx_google_drive",
     version="0.1",
-    description='Store embeddings on a Milvus server'
+    description="Replace a tab of an xlsx spreadsheet with another in an xlsx file on google drive"
 )
 
 setup(**setup_generator.generate())
