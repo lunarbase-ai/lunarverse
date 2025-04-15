@@ -29,14 +29,18 @@ class SqliteQuery(
             )
 
             output = io.StringIO()
-            writer = csv.writer(output)
-
-            if headers:
-                writer.writerow(headers)
-            writer.writerows(rows)
+            if headers and rows:
+                dict_rows = [dict(zip(headers, row)) for row in rows]
+                writer = csv.DictWriter(output, fieldnames=headers)
+                writer.writeheader()
+                writer.writerows(dict_rows)
+            elif headers:
+                writer = csv.DictWriter(output, fieldnames=headers)
+                writer.writeheader()
+            # If no headers, output remains empty
 
             connection.close()
 
-            return output.getvalue().strip()
+            return "\n".join(output.getvalue().splitlines())
         except Exception as e:
             return str(e)
