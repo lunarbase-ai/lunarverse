@@ -37,7 +37,9 @@ class SqliteQuery(
             elif headers:
                 writer = csv.DictWriter(output, fieldnames=headers)
                 writer.writeheader()
-            # If no headers, output remains empty
+            elif rows:
+                writer = csv.writer(output)
+                writer.writerows(rows)
 
             connection.close()
 
