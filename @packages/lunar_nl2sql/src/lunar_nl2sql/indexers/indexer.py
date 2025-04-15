@@ -31,7 +31,6 @@ class Indexer:
                     table_name, self.data_access.samples[table_name]
                 )
             self._nl_db_schema = NLDBSchema(nl_db_schema)
-        print(self._nl_db_schema)
         return self._nl_db_schema
 
     @property
