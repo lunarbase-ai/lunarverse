@@ -42,7 +42,7 @@ class ComponentSetupGenerator:
 
 setup_generator = ComponentSetupGenerator(
     name="nl2sql",
-    version="0.1",
+    version="0.2",
     description="Transforms natural language queries into SQL queries.",
 )
 
