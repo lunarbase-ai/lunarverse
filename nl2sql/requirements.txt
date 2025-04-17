@@ -1,3 +1,2 @@
-numpy
-pandas
-openai
+pydantic
+lunar_nl2sql @ git+https://github.com/lunarbase-ai/lunarverse.git@update/nl2sql#subdirectory=@packages/lunar_nl2sql
