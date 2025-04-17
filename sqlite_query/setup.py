@@ -41,9 +41,9 @@ class ComponentSetupGenerator:
 
 
 setup_generator = ComponentSetupGenerator(
-    name="nl2sql",
-    version="0.2",
-    description="Transforms natural language queries into SQL queries.",
+    name="sqlite_query",
+    version="0.1",
+    description="Connects to a SQLite database and returns the result of a query",
 )
 
 setup(**setup_generator.generate())
