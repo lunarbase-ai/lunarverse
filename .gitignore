@@ -196,3 +196,5 @@ tests/*/*.json
 
 pytest.ini
 **/local/
+
+.python-version
