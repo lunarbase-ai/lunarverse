@@ -22,7 +22,7 @@ class PDFImageExtractor(
     """,
     input_types={"path": DataType.TEXT},
     output_type=DataType.LIST,
-    component_group=ComponentGroup.UTILS,
+    component_group=ComponentGroup.DATA_EXTRACTION,
 ):
     def run(self, path: str) -> List:
         pipeline_options = PdfPipelineOptions()
