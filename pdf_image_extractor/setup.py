@@ -41,9 +41,9 @@ class ComponentSetupGenerator:
             return [line for line in lines if line and not line.startswith('#')]
 
 setup_generator = ComponentSetupGenerator(
-    name="image_extractor",
+    name="image-extractor",
     version="0.1",
-    description="Extracts images from a PDF file."
+    description="Extracts images from a PDF file"
 )
 
 setup(**setup_generator.generate())
