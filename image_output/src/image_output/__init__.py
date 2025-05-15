@@ -23,6 +23,6 @@ class ImageOutput(
         try:
             base64_string_no_prefix = base64_string.split(",")[-1]
             base64.b64decode(base64_string_no_prefix)
-            return base64_string
+            return f"data:image;base64,{base64_string_no_prefix}"
         except Exception as e:
             raise ValueError("Invalid base64 string") from e
