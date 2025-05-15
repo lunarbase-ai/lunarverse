@@ -28,8 +28,8 @@ class AzureOpenAIImageStructuredLLM(
             azure_endpoint=self.configuration["azure_endpoint"]
         )
 
-    def run(self, user_prompt: str,  image: File, schema: dict, system_prompt: str = SYSTEM_PROMPT):
-        if image.content.type is not "base64":
+    def run(self, user_prompt: str,  image: dict, schema: dict, system_prompt: str = SYSTEM_PROMPT):
+        if image["content"]["type"] is not "base64":
             raise ValueError("Image content type must be base64")
         try:
             Draft7Validator.check_schema(schema)
@@ -40,7 +40,7 @@ class AzureOpenAIImageStructuredLLM(
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": [
                 {"type": "text", "text": user_prompt},
-                {"type": "image_url", "image_url": {"url": f"data:image;base64,{image.content.content}"}}
+                {"type": "image_url", "image_url": {"url": f"data:image;base64,{image['content']['content']}"}}
             ]}
         ]
         response = self._client.chat.completions.create(

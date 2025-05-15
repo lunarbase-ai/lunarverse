@@ -4,7 +4,7 @@ from typing import List
 
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
-from lunarcore.component.data_types import DataType, File, Base64FileContent
+from lunarcore.component.data_types import DataType
 
 from docling.datamodel.pipeline_options import PdfPipelineOptions, PictureDescriptionVlmOptions
 from docling.document_converter import DocumentConverter, PdfFormatOption
@@ -60,7 +60,10 @@ class PDFImageExtractor(
 
                     base64_encoded_content = base64.b64encode(image_bytes).decode('utf-8')
                     
-                    file_content = Base64FileContent(content=base64_encoded_content)
+                    file_content = {
+                        "type": "base64",
+                        "content": base64_encoded_content
+                    }
                     
                     file = {
                         "name": f"image_{image_counter}.png",
