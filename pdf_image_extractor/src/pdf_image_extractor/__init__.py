@@ -62,13 +62,13 @@ class PDFImageExtractor(
                     
                     file_content = Base64FileContent(content=base64_encoded_content)
                     
-                    file = File(
-                        name=f"image_{image_counter}.png",
-                        type="image/png",
-                        size=len(image_bytes),
-                        description=description,
-                        content=file_content
-                    )
+                    file = {
+                        "name": f"image_{image_counter}.png",
+                        "type": "image/png",
+                        "size": len(image_bytes),
+                        "description": description,
+                        "content": file_content
+                    }
                     output.append({"description": description, "file": file})
                     
                     image_counter += 1
