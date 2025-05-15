@@ -29,8 +29,6 @@ class AzureOpenAIImageStructuredLLM(
         )
 
     def run(self, user_prompt: str,  image: dict, schema: dict, system_prompt: str = SYSTEM_PROMPT):
-        if image["content"]["type"] is not "base64":
-            raise ValueError("Image content type must be base64")
         try:
             Draft7Validator.check_schema(schema)
         except SchemaError as e:
