@@ -12,7 +12,7 @@ class AzureOpenAIImageStructuredLLM(
     LunarComponent,
     component_name="Azure Open AI Image Structured LLM",
     component_description="""Connects to Azure OpenAI's API (an LLM), runs an inputted natural language prompt that analyzes an image (str), and output the result as text (str)""",
-    input_types={"user_prompt": DataType.TEMPLATE, "system_prompt": DataType.TEMPLATE, "image": DataType.FILE, "schema": DataType.JSON},
+    input_types={"user_prompt": DataType.TEMPLATE, "system_prompt": DataType.TEMPLATE, "image": DataType.JSON, "schema": DataType.JSON},
     output_type=DataType.JSON,
     component_group=ComponentGroup.GENAI,
     openai_api_version="$LUNARENV::OPENAI_API_VERSION",
