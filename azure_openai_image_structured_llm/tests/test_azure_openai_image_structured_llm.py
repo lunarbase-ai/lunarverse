@@ -4,6 +4,7 @@ from azure_openai_image_structured_llm import AzureOpenAIImageStructuredLLM
 from lunarcore.component.data_types import File, Base64FileContent
 import json
 
+
 MOCK_CONFIG = {
     "openai_api_key": "fake-key",
     "openai_api_version": "2024-02-15-preview",
