@@ -28,17 +28,27 @@ class AzureOpenAIImageStructuredLLM(
             azure_endpoint=self.configuration["azure_endpoint"]
         )
 
-    def run(self, user_prompt: str,  image: dict, schema: dict, system_prompt: str = SYSTEM_PROMPT):
+    def run(self, user_prompt: str,  image: File | dict, schema: dict, system_prompt: str = SYSTEM_PROMPT):
         try:
             Draft7Validator.check_schema(schema)
         except SchemaError as e:
             raise ValueError(f"JSON schema is invalid: {e.message}")
         
+        # Handle both File objects and dictionaries
+        if isinstance(image, File):
+            if image.content.type != "base64":
+                raise ValueError("Image content type must be base64")
+            image_content = image.content.content
+        else:
+            if image['content']['type'] != "base64":
+                raise ValueError("Image content type must be base64")
+            image_content = image['content']['content']
+        
         messages = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": [
                 {"type": "text", "text": user_prompt},
-                {"type": "image_url", "image_url": {"url": f"data:image;base64,{image['content']['content']}"}}
+                {"type": "image_url", "image_url": {"url": f"data:image;base64,{image_content}"}}
             ]}
         ]
         response = self._client.chat.completions.create(
