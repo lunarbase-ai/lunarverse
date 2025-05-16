@@ -31,7 +31,6 @@ Output (str): The answer provided by the LLM to the prompt.""",
 ):
     def __init__(self, **kwargs: Any):
         super().__init__(configuration=kwargs)
-        # Configure the OpenAI library for Azure OpenAI usage.
         self._client = AzureOpenAI(
             api_key=self.configuration["openai_api_key"],
             api_version=self.configuration["openai_api_version"],
@@ -39,18 +38,17 @@ Output (str): The answer provided by the LLM to the prompt.""",
         )
 
     def run(self, user_prompt: str, system_prompt: str = SYSTEM_PROMPT):
-        # Create the messages list in the required format.
+        if not system_prompt:
+            system_prompt = SYSTEM_PROMPT
+        if not user_prompt:
+            raise ValueError("User prompt cannot be empty.")
         messages = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
         ]
-        # Call the OpenAI Chat Completion endpoint.
         response = self._client.chat.completions.create(
             model=self.configuration["deployment_name"],
             messages=messages,
         )
-        # Extract the assistant's reply from the response.
         result = response.choices[0].message.content
-
-        # Clean up the result string and return it.
         return str(result).strip("\n").strip().replace('"', "'")
