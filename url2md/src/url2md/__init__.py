@@ -18,7 +18,7 @@ from crawl4ai import AsyncWebCrawler, CrawlerRunConfig, CrawlResult, DefaultMark
 class URL2MD(
     LunarComponent,
     component_name="URL2MD",
-    component_description="""Converts web pages to Markdown using asynchronous web crawling.
+    component_description="""Converts web pages to Markdown using web crawling.
     Inputs:
         `url` (str): Web page URL to be converted to Markdown
     Output (str): Path to the generated Markdown file or None if conversion fails""",
@@ -28,12 +28,23 @@ class URL2MD(
 ):
     def __init__(self, **kwargs: Any):
         super().__init__(configuration=kwargs)
-        self.temp_dir = tempfile.mkdtemp()
+        self.temp_dir = tempfile.mkdtemp(prefix="url2md_")
 
     async def run(self, url: str) -> Optional[str]:
         parsed_url = urlparse(url)
-        filename = re.sub(r'[^a-zA-Z0-9]', '_', parsed_url.path) or "page"
-        md_path = os.path.join(self.temp_dir, f"{filename}.md")
+        domain = parsed_url.netloc.replace("www.", "")
+        domain = re.sub(r'[^a-zA-Z0-9.-]', '_', domain)
+        
+        path = parsed_url.path.strip("/")
+        if not path:
+            path = "index"
+        path = re.sub(r'[^a-zA-Z0-9/-]', '_', path)
+        
+        domain_dir = os.path.join(self.temp_dir, domain)
+        os.makedirs(domain_dir, exist_ok=True)
+        
+        md_path = os.path.join(domain_dir, f"{path}.md")
+        os.makedirs(os.path.dirname(md_path), exist_ok=True)
 
         async with AsyncWebCrawler() as crawler:
             result: CrawlResult = await crawler.arun(
