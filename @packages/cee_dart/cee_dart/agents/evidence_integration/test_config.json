@@ -1,0 +1,7 @@
+{
+  "civic_file": "civic_analysis_consolidated_20250526_223159.json",
+  "pharmgkb_file": "pharmgkb_analysis_consolidated_20250526_210558.json",
+  "gene_enrichment_file": "gene_enrichment_analysis_consolidated_20250526_223219.json",
+  "context": "The aim here is to identify differences between responders (pCR) and non-responders (RD) in the two different treatment arms (T-DM1, DHP). The Breast cancer team in the group suggest that non-responding patients have activation of alternative signaling pathways and responding patients have increased anti-tumor immune activity during HER2-targeted treatment. We discovered a significant differences in interactions between the genes when comparing responders vs non-responders.",
+  "question": "To what extend the evidence related to these genes explain the fact that one group responds to the treatment?"
+} 
