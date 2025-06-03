@@ -18,7 +18,7 @@ from crawl4ai import AsyncWebCrawler, CrawlerRunConfig, CrawlResult
 class URL2HTML(
     LunarComponent,
     component_name="URL2HTML",
-    component_description="""Converts web pages to HTML files using asynchronous web crawling.
+    component_description="""Converts web pages to HTML files using web crawling.
     Inputs:
         `url` (str): Web page URL to be converted to HTML
     Output (str): Path to the generated HTML file or None if conversion fails""",
@@ -28,17 +28,28 @@ class URL2HTML(
 ):
     def __init__(self, **kwargs: Any):
         super().__init__(configuration=kwargs)
-        self.temp_dir = tempfile.mkdtemp()
+        self.temp_dir = tempfile.mkdtemp(prefix="url2html_")
 
     async def run(self, url: str) -> Optional[str]:
         parsed_url = urlparse(url)
-        filename = re.sub(r'[^a-zA-Z0-9]', '_', parsed_url.path) or "page"
-        html_path = os.path.join(self.temp_dir, f"{filename}.html")
+        domain = parsed_url.netloc.replace("www.", "")
+        domain = re.sub(r'[^a-zA-Z0-9.-]', '_', domain)
+        
+        path = parsed_url.path.strip("/")
+        if not path:
+            path = "index"
+        path = re.sub(r'[^a-zA-Z0-9/-]', '_', path)
+        
+        domain_dir = os.path.join(self.temp_dir, domain)
+        os.makedirs(domain_dir, exist_ok=True)
+        
+        html_path = os.path.join(domain_dir, f"{path}.html")
+        os.makedirs(os.path.dirname(html_path), exist_ok=True)
 
         async with AsyncWebCrawler() as crawler:
             result: CrawlResult = await crawler.arun(
                 url=url,
-                config=CrawlerRunConfig(html=True),
+                config=CrawlerRunConfig(),
             )
 
             if not result.html:
