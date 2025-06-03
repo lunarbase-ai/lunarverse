@@ -22,11 +22,9 @@ setup(
         "python-dotenv",
     ],
     author="CEE DART Team",
-    author_email="your.email@example.com",  # Update this
     description="A package for biological pathway analysis and evidence integration",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/cee-dart-navigator",  # Update this
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
