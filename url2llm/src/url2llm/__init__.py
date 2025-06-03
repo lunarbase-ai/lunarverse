@@ -13,22 +13,20 @@ from crawl4ai import AsyncWebCrawler, CrawlerRunConfig, CrawlResult, LLMExtracti
 class URL2LLM(
     LunarComponent,
     component_name="URL2LLM",
-    component_description="""Extracts information from web pages using LLM (Large Language Model).\nInputs:\n    `url` (str): Web page URL\n    `instruction` (str): Instruction for the LLM to extract desired information\nOutput (dict): A dictionary with 'url' and 'extracted_content' keys containing the LLM response""",
+    component_description="Extracts information from web pages using LLM. Input: url (str): Web page URL, instruction (str): LLM instruction. Output: JSON with url and extracted_content",
     input_types={"url": DataType.TEXT, "instruction": DataType.TEXT},
     output_type=DataType.JSON,
     component_group=ComponentGroup.DATA_EXTRACTION,
-    openai_api_version="$LUNARENV::OPENAI_API_VERSION",
-    deployment_name="$LUNARENV::DEPLOYMENT_NAME",
-    openai_api_key="$LUNARENV::OPENAI_API_KEY",
-    azure_endpoint="$LUNARENV::AZURE_OPENAI_ENDPOINT",
+    api_key_token="$LUNARENV::API_KEY_TOKEN",
+    base_url="$LUNARENV::BASE_URL",
     provider="$LUNARENV::PROVIDER",
 ):
     def __init__(self, **kwargs: Any):
         super().__init__(configuration=kwargs)
         self.llm_config = LLMConfig(
             provider=self.configuration["provider"],
-            base_url=self.configuration["azure_endpoint"],
-            api_token=self.configuration["openai_api_key"]
+            base_url=self.configuration["base_url"],
+            api_token=self.configuration["api_key_token"]
         )
 
     async def run(self, url: str, instruction: str) -> Optional[Dict[str, str]]:
@@ -39,9 +37,8 @@ class URL2LLM(
 
         config = CrawlerRunConfig(
             extraction_strategy=extraction_strategy,
-            exclude_external_links=True,
-            max_pages=1
-        )
+            exclude_external_links=True        
+            )
 
         async with AsyncWebCrawler() as crawler:
             result: CrawlResult = await crawler.arun(url, config=config)

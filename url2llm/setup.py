@@ -1,35 +1,51 @@
-# SPDX-FileCopyrightText: Copyright © 2024 Idiap Research Institute <contact@idiap.ch>
-#
-# SPDX-FileContributor: Lunarbase <contact@lunarbase.ai>
-#
-# SPDX-License-Identifier: LicenseRef-lunarbase
+from setuptools import find_packages, setup
 
-from setuptools import setup, find_packages
+AUTHOR = "Lunarbase (https://lunarbase.ai/)"
+AUTHOR_EMAIL = "contact@lunarbase.ai"
+LICENSE = "SPDX-License-Identifier: GPL-3.0-or-later"
+TEST_REQUIREMENTS = [
+    'pytest',
+    'pytest-asyncio',
+]
+EXTRAS_REQUIREMENTS = {
+    'dev': [
+        'pytest',
+        'pytest-asyncio',
+    ],
+}
 
-setup(
+REQUIREMENTS_FILE_PATH = 'requirements.txt'
+
+class ComponentSetupGenerator:
+    def __init__(self, name, version, description):
+        self.name = name
+        self.version = version
+        self.description = description
+
+    def generate(self):
+        return {
+            "name": self.name,
+            "version": self.version,
+            "packages": find_packages(where="src"),
+            "package_dir": {"": "src"},
+            "install_requires": self._load_requirements(),
+            "tests_require": TEST_REQUIREMENTS,
+            "extras_require": EXTRAS_REQUIREMENTS,
+            "author": AUTHOR,
+            "author_email": AUTHOR_EMAIL,
+            "description": self.description,
+            "license": LICENSE,
+        }
+
+    def _load_requirements(self):
+        with open(REQUIREMENTS_FILE_PATH, 'r') as file:
+            lines = file.read().splitlines()
+            return [line for line in lines if line and not line.startswith('#')]
+
+setup_generator = ComponentSetupGenerator(
     name="url2llm",
-    version="0.1.0",
-    packages=find_packages(where="src"),
-    package_dir={"": "src"},
-    install_requires=[
-        "lunarcore",
-        "crawl4ai",
-    ],
-    python_requires=">=3.8",
-    author="Lunarbase",
-    author_email="contact@lunarbase.ai",
-    description="Component for extracting information from web pages using LLM",
-    long_description=open("README.md").read(),
-    long_description_content_type="text/markdown",
-    url="https://github.com/lunarbase/url2llm",
-    classifiers=[
-        "Development Status :: 3 - Alpha",
-        "Intended Audience :: Developers",
-        "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
-    ],
-) 
+    version="0.1",
+    description="A Python component for converting web pages to LLM using asynchronous web crawling"
+)
+
+setup(**setup_generator.generate()) 
