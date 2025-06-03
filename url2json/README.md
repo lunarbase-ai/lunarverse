@@ -1,43 +1,40 @@
 # URL2JSON Component
 
-The **URL2JSON** component is designed to convert web pages to JSON using asynchronous web crawling. It takes a URL as input and returns a JSON dictionary containing the URL and HTML content.
-
 ## Description
 
-This component takes a URL as input and converts the web page content to a JSON dictionary. The JSON contains the keys `url` and `html_content`. The component handles URL parsing and asynchronous web crawling to ensure efficient JSON generation.
+The **URL2JSON** component converts web pages to JSON using asynchronous web crawling. It takes a URL as input, downloads the web page content, and returns a JSON dictionary containing the URL and HTML content. The component handles URL parsing and asynchronous web crawling to ensure efficient JSON generation.
 
 ## Inputs
 
-- **url** (`str`): The web page URL to be converted to JSON.
+- **url** (str): The web page URL to be converted to JSON. Example: `https://example.com/page`
 
-## Output
+## Outputs
 
-- **result** (`dict`): A JSON dictionary with keys `url` and `html_content`. Returns None if the conversion fails.
+- **result** (dict): A JSON dictionary with keys `url` and `html`. Returns None if the conversion fails.
 
-## Input Types
+## Usage
 
-- **url**: Expected to be a string containing a valid URL.
+To use the **URL2JSON** component, you need:
 
-## Output Type
+1. A valid web page URL that you want to convert to JSON
 
-- **result**: JSON (dictionary)
-
-## Configuration Parameters
-
-This component does not have any configuration parameters.
+The component will:
+1. Parse the URL to ensure it's valid
+2. Download the web page content asynchronously
+3. Return a JSON dictionary containing the URL and HTML content
 
 ## Example
 
-Given the following input:
+Input URL:
 ```
 https://www.example.com/
 ```
 
-The output will be a dictionary:
-```python
+Output JSON:
+```
 {
     "url": "https://www.example.com/",
-    "html_content": "<html>...content...</html>"
+    "html": "<!DOCTYPE html>..."
 }
 ```
 
@@ -45,4 +42,22 @@ The output will be a dictionary:
 
 - The component uses asynchronous web crawling for better performance
 - The component requires internet access to download web pages
-- The output is a Python dictionary that can be easily converted to JSON if needed 
+- The output is a Python dictionary that can be easily converted to JSON if needed
+- The HTML content is returned with UTF-8 encoding to properly handle special characters
+
+## Features
+
+- Asynchronous web crawling
+- JSON content return
+- Valid URL support
+- Error handling and failure cases
+
+## Requirements
+
+- Python 3.8+
+- crawl4ai
+- lunarcore
+
+## Installation
+
+```

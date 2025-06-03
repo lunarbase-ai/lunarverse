@@ -5,11 +5,7 @@
 # SPDX-License-Identifier: LicenseRef-lunarbase
 
 from typing import Any, Optional, Dict
-import os
-import tempfile
 from urllib.parse import urlparse
-import re
-import json
 
 from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
@@ -19,7 +15,7 @@ from crawl4ai import AsyncWebCrawler, CrawlerRunConfig, CrawlResult
 class URL2JSON(
     LunarComponent,
     component_name="URL2JSON",
-    component_description="""Converts web pages to JSON using asynchronous web crawling.\nInputs:\n    `url` (str): Web page URL to be converted to JSON\nOutput (dict): A JSON dict with keys 'url' and 'html_content' or None if conversion fails""",
+    component_description="Converts web pages to JSON using async web crawling. Input: url (str): Web page URL. Output: JSON with url and html content",
     input_types={"url": DataType.TEXT},
     output_type=DataType.JSON,
     component_group=ComponentGroup.DATA_EXTRACTION,
@@ -31,13 +27,12 @@ class URL2JSON(
         async with AsyncWebCrawler() as crawler:
             result: CrawlResult = await crawler.arun(
                 url=url,
-                config=CrawlerRunConfig(html=True),
+                config=CrawlerRunConfig(),
             )
-
             if not result.html:
                 return None
 
             return {
                 "url": url,
-                "html_content": result.html
+                "html": result.html
             } 
