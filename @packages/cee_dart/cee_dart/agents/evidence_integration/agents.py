@@ -4,22 +4,14 @@ import json
 import re
 from datetime import datetime
 from cee_dart.utils.openai_client import client
-# Handle imports for both module and direct execution
-try:
-    from .config import Config
-    from .models import (UserInput, ReportComposerOutput, EvaluatorOutput, CriticOutput, 
-                        DeliberationOutput, EvaluationStatus, ConsolidatedEvidence,
-                        TokenUsage, AgentExecution)
-    from .prompts import (ORCHESTRATOR_PROMPT, REPORT_COMPOSER_PROMPT, CONTENT_VALIDATOR_PROMPT, 
-                         CRITICAL_REVIEWER_PROMPT, RELEVANCE_VALIDATOR_PROMPT)
-except ImportError:
-    # Fallback for direct execution
-    from config import Config
-    from models import (UserInput, ReportComposerOutput, EvaluatorOutput, CriticOutput, 
-                       DeliberationOutput, EvaluationStatus, ConsolidatedEvidence,
-                       TokenUsage, AgentExecution)
-    from prompts import (ORCHESTRATOR_PROMPT, REPORT_COMPOSER_PROMPT, CONTENT_VALIDATOR_PROMPT, 
+
+from cee_dart.agents.evidence_integration.config import Config
+from cee_dart.agents.evidence_integration.models import (UserInput, ReportComposerOutput, EvaluatorOutput, CriticOutput, 
+                    DeliberationOutput, EvaluationStatus, ConsolidatedEvidence,
+                    TokenUsage, AgentExecution)
+from cee_dart.agents.evidence_integration.prompts import (ORCHESTRATOR_PROMPT, REPORT_COMPOSER_PROMPT, CONTENT_VALIDATOR_PROMPT, 
                         CRITICAL_REVIEWER_PROMPT, RELEVANCE_VALIDATOR_PROMPT)
+
 
 class BaseAgent:
     """Base class for all agents."""
