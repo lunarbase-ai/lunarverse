@@ -32,8 +32,8 @@ class CivicAnalysis(
 
     def run(self, context: str, question: str, civic_evidence: dict) -> dict:
         data = {
-            "context": context,
-            "question": question,
+            "Context": context,
+            "Question": question,
             "CIVIC Evidence": civic_evidence,
         }
         return self.runner.run_from_dict(data)
