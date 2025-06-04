@@ -36,6 +36,6 @@ class CivicAnalysis(
             "Question": question,
             "CIVIC Evidence": civic_evidence,
         }
-        return self.runner.run_from_dict(data)
+        return self.runner.run_from_dict(data)[0]
 
 

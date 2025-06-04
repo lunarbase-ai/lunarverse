@@ -129,7 +129,7 @@ class WorkflowRunner:
             approved_count = sum(1 for r in results if r.final_status.value == "APPROVED")
             self.progress_callback(f"🎉 **All genes completed!** {approved_count}/{total_genes} analyses approved")
         
-        return results 
+        return self._generate_consolidated_data(results)
     
     def run_from_json_file(self, file_path: str) -> List[WorkflowResult]:
         """Run workflow from JSON file (original CLI functionality)."""
