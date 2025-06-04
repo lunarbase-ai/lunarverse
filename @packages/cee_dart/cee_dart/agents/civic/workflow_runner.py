@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 from datetime import datetime
-
+from openai import AzureOpenAI
 from cee_dart.agents.civic.models import UserInput, WorkflowResult
 from cee_dart.agents.civic.workflow import create_workflow_engine
 from cee_dart.agents.civic.prompts import BIOEXPERT_PROMPT, EVALUATOR_PROMPT
@@ -16,10 +16,10 @@ from cee_dart.agents.civic.prompts import BIOEXPERT_PROMPT, EVALUATOR_PROMPT
 class WorkflowRunner:
     """Main workflow runner that can be used programmatically or via CLI."""
     
-    def __init__(self, debug: bool = False, progress_callback=None):
+    def __init__(self, client: AzureOpenAI, debug: bool = False, progress_callback=None):
         self.debug = debug
         self.progress_callback = progress_callback
-        self.workflow = create_workflow_engine(progress_callback=progress_callback)
+        self.workflow = create_workflow_engine(client, progress_callback=progress_callback)
     
     def _extract_gene_name_from_evidence(self, evidence: str, index: int) -> str:
         """Extract gene name from evidence string or use fallback naming."""
