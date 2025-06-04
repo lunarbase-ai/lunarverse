@@ -71,6 +71,66 @@ class WorkflowRunner:
         
         return results, consolidated_result
     
+    def _load_input_from_dict(self, output_dict: Dict[str, Any]) -> List[UserInput]:
+        """Load input from dictionary."""
+        context = output_dict.get('Context', None)
+        question = output_dict.get('Question', None)
+        civic_evidence = output_dict.get('CIVIC Evidence', None)
+        
+        if not context or not question or not civic_evidence:
+            raise ValueError("Context, Question, and CIVIC Evidence are required")
+        
+        inputs: List[UserInput] = []
+        gene_evidence_pairs = self._process_civic_evidence_data(civic_evidence)
+
+        for gene, combined_evidence in gene_evidence_pairs:
+            evidence_parts = combined_evidence.split('\n\n')
+            
+            # Only create UserInput if there's at least some evidence
+            if len(evidence_parts) > 1:  # More than just the gene name
+                inputs.append(UserInput(
+                    context=context,
+                    question=question,
+                    evidence=combined_evidence
+                ))
+            else:
+                # If no evidence, still create input but with a note
+                no_evidence_text = f"Gene: {gene}\n\nNo clinical evidence available for gene {gene}"
+                inputs.append(UserInput(
+                    context=context,
+                    question=question,
+                    evidence=no_evidence_text
+                ))
+        return inputs
+    
+    def run_from_dict(self, output_dict: Dict[str, Any]) -> tuple[List[WorkflowResult], Dict[str, Any]]:
+        """Run workflow from dictionary."""
+        inputs = self._load_input_from_dict(output_dict)
+        results = []
+        total_genes = len(inputs)
+        
+        for i, inp in enumerate(inputs, 1):
+            gene_name = self._extract_gene_name_from_evidence(inp.evidence, i)
+            
+            # Update progress for current gene (if callback available)
+            if self.progress_callback:
+                self.progress_callback(f"**Processing gene {i}/{total_genes}: {gene_name}**")
+            
+            result = self.workflow.run_workflow(inp)
+            results.append(result)
+            
+            # Update progress after gene completion (if callback available)
+            if self.progress_callback:
+                status_emoji = "✅" if result.final_status.value == "APPROVED" else "⚠️"
+                self.progress_callback(f"{status_emoji} **Gene {i}/{total_genes} ({gene_name}) completed** - {result.total_iterations} iteration(s)")
+        
+        # Final completion message (if callback available)
+        if self.progress_callback:
+            approved_count = sum(1 for r in results if r.final_status.value == "APPROVED")
+            self.progress_callback(f"🎉 **All genes completed!** {approved_count}/{total_genes} analyses approved")
+        
+        return results 
+    
     def run_from_json_file(self, file_path: str) -> List[WorkflowResult]:
         """Run workflow from JSON file (original CLI functionality)."""
         inputs = self._load_input_from_file(file_path)
@@ -100,6 +160,7 @@ class WorkflowRunner:
             self.progress_callback(f"🎉 **All genes completed!** {approved_count}/{total_genes} analyses approved")
         
         return results
+    
     
     def _process_civic_evidence_data(self, civic_evidence: dict) -> List[tuple[str, str]]:
         """Process CIVIC Evidence data into gene-evidence pairs.
@@ -219,6 +280,7 @@ class WorkflowRunner:
         evidence_name = evidence_item.get('evidence_name', 'N/A')
         
         return f"Statement: {statement} [{evidence_name}]"
+    
     
     def _load_input_from_file(self, file_path: str) -> List[UserInput]:
         """Load sample_input.json with 'Context', 'Question', and 'CIVIC Evidence' mapping."""
