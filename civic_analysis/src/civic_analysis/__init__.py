@@ -22,10 +22,6 @@ class CivicAnalysis(
 ):
     def __init__(self, **kwargs: Any):
         super().__init__(configuration=kwargs)
-        os.environ["OPENAI_API_VERSION"] = self.configuration["openai_api_version"]
-        os.environ["DEPLOYMENT_NAME"] = self.configuration["deployment_name"]
-        os.environ["OPENAI_API_KEY"] = self.configuration["openai_api_key"]
-        os.environ["AZURE_OPENAI_ENDPOINT"] = self.configuration["azure_endpoint"]
 
         self.client = AzureOpenAI(
             api_version=self.configuration["openai_api_version"],
