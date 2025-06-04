@@ -1,9 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="cee-dart-navigator",
+    name="cee_dart",
     version="0.1.0",
-    packages=find_packages(include=["cee_dart", "cee_dart.*"]),
     install_requires=[
         "numpy",
         "pandas",
