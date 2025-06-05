@@ -60,7 +60,6 @@ class DeepCrawling(
             if not results:
                 return None
 
-            # Combinar o conteúdo extraído de todas as páginas
             combined_content = []
             for result in results:
                 if result.extracted_content:

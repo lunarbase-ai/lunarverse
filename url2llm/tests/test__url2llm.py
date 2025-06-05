@@ -14,10 +14,9 @@ class TestUrl2LLM:
         self.test_prompt = "Extract main information from this page"
         self.mock_result = MagicMock(extracted_content="Content extracted by LLM")
         self.component = URL2LLM(
-            openai_api_version="2024-02-15-preview",
-            deployment_name="gpt-4",
-            openai_api_key="test-key",
-            azure_endpoint="https://test.openai.azure.com/"
+            provider="azure",
+            base_url="https://test.openai.azure.com/",
+            api_key_token="test-key"
         )
 
     @patch('url2llm.AsyncWebCrawler')
@@ -54,6 +53,7 @@ class TestUrl2LLM:
         mock_crawler_class.return_value.__aenter__.return_value = mock_crawler_instance
         mock_crawler_instance.arun.side_effect = Exception("Invalid URL")
 
-        result = await self.component.run("https://invalid-url.com", self.test_prompt)
-
-        assert result is None 
+        with pytest.raises(Exception) as exc_info:
+            await self.component.run("https://invalid-url.com", self.test_prompt)
+        
+        assert str(exc_info.value) == "Invalid URL" 

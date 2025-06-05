@@ -42,5 +42,5 @@ async def test_url2html_special_characters():
     
     assert result is not None
     assert os.path.exists(result)
-    assert "special_chars" in result
-    assert result.endswith(".html") 
+    assert result.endswith(".html")
+    assert all(not char in result for char in "!@#$%^&*()") 

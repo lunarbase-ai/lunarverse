@@ -7,6 +7,7 @@
 import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
 import os
+import base64
 from url2screenshot import URL2Screenshot
 
 
@@ -14,7 +15,9 @@ class TestURL2Screenshot:
     def setup_method(self):
         self.test_url = "https://www.example.com/test-page"
         self.test_output_dir = "test_files"
-        self.mock_result = MagicMock(screenshot=b"mock screenshot content")
+        mock_screenshot_bytes = b"mock screenshot content"
+        self.mock_screenshot_base64 = base64.b64encode(mock_screenshot_bytes).decode('utf-8')
+        self.mock_result = MagicMock(screenshot=self.mock_screenshot_base64)
         self.component = URL2Screenshot()
 
     def teardown_method(self):
@@ -34,7 +37,7 @@ class TestURL2Screenshot:
 
         assert result is not None
         assert os.path.exists(result)
-        assert result.endswith('.png')
+        assert result.endswith('.jpg')
 
     @patch('url2screenshot.AsyncWebCrawler')
     @pytest.mark.asyncio
@@ -57,6 +60,7 @@ class TestURL2Screenshot:
 
         result = await self.component.run(special_url)
 
+        assert result is not None
         assert all(not char in result for char in "!@#$%^&*()")
 
     @patch('url2screenshot.AsyncWebCrawler')
@@ -69,4 +73,5 @@ class TestURL2Screenshot:
 
         result = await self.component.run(empty_path_url)
 
-        assert "page.png" in result
+        assert result is not None
+        assert "index.jpg" in result

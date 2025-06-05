@@ -1,3 +1,9 @@
+# SPDX-FileCopyrightText: Copyright © 2024 Idiap Research Institute <contact@idiap.ch>
+#
+# SPDX-FileContributor: Lunarbase <contact@lunarbase.ai>
+#
+# SPDX-License-Identifier: LicenseRef-lunarbase
+
 import pytest
 from unittest.mock import patch, MagicMock, AsyncMock
 import os
