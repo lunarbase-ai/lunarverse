@@ -57,7 +57,7 @@ class WorkflowEngine:
             evidence=consolidated_evidence.combined_evidence
         )
         
-        return self.run_workflow(user_input, consolidated_evidence)
+        return self.run_workflow(user_input, consolidated_evidence, False)
     
     
     def run_workflow_from_files(self, civic_file: str, pharmgkb_file: str, 
