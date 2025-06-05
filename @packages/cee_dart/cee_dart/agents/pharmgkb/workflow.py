@@ -6,7 +6,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 import time
 import json
 from datetime import datetime
-
+from openai import AzureOpenAI
 from cee_dart.agents.pharmgkb.config import Config
 from cee_dart.agents.pharmgkb.models import UserInput, BioExpertOutput, EvaluatorOutput, EvaluationStatus, WorkflowResult, WorkflowMetrics
 from cee_dart.agents.pharmgkb.agents import OrchestratorAgent, BioExpertAgent, EvaluatorAgent
@@ -14,12 +14,12 @@ from cee_dart.agents.pharmgkb.agents import OrchestratorAgent, BioExpertAgent, E
 class WorkflowEngine:
     """Main workflow engine that orchestrates the biomedical evidence interpretation process."""
     
-    def __init__(self, console: Optional[Console] = None, progress_callback=None):
+    def __init__(self, console: Optional[Console] = None, progress_callback=None, client: AzureOpenAI = None):
         self.console = console or Console()
         self.progress_callback = progress_callback
-        self.orchestrator = OrchestratorAgent()
-        self.bioexpert = BioExpertAgent()
-        self.evaluator = EvaluatorAgent()
+        self.orchestrator = OrchestratorAgent(client)
+        self.bioexpert = BioExpertAgent(client)
+        self.evaluator = EvaluatorAgent(client)
     
     def _update_progress(self, message: str):
         """Update progress via callback if available."""
@@ -248,6 +248,6 @@ class WorkflowEngine:
         
         self.console.print(Panel(summary, title="Workflow Summary", style=status_color))
 
-def create_workflow_engine(progress_callback=None) -> WorkflowEngine:
+def create_workflow_engine(client: AzureOpenAI, progress_callback=None) -> WorkflowEngine:
     """Factory function to create a workflow engine."""
-    return WorkflowEngine(progress_callback=progress_callback)
+    return WorkflowEngine(client=client, progress_callback=progress_callback)

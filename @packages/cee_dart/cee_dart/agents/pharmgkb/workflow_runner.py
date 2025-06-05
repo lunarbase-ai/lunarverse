@@ -11,15 +11,15 @@ from datetime import datetime
 from cee_dart.agents.pharmgkb.models import UserInput, WorkflowResult
 from cee_dart.agents.pharmgkb.workflow import create_workflow_engine
 from cee_dart.agents.pharmgkb.prompts import BIOEXPERT_PROMPT, EVALUATOR_PROMPT
-
+from openai import AzureOpenAI
 
 class WorkflowRunner:
     """Main workflow runner that can be used programmatically or via CLI."""
     
-    def __init__(self, debug: bool = False, progress_callback=None):
+    def __init__(self, debug: bool = False, progress_callback=None, client: AzureOpenAI = None):
         self.debug = debug
         self.progress_callback = progress_callback
-        self.workflow = create_workflow_engine(progress_callback=progress_callback)
+        self.workflow = create_workflow_engine(progress_callback=progress_callback, client=client)
     
     def _extract_gene_name_from_evidence(self, evidence: str, index: int) -> str:
         """Extract gene name from evidence string or use fallback naming."""
