@@ -10,7 +10,7 @@ from cee_dart.agents.evidence_integration.workflow_runner import NoveltyWorkflow
 
 class CeeDartAnalysisEvidenceIntegrator(
     LunarComponent,
-    component_name="CeeDartAnalysisEvidenceIntegrator",
+    component_name="Cee Dart Evidence Integrator",
     component_description="Analyzes CIViC, PharmGKB, and Gene Enrichment evidence.",
     input_types={
         "context": DataType.TEXT,
