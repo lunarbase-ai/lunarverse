@@ -3,7 +3,6 @@ from openai import AzureOpenAI
 import json
 import re
 from datetime import datetime
-from cee_dart.utils.openai_client import client
 
 from cee_dart.agents.evidence_integration.config import Config
 from cee_dart.agents.evidence_integration.models import (UserInput, ReportComposerOutput, EvaluatorOutput, CriticOutput, 
@@ -16,7 +15,7 @@ from cee_dart.agents.evidence_integration.prompts import (ORCHESTRATOR_PROMPT, R
 class BaseAgent:
     """Base class for all agents."""
     
-    def __init__(self, name: str, system_prompt: str):
+    def __init__(self, name: str, system_prompt: str, client: AzureOpenAI):
         self.name = name
         self.system_prompt = system_prompt
         # self.client = AzureOpenAI(api_key=Config.OPENAI_API_KEY)
@@ -61,8 +60,8 @@ class BaseAgent:
 class OrchestratorAgent(BaseAgent):
     """Orchestrator agent that coordinates the workflow and extracts evidence from consolidated files."""
     
-    def __init__(self):
-        super().__init__("Orchestrator", ORCHESTRATOR_PROMPT)
+    def __init__(self, client: AzureOpenAI):
+        super().__init__("Orchestrator", ORCHESTRATOR_PROMPT, client)
     
     def coordinate_workflow(self, consolidated_evidence: ConsolidatedEvidence) -> str:
         """Coordinate the overall workflow purely by routing data without LLM calls."""
@@ -162,8 +161,8 @@ class OrchestratorAgent(BaseAgent):
 class ReportComposerAgent(BaseAgent):
     """Report Composer agent that integrates evidence into structured reports."""
     
-    def __init__(self):
-        super().__init__("ReportComposer", REPORT_COMPOSER_PROMPT)
+    def __init__(self, client: AzureOpenAI):
+        super().__init__("ReportComposer", REPORT_COMPOSER_PROMPT, client)
     
     def compose_report(self, user_input: UserInput, consolidated_evidence: ConsolidatedEvidence,
                       previous_output: Optional[ReportComposerOutput] = None, 
@@ -265,8 +264,8 @@ As the Report Composer Agent, create a unified report that integrates evidence f
 class ContentValidatorAgent(BaseAgent):
     """Content Validator agent that validates structural integrity and content quality."""
     
-    def __init__(self):
-        super().__init__("Content Validator", CONTENT_VALIDATOR_PROMPT)
+    def __init__(self, client: AzureOpenAI):
+        super().__init__("Content Validator", CONTENT_VALIDATOR_PROMPT, client)
     
     def evaluate(self, user_input: UserInput, report_output: ReportComposerOutput,
                 consolidated_evidence: ConsolidatedEvidence) -> EvaluatorOutput:
@@ -320,8 +319,8 @@ Evaluate for structural integrity, content quality, and completeness. Respond wi
 class CriticalReviewerAgent(BaseAgent):
     """Critical Reviewer agent that provides critical analysis and identifies biases."""
     
-    def __init__(self):
-        super().__init__("Critical Reviewer", CRITICAL_REVIEWER_PROMPT)
+    def __init__(self, client: AzureOpenAI):
+        super().__init__("Critical Reviewer", CRITICAL_REVIEWER_PROMPT, client)
     
     def critique(self, user_input: UserInput, report_output: ReportComposerOutput,
                 consolidated_evidence: ConsolidatedEvidence) -> CriticOutput:
@@ -375,8 +374,8 @@ Analyze for potential biases, unsupported claims, and alternative interpretation
 class RelevanceValidatorAgent(BaseAgent):
     """Relevance Validator agent that explores question alignment and validates novelty assessments."""
     
-    def __init__(self):
-        super().__init__("Relevance Validator", RELEVANCE_VALIDATOR_PROMPT)
+    def __init__(self, client: AzureOpenAI):
+        super().__init__("Relevance Validator", RELEVANCE_VALIDATOR_PROMPT, client)
     
     def deliberate(self, user_input: UserInput, report_output: ReportComposerOutput,
                   consolidated_evidence: ConsolidatedEvidence) -> DeliberationOutput:

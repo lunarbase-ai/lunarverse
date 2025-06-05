@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 from datetime import datetime
-
+from openai import AzureOpenAI
 from cee_dart.agents.evidence_integration.models import UserInput, WorkflowResult, ConsolidatedEvidence
 from cee_dart.agents.evidence_integration.workflow import WorkflowEngine
 from cee_dart.agents.evidence_integration.config import Config
@@ -24,10 +24,10 @@ class ValidationError(Exception):
 class NoveltyWorkflowRunner:
     """Main workflow runner that can be used programmatically or via CLI."""
     
-    def __init__(self, debug: bool = False, progress_callback=None):
+    def __init__(self, debug: bool = False, progress_callback=None, client: AzureOpenAI = None):
         self.debug = debug
         self.progress_callback = progress_callback
-        self.workflow_engine = WorkflowEngine(progress_callback=progress_callback)
+        self.workflow_engine = WorkflowEngine(progress_callback=progress_callback, client=client)
     
     def _validate_input(self, context: str, question: str) -> None:
         """Validate that required input fields are provided.

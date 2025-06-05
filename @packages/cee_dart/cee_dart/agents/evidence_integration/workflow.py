@@ -6,7 +6,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 import time
 import json
 from datetime import datetime
-
+from openai import AzureOpenAI
 from cee_dart.agents.evidence_integration.config import Config
 from cee_dart.agents.evidence_integration.models import (UserInput, ReportComposerOutput, EvaluatorOutput, CriticOutput, 
                     DeliberationOutput, EvaluationStatus, WorkflowResult, 
@@ -17,14 +17,14 @@ from cee_dart.agents.evidence_integration.agents import (OrchestratorAgent, Repo
 class WorkflowEngine:
     """Main workflow engine that orchestrates the evidence integration process with 5 agents."""
     
-    def __init__(self, console: Optional[Console] = None, progress_callback=None):
+    def __init__(self, console: Optional[Console] = None, progress_callback=None, client: AzureOpenAI = None):
         self.console = console or Console()
         self.progress_callback = progress_callback
-        self.orchestrator = OrchestratorAgent()
-        self.report_composer = ReportComposerAgent()
-        self.content_validator = ContentValidatorAgent()
-        self.critical_reviewer = CriticalReviewerAgent()
-        self.relevance_validator = RelevanceValidatorAgent()
+        self.orchestrator = OrchestratorAgent(client)
+        self.report_composer = ReportComposerAgent(client)
+        self.content_validator = ContentValidatorAgent(client)
+        self.critical_reviewer = CriticalReviewerAgent(client)
+        self.relevance_validator = RelevanceValidatorAgent(client)
     
     def _update_progress(self, message: str):
         """Update progress via callback if available."""
