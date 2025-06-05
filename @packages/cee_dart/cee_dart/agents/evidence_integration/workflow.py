@@ -51,13 +51,104 @@ class WorkflowEngine:
             civic_consolidated, pharmgkb_consolidated, gene_enrichment_consolidated
         )
         
+        # Create user input with consolidated evidence
         user_input = UserInput(
             context=context,
             question=question,
             evidence=consolidated_evidence.combined_evidence
         )
+
+        feedback_history: List[FeedbackCollection] = []
+        report_composer_history: List[ReportComposerOutput] = []
+        current_report_output: Optional[ReportComposerOutput] = None
+        iteration = 1
+        workflow_metrics = WorkflowMetrics()
+        workflow_start_time = datetime.now()
+
+        self.orchestrator.coordinate_workflow(consolidated_evidence)
+
+        while iteration <= Config.MAX_ITERATIONS:
+            report_composer_execution = self.report_composer.start_execution()
+
+            if iteration == 1:
+                # First report composition
+                current_report_output = self.report_composer.compose_report(
+                    user_input, consolidated_evidence, iteration=iteration
+                )
+            else:
+                # Revision based on feedback
+                previous_feedback = feedback_history[-1]
+                combined_feedback = previous_feedback.combined_feedback
+                current_report_output = self.report_composer.compose_report(
+                    user_input,
+                    consolidated_evidence,
+                    previous_output=current_report_output,
+                    combined_feedback=combined_feedback,
+                    iteration=iteration
+                    )
+                
+            report_composer_execution = self.report_composer.end_execution()
+            workflow_metrics.add_agent_execution(report_composer_execution)
+            report_composer_history.append(current_report_output)
+
+            # Content Validator feedback
+            evaluator_execution = self.content_validator.start_execution()
+            evaluator_feedback = self.content_validator.evaluate(
+                user_input, current_report_output, consolidated_evidence
+            )
+            evaluator_execution = self.content_validator.end_execution()
+            workflow_metrics.add_agent_execution(evaluator_execution)
+
+            # Critical Reviewer feedback
+            critic_execution = self.critical_reviewer.start_execution()
+            critic_feedback = self.critical_reviewer.critique(
+                user_input, current_report_output, consolidated_evidence
+            )
+            critic_execution = self.critical_reviewer.end_execution()
+            workflow_metrics.add_agent_execution(critic_execution)
+
+            # Relevance Validator feedback
+            deliberation_execution = self.relevance_validator.start_execution()
+            deliberation_feedback = self.relevance_validator.deliberate(
+                user_input, current_report_output, consolidated_evidence
+            )
+            deliberation_execution = self.relevance_validator.end_execution()
+            workflow_metrics.add_agent_execution(deliberation_execution)
+
+            # Collect all feedback
+            feedback_collection = FeedbackCollection(
+                evaluator_feedback=evaluator_feedback,
+                critic_feedback=critic_feedback,
+                deliberation_feedback=deliberation_feedback
+            )
+            feedback_history.append(feedback_collection)
+
+            feedback_collection.evaluator_feedback.status.value
+            feedback_collection.critic_feedback.status.value
+            feedback_collection.deliberation_feedback.status.value
+
+            iteration += 1
+
+        unified_report = UnifiedReport(
+            potential_novel_biomarkers=current_report_output.potential_novel_biomarkers,
+            implications=current_report_output.implications,
+            well_known_interactions=current_report_output.well_known_interactions,
+            conclusions=current_report_output.conclusions
+        )
+        workflow_end_time = datetime.now()
+        workflow_metrics.total_execution_time_seconds = (workflow_end_time - workflow_start_time).total_seconds()
         
-        return self.run_workflow(user_input, consolidated_evidence, False)
+        result = WorkflowResult(
+            unified_report=unified_report,
+            total_iterations=iteration,
+            feedback_history=feedback_history,
+            report_composer_history=report_composer_history,
+            final_status=feedback_history[-1].evaluator_feedback.status,  # Use evaluator status as final
+            user_input=user_input,
+            consolidated_evidence=consolidated_evidence,
+            metrics=workflow_metrics
+        )
+        return result
     
     
     def run_workflow_from_files(self, civic_file: str, pharmgkb_file: str, 
