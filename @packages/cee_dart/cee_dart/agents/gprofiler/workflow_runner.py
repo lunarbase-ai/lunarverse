@@ -301,7 +301,7 @@ class WorkflowRunner:
                 evidence=no_evidence_text
             ))
         
-            return inputs      
+        return inputs      
         
     def _load_input_from_file(self, file_path: str) -> List[UserInput]:
         """Load sample_input.json with 'Context', 'Question', 'Gene Enrichment', and 'Community Enrichment' mapping."""
