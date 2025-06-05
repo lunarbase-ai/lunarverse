@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text
@@ -32,6 +32,33 @@ class WorkflowEngine:
             self.progress_callback(message)
             # Small delay to make progress visible
             time.sleep(0.5)
+
+    def run_workflow_from_dict(self, civic_consolidated: Dict[str, Any], pharm_consolidated: Dict[str, Any], gene_enrichment_consolidated: Dict[str, Any], context: str, question: str) -> WorkflowResult:
+        """
+        Run the complete evidence integration workflow from consolidated analysis dictionaries.
+        
+        Args:
+            civic_consolidated: Consolidated CIVIC analysis dictionary  
+            pharm_consolidated: Consolidated PharmGKB analysis dictionary
+            gene_enrichment_consolidated: Consolidated Gene Enrichment analysis dictionary
+            context: Study context and background information
+            question: User's specific research question
+            
+        Returns:
+            WorkflowResult: Final unified report with analysis and workflow metadata
+        """
+        consolidated_evidence = self.orchestrator.extract_evidence_from_dict(
+            civic_consolidated, pharm_consolidated, gene_enrichment_consolidated
+        )
+        
+        user_input = UserInput(
+            context=context,
+            question=question,
+            evidence=consolidated_evidence.combined_evidence
+        )
+        
+        return self.run_workflow(user_input, consolidated_evidence)
+    
     
     def run_workflow_from_files(self, civic_file: str, pharmgkb_file: str, 
                                gene_enrichment_file: str, context: str, question: str) -> WorkflowResult:
@@ -66,7 +93,7 @@ class WorkflowEngine:
         
         return self.run_workflow(user_input, consolidated_evidence)
     
-    def run_workflow(self, user_input: UserInput, consolidated_evidence: ConsolidatedEvidence) -> WorkflowResult:
+    def run_workflow(self, user_input: UserInput, consolidated_evidence: ConsolidatedEvidence, save_to_json: bool = True) -> WorkflowResult:
         """
         Run the complete evidence integration workflow.
         
@@ -237,9 +264,10 @@ class WorkflowEngine:
             consolidated_evidence=consolidated_evidence,
             metrics=workflow_metrics
         )
-        
-        self._display_final_summary(result)
-        self._save_result_to_json(result)
+
+        if save_to_json:
+            self._save_result_to_json(result)        
+            self._display_final_summary(result)
         return result
 
     def _save_result_to_json(self, result: WorkflowResult):

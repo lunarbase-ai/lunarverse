@@ -72,6 +72,36 @@ class OrchestratorAgent(BaseAgent):
                 f"Gene sets: {consolidated_evidence.total_gene_sets_enrichment}, "
                 f"Total evidence length: {total_evidence_length} chars")
     
+
+    def extract_evidence_from_dict(self, civic_consolidated: Dict[str, Any], pharm_consolidated: Dict[str, Any], gene_enrichment_consolidated: Dict[str, Any]) -> ConsolidatedEvidence:
+        """Extract and consolidate evidence from the three analysis files."""
+        total_genes_civic = civic_consolidated.get('summary_stats', {}).get('total_genes', 0)
+
+        civic_evidence = ""
+        for gene, analysis in civic_consolidated.get('gene_analyses', {}).items():
+            civic_evidence += f"Gene: {gene}\n{analysis.get('final_analysis', '')}\n\n"
+
+        total_genes_pharmgkb = pharm_consolidated.get('summary_stats', {}).get('total_genes', 0)
+
+        pharmgkb_evidence = ""
+        for gene, analysis in pharm_consolidated.get('gene_analyses', {}).items():
+            pharmgkb_evidence += f"Gene: {gene}\n{analysis.get('final_analysis', '')}\n\n"
+
+        total_gene_sets_enrichment = gene_enrichment_consolidated.get('summary_stats', {}).get('total_gene_sets', 0)
+
+        gene_enrichment_evidence = ""
+        for gene_set, analysis in gene_enrichment_consolidated.get('gene_set_analyses', {}).items():
+            gene_enrichment_evidence += f"Gene Set: {gene_set}\n{analysis.get('final_analysis', '')}\n\n"
+
+        return ConsolidatedEvidence(
+            civic_evidence=civic_evidence,
+            pharmgkb_evidence=pharmgkb_evidence,
+            gene_enrichment_evidence=gene_enrichment_evidence,
+            total_genes_civic=total_genes_civic,
+            total_genes_pharmgkb=total_genes_pharmgkb,
+            total_gene_sets_enrichment=total_gene_sets_enrichment
+        )
+    
     def extract_evidence_from_files(self, civic_file: str, pharmgkb_file: str, 
                                    gene_enrichment_file: str) -> ConsolidatedEvidence:
         """Extract and consolidate evidence from the three analysis files."""

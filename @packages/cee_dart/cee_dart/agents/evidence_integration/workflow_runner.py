@@ -59,6 +59,25 @@ class NoveltyWorkflowRunner:
         except Exception as e:
             print(f"Warning: Could not extract metadata from {filepath}: {e}")
             return {}
+        
+    def run_from_dict(self, civic_consolidated: Dict[str, Any], pharm_consolidated: Dict[str, Any], gene_enrichment_consolidated: Dict[str, Any], context: str, question: str) -> WorkflowResult:
+        """
+        Run evidence integration workflow from consolidated analysis dictionaries.
+        
+        Args:
+            civic_consolidated: Consolidated CIVIC analysis dictionary
+            pharm_consolidated: Consolidated PharmGKB analysis dictionary
+    
+        Returns:
+            WorkflowResult: Final unified report with analysis and workflow metadata
+        """
+        return self.workflow_engine.run_workflow_from_dict(
+            civic_consolidated=civic_consolidated,
+            pharm_consolidated=pharm_consolidated,
+            gene_enrichment_consolidated=gene_enrichment_consolidated,
+            context=context,
+            question=question
+        )
     
     def run_from_files(self, civic_file: str, pharmgkb_file: str, gene_enrichment_file: str,
                       context: str, question: str) -> WorkflowResult:
