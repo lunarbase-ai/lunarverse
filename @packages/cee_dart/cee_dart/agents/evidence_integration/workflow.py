@@ -91,7 +91,7 @@ class WorkflowEngine:
             evidence=consolidated_evidence.combined_evidence
         )
         
-        return self.run_workflow(user_input, consolidated_evidence)
+        return self.run_workflow(user_input, consolidated_evidence, False)
     
     def run_workflow(self, user_input: UserInput, consolidated_evidence: ConsolidatedEvidence, save_to_json: bool = True) -> WorkflowResult:
         """
