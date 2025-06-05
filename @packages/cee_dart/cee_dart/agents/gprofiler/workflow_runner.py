@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 from datetime import datetime
-
+from openai import AzureOpenAI
 # Handle imports for both module and direct execution
 try:
     from .models import UserInput, WorkflowResult
@@ -28,10 +28,10 @@ class ValidationError(Exception):
 class WorkflowRunner:
     """Main workflow runner that can be used programmatically or via CLI."""
     
-    def __init__(self, debug: bool = False, progress_callback=None):
+    def __init__(self, debug: bool = False, progress_callback=None, client: AzureOpenAI = None):
         self.debug = debug
         self.progress_callback = progress_callback
-        self.workflow = create_workflow_engine(progress_callback=progress_callback)
+        self.workflow = create_workflow_engine(progress_callback=progress_callback, client=client)
     
     def _validate_input(self, context: str, question: str) -> None:
         """Validate that required input fields are provided.

@@ -3,7 +3,6 @@ from openai import AzureOpenAI
 import json
 import re
 from datetime import datetime
-from cee_dart.utils.openai_client import client
 
 # Handle imports for both module and direct execution
 try:
@@ -19,7 +18,7 @@ except ImportError:
 class BaseAgent:
     """Base class for all agents."""
     
-    def __init__(self, name: str, system_prompt: str):
+    def __init__(self, name: str, system_prompt: str, client: AzureOpenAI):
         self.name = name
         self.system_prompt = system_prompt
         # self.client = AzureOpenAI(api_key=Config.OPENAI_API_KEY)
@@ -64,8 +63,8 @@ class BaseAgent:
 class OrchestratorAgent(BaseAgent):
     """Orchestrator agent that coordinates the workflow in pure Python routing logic."""
     
-    def __init__(self):
-        super().__init__("Orchestrator", ORCHESTRATOR_PROMPT)
+    def __init__(self, client: AzureOpenAI):
+        super().__init__("Orchestrator", ORCHESTRATOR_PROMPT, client)
     
     def coordinate_workflow(self, user_input: UserInput) -> str:
         """Coordinate the overall workflow purely by routing data without LLM calls."""
@@ -76,8 +75,8 @@ class OrchestratorAgent(BaseAgent):
 class GeneEnrichmentExpertAgent(BaseAgent):
     """Gene Enrichment Expert agent that analyzes pathway and biological process evidence."""
     
-    def __init__(self):
-        super().__init__("GeneEnrichmentExpert", BIOEXPERT_PROMPT)
+    def __init__(self, client: AzureOpenAI):
+        super().__init__("GeneEnrichmentExpert", BIOEXPERT_PROMPT, client)
     
     def analyze(self, user_input: UserInput, previous_output: Optional[BioExpertOutput] = None, 
                 evaluator_feedback: Optional[str] = None, iteration: int = 1) -> BioExpertOutput:
@@ -193,8 +192,8 @@ BioExpertAgent = GeneEnrichmentExpertAgent
 class EvaluatorAgent(BaseAgent):
     """Evaluator agent that reviews Gene Enrichment Expert analyses."""
     
-    def __init__(self):
-        super().__init__("Evaluator", EVALUATOR_PROMPT)
+    def __init__(self, client: AzureOpenAI):
+        super().__init__("Evaluator", EVALUATOR_PROMPT, client)
     
     def evaluate(self, user_input: UserInput, bioexpert_output: BioExpertOutput) -> EvaluatorOutput:
         """Evaluate the Gene Enrichment Expert's analysis."""
