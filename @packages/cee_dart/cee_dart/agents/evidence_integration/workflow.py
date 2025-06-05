@@ -33,7 +33,7 @@ class WorkflowEngine:
             # Small delay to make progress visible
             time.sleep(0.5)
 
-    def run_workflow_from_dict(self, civic_consolidated: Dict[str, Any], pharm_consolidated: Dict[str, Any], gene_enrichment_consolidated: Dict[str, Any], context: str, question: str) -> WorkflowResult:
+    def run_workflow_from_dict(self, civic_consolidated: Dict[str, Any], pharmgkb_consolidated: Dict[str, Any], gene_enrichment_consolidated: Dict[str, Any], context: str, question: str) -> WorkflowResult:
         """
         Run the complete evidence integration workflow from consolidated analysis dictionaries.
         
@@ -48,7 +48,7 @@ class WorkflowEngine:
             WorkflowResult: Final unified report with analysis and workflow metadata
         """
         consolidated_evidence = self.orchestrator.extract_evidence_from_dict(
-            civic_consolidated, pharm_consolidated, gene_enrichment_consolidated
+            civic_consolidated, pharmgkb_consolidated, gene_enrichment_consolidated
         )
         
         user_input = UserInput(

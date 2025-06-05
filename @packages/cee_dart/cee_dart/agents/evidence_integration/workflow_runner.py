@@ -60,7 +60,7 @@ class NoveltyWorkflowRunner:
             print(f"Warning: Could not extract metadata from {filepath}: {e}")
             return {}
         
-    def run_from_dict(self, civic_consolidated: Dict[str, Any], pharm_consolidated: Dict[str, Any], gene_enrichment_consolidated: Dict[str, Any], context: str, question: str) -> WorkflowResult:
+    def run_from_dict(self, civic_consolidated: Dict[str, Any], pharmgkb_consolidated: Dict[str, Any], gene_enrichment_consolidated: Dict[str, Any], context: str, question: str) -> WorkflowResult:
         """
         Run evidence integration workflow from consolidated analysis dictionaries.
         
@@ -73,7 +73,7 @@ class NoveltyWorkflowRunner:
         """
         return self.workflow_engine.run_workflow_from_dict(
             civic_consolidated=civic_consolidated,
-            pharm_consolidated=pharm_consolidated,
+            pharmgkb_consolidated=pharmgkb_consolidated,
             gene_enrichment_consolidated=gene_enrichment_consolidated,
             context=context,
             question=question
