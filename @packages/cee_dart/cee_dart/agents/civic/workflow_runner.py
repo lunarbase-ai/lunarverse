@@ -103,7 +103,7 @@ class WorkflowRunner:
                 ))
         return inputs
     
-    def run_from_dict(self, output_dict: Dict[str, Any]) -> tuple[List[WorkflowResult], Dict[str, Any]]:
+    def run_from_dict(self, output_dict: Dict[str, Any]) -> Dict[str, Any]:
         """Run workflow from dictionary."""
         inputs = self._load_input_from_dict(output_dict)
         results = []

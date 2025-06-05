@@ -62,6 +62,18 @@ class WorkflowRunner:
         # Fallback to index-based naming
         return f'GeneSet_{index}'
     
+    def run_from_dict(self, data: dict) -> Dict[str, Any]:
+        """Run workflow from dictionary."""
+        inputs = self._load_input_from_dict(data)
+
+        results = []
+        for inp in inputs:
+            result = self.workflow.run_workflow(inp)
+            results.append(result)
+
+        return self._generate_consolidated_data(results)
+
+    
     def run_from_app_data(self, output_dict: Dict[str, Any]) -> tuple[List[WorkflowResult], Dict[str, Any]]:
         """Run workflow from app.py output_dict format."""
         # Validate input before processing
@@ -262,6 +274,35 @@ class WorkflowRunner:
         
         return formatted_str
     
+    def _load_input_from_dict(self, data: dict) -> List[UserInput]:
+        """Load input from dictionary."""
+        context = data.get('Context', '')
+        question = data.get('Question', '')
+        gene_enrichment = data.get('Gene Enrichment', {})
+        community_enrichment = data.get('Community Enrichment', {})
+
+        inputs: List[UserInput] = []
+
+        # Process enrichment data using the common method
+        combined_evidence = self._process_enrichment_data(gene_enrichment, community_enrichment)
+
+        evidence_parts = combined_evidence.split('\n\n')
+        if len(evidence_parts) > 2:  # More than just the header
+            inputs.append(UserInput(
+                context=context,
+                question=question,
+                evidence=combined_evidence
+            ))
+        else:
+            no_evidence_text = "Gene Set: Combined Gene Enrichment and Community Enrichment Analysis\n\nNo gene enrichment or community enrichment evidence available"
+            inputs.append(UserInput(
+                context=context,
+                question=question,
+                evidence=no_evidence_text
+            ))
+        
+            return inputs      
+        
     def _load_input_from_file(self, file_path: str) -> List[UserInput]:
         """Load sample_input.json with 'Context', 'Question', 'Gene Enrichment', and 'Community Enrichment' mapping."""
         try:
