@@ -71,6 +71,20 @@ class WorkflowRunner:
         
         return results, consolidated_result
     
+    def run_from_dict(self, input_dict: Dict[str, Any]) -> Dict[str, Any]:
+        """Run workflow from dictionary with 'Context', 'Question', and 'pharmGKB Analysis' mapping."""
+        inputs = self._load_input_from_dict(input_dict)
+
+        results = []
+
+        for inp in inputs:
+            result = self.workflow.run_workflow(inp)
+            results.append(result)
+
+        consolidated_data = self._generate_consolidated_data(results)
+
+        return consolidated_data
+    
     def run_from_json_file(self, file_path: str) -> List[WorkflowResult]:
         """Run workflow from JSON file (original CLI functionality)."""
         inputs = self._load_input_from_file(file_path)
@@ -212,6 +226,37 @@ class WorkflowRunner:
         """Format evidence dictionary into readable string (legacy method for backward compatibility)."""
         # This method is kept for backward compatibility but redirects to pharmGKB formatting
         return self._format_pharmgkb_evidence_item(evidence_item, index)
+    
+    def _load_input_from_dict(self, input_dict: Dict[str, Any]) -> List[UserInput]:
+        """Load input from dictionary with 'Context', 'Question', and 'pharmGKB Analysis' mapping."""
+        context = input_dict.get('Context', None)
+        question = input_dict.get('Question', None)
+        pharmgkb = input_dict.get('pharmGKB Analysis', None)
+
+        if not context or not question or not pharmgkb:
+            raise ValueError("Context, Question, and pharmGKB Analysis are required")
+        
+        inputs: List[UserInput] = []
+        gene_evidence_pairs = self._process_pharmgkb_evidence_data(pharmgkb)
+        
+        for gene, combined_evidence in gene_evidence_pairs:
+            evidence_parts = combined_evidence.split('\n\n')
+            
+            if len(evidence_parts) > 1:
+                inputs.append(UserInput(
+                    context=context,
+                    question=question,
+                    evidence=combined_evidence
+                ))
+            else:
+                no_evidence_text = f"Gene: {gene}\n\nNo pharmGKB evidence available for gene {gene}"
+                inputs.append(UserInput(
+                    context=context,
+                    question=question,
+                    evidence=no_evidence_text
+                ))
+        
+        return inputs
     
     def _load_input_from_file(self, file_path: str) -> List[UserInput]:
         """Load sample_input.json with 'Context', 'Question', and 'pharmGKB Analysis' mapping."""
