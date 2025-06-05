@@ -44,6 +44,6 @@ class CeeDartAnalysisEvidenceIntegrator(
             gene_enrichment_consolidated=gene_enrichment_consolidated,
             context=context,
             question=question,
-        ).to_dict()
+        ).dict()
 
 
