@@ -42,7 +42,7 @@ class ComponentSetupGenerator:
 
 setup_generator = ComponentSetupGenerator(
     name="cee_dart_analysis_evidence_integrator",
-    version="0.2",
+    version="0.2.1",
     description="Analyzes CIViC, PharmGKB, and Gene Enrichment evidence.",
 )
 
