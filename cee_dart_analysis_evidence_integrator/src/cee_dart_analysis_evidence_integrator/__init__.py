@@ -41,7 +41,7 @@ class CeeDartAnalysisEvidenceIntegrator(
             gene_enrichment_consolidated=gene_enrichment_consolidated,
             context=context,
             question=question,
-        ).model_dump()
+        ).model_dump(mode='json')
 
         return result
 
