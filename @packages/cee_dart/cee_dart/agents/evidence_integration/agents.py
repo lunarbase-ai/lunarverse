@@ -93,10 +93,21 @@ class OrchestratorAgent(BaseAgent):
         for gene_set, analysis in gene_enrichment_consolidated.get('gene_set_analyses', {}).items():
             gene_enrichment_evidence += f"Gene Set: {gene_set}\n{analysis.get('final_analysis', '')}\n\n"
 
+        evidence_sections = []
+        if civic_evidence:
+            evidence_sections.append(f"=== CIVIC EVIDENCE ===\n{civic_evidence}")
+        if pharmgkb_evidence:
+            evidence_sections.append(f"=== PHARMGKB EVIDENCE ===\n{pharmgkb_evidence}")
+        if gene_enrichment_evidence:
+            evidence_sections.append(f"=== GENE ENRICHMENT EVIDENCE ===\n{gene_enrichment_evidence}")
+
+        combined_evidence = "\n\n".join(evidence_sections)
+
         return ConsolidatedEvidence(
             civic_evidence=civic_evidence,
             pharmgkb_evidence=pharmgkb_evidence,
             gene_enrichment_evidence=gene_enrichment_evidence,
+            combined_evidence=combined_evidence,
             total_genes_civic=total_genes_civic,
             total_genes_pharmgkb=total_genes_pharmgkb,
             total_gene_sets_enrichment=total_gene_sets_enrichment
