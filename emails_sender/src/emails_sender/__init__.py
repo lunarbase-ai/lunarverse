@@ -23,7 +23,7 @@ from lunarcore.component.data_types import DataType
 class EmailsSender(
     LunarComponent,
     component_name="Emails Sender",
-    component_description="""Sends emails.
+    component_description="""Sends emails based on user-defined inputs, including recipients, subject lines, and message content. .
 Inputs:
   emails_input (Dict[Dict[str, Optional]]): A dictionary with the receiver email adresses (str) as keys, each mapped to a dictionary with the keys `html` (str) mapped to a string `<b>body of the email</b>` with the email content, and `subject` mapped to a string of the email subject.
   sender (str): A string of the sender email, e.g `no-reply@lunarbase.ch`.

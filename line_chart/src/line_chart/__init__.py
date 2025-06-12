@@ -18,7 +18,7 @@ from lunarcore.component.data_types import DataType
 class LineChart(
     LunarComponent,
     component_name="Line chart",
-    component_description="""Plots a line chart given a dictionary with numerical keys and values. The output can be linked to a report component. 
+    component_description="""Generates line charts from user-provided data, enabling clear visualization of trends, patterns, and changes over time. The output can be linked to other components. 
 Inputs:
   `Data` (Dict[Union(int,float), Union(int,float)]): A dictionary with keys (int or float) mapped to numerical values (int or float).
 Output (Dict): A dictionary with the key `data` (str) mapped to the original input data (Dict[Any, Union[int, float]]), """ \

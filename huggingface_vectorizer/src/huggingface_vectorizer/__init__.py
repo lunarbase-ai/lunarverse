@@ -15,7 +15,7 @@ from transformers import AutoTokenizer, AutoModel
 class HuggingfaceVectorizer(
     LunarComponent,
     component_name="HuggingFace vectorizer",
-    component_description="""Encode texts using HuggingFace's models. The output is the embeddings
+    component_description="""Generates high-quality text embeddings using a pre-trained model hosted on HuggingFace, enabling seamless integration into NLP pipelines. 
     Input (text: List[str], model_name: str): A list of text items to encode and the name of the model to use.
     Output (List[dict]): A list of dictionaries containing the original text (str) and the 
     embeddings (List[Union[float, int]]) for each text item in the input.""",

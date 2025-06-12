@@ -12,7 +12,7 @@ from lunarcore.component.data_types import DataType
 class Wikipedia(
     LunarComponent,
     component_name="Wikipedia client",
-    component_description="""Retrieves data from Wikipedia API.
+    component_description="""Retrieves information from Wikipedia, allowing users to access comprehensive articles and summaries on a wide range of topics.
 Input:
   `Query` (str): A string of the query to use for finding the article. Eg. `Fermats last theorem`.
 Output (Dict[str, str]): A dictionary with the string `content` mapped to a string of the content of the found article.""",

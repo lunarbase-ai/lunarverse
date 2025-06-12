@@ -14,7 +14,7 @@ from lunarcore.component.lunar_component import LunarComponent
 class MilvusVectorstore(
     LunarComponent,
     component_name="Milvus vectorstore",
-    component_description="""Store embeddings on a Milvus server
+    component_description="""Stores generated embeddings in a Milvus vector store, enabling efficient similarity search and retrieval.
     Output (dict): a dictionary with a single key (stored), containing the number of stored embeddings.""",
     input_types={"embeddings": DataType.EMBEDDINGS},
     output_type=DataType.JSON,

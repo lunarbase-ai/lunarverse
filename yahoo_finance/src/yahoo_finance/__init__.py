@@ -15,7 +15,7 @@ import yfinance as yf
 class YahooFinanceAPI(
     LunarComponent,
     component_name="Yahoo Finance API",
-    component_description="""Connects to Yahoo's public API (using Python package yfinance) and retrieves financial data about companies and their stocks.
+    component_description="""Retrieves financial data from Yahoo Finance, providing users with real-time and historical stock prices, market trends, and company information.
     Input (List[str]): A list of strings of the tickers to the stocks to get data about.
     Output (Dict[str,Dict[str, Any]]): A dictionary mapping each inputted ticker (str) to the financial data about the corresponding stock in the form of a dictionary of indicators (str) mapped to their values (Any)""",
     input_types={"tickers": DataType.LIST},

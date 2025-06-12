@@ -15,7 +15,7 @@ from lunarcore.component.lunar_component import LunarComponent
 class SPARQLQuery(
     LunarComponent,
     component_name="SPARQL Query",
-    component_description="""Runs a SPARQL query on a SPARQL endpoint.
+    component_description="""Allows users to run SPARQL queries against RDF datasets, enabling retrieval and manipulation of structured semantic data from knowledge graphs or semantic web.
 Inputs:  query: str
 Outputs: The query result in JSON format
 Expected configuration includes: endpoint: str, defaultGraph: Optional[str] = None., etc.

@@ -18,7 +18,7 @@ from lunarcore.component.data_types import DataType
 class BarChart(
     LunarComponent,
     component_name="Bar chart",
-    component_description="""Plots a bar chart given a dictionary with numerical values. The output can be linked to a report component.
+    component_description="""Creates bar charts from user-supplied data, providing a clear visual comparison of categorical values or group-based metrics. . The output can be linked to other components.
 Inputs:
   `data` (Dict[Any, Union[int, float]]): A dictionary with keys (any data type that can be converted to a str) mapped to numerical values (int or float).
 Output (Dict): A dictionary with the key `data` (str) mapped to the original input data (Dict[Any, Union[int, float]]), """ \

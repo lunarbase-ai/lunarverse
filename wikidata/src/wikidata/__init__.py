@@ -14,7 +14,7 @@ from lunarcore.component.data_types import DataType
 class Wikidata(
     LunarComponent,
     component_name="Wikidata client",
-    component_description="""Retrieves data from Wikidata API (a knowledge graph / knowledge base).
+    component_description="""Retrieves data from Wikidata, enabling users to access structured, linked information from a vast open knowledge base.
 Inputs:
   `Query` (str): A string of the the term to search for in Wikidata. E.g. `Barack Obama`.
 Output (Dict[str, List[Dict]]): A dictionary with the key `results` (str), mapped to a list containing one dictionary of information/knowledge for each query match. E.g. `{`results`: [{`description`: `President of the United States from 2009 to 2017`, ...}]}`. The list is sorted with the best match first.""",

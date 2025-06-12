@@ -27,7 +27,7 @@ Other instructions: {other_instructions}"""
 class LyricsGenerator(
     LunarComponent,
     component_name="Lyrics Generator",
-    component_description="""Generates song lyrics from an inputted theme using Azure OpenAI's API (an LLM).
+    component_description="""Uses AI to generate original song lyrics based on a user-provided theme, blending creativity with language understanding.
 Inputs:
   `Theme` (str): The theme of the song, e.g. `love`.
   `Mood` (str): The mood of the song, e.g. `happy`.

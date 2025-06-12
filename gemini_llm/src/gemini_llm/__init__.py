@@ -17,12 +17,10 @@ from langchain.prompts.prompt import PromptTemplate
 from langchain_core.messages import HumanMessage
 
 
-
-
 class GeminiAIPrompt(
     LunarComponent,
     component_name="Gemini AI prompt",
-    component_description="""Connects to Gemini's API, runs natural language prompts and outputs the result as text
+    component_description="""Sends prompts to the Gemini API and returns the generated response, enabling interaction with Google advanced language models.
     Output (str): The answer provided by the LLM to the prompt.""",
     input_types={"prompt": DataType.TEMPLATE},
     output_type=DataType.TEXT,

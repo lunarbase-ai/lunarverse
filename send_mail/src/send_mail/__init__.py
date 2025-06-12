@@ -11,7 +11,7 @@ from lunarcore.component.data_types import DataType
 class SendEmail(
     LunarComponent,
     component_name="Send Email",
-    component_description="This component sends an email with optional attachments using SMTP.",
+    component_description="Sends emails using SMTP and supports optional attachments for flexible communication. It allows customization of sender, recipients, subject, body content, and file attachments.",
     input_types={"smtp_server": DataType.TEXT, "smtp_port": DataType.TEXT, "email_sender": DataType.TEXT, "password": DataType.TEXT, "recipient": DataType.TEXT, "subject": DataType.TEXT, "body": DataType.TEXT},
     output_type=DataType.TEXT,
     component_group=ComponentGroup.UTILS,

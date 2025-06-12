@@ -9,10 +9,11 @@ from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
 
+
 class PythonCoder(
     LunarComponent,
     component_name="Python coder",
-    component_description="""Performs customized Python code execution. Outputs the value that the Python variable `result` is set to during the execution of the Python code.
+    component_description="""Enables the execution of arbitrary Python code, allowing users to perform dynamic computations, data analysis, and automation tasks on the fly. Outputs the value that the Python variable `result` is set to during the execution of the Python code.
 Inputs:
   `Code` (str): A string of the Python code to execute.  If needed, the Python code can be inputted manually by the user.
 Output (Any): The value of the variable `result` in the Python code after execution.""",

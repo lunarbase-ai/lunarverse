@@ -15,7 +15,8 @@ from io import StringIO
 class CsvViewer(
     LunarComponent,
     component_name="Csv Viewer",
-    component_description="""Displays .csv files Output (str): csv file""",
+    component_description="""Converts CSV files into plain text strings, preserving the data structure for easy visualization.
+Output (str): csv file""",
     input_types={"input_text": DataType.TEXT},
     output_type=DataType.CSV,
     component_group=ComponentGroup.DATA_VISUALIZATION,

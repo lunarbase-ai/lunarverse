@@ -14,7 +14,7 @@ import pandas as pd
 class Report(
     LunarComponent,
     component_name="Report",
-    component_description="""Creates an editable report from the input it gets.
+    component_description="""Captures the output of various components and compiles them into a editable, structured and downloadable report document. It streamlines result aggregation for easy sharing, documentation, or further analysis.
 Inputs:
   `Inputs` (Dict[str, str]): A dictionary containing of strings mapped to strings, containing data to be included in the report.
 Output (Dict): A dictionary containing instructions for building the report using the Quill editor format.""",

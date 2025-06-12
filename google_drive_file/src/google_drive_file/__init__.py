@@ -11,7 +11,7 @@ from lunarcore.component.data_types import DataType
 class GoogleDriveFile(
     LunarComponent,
     component_name="Google Drive File",
-    component_description="This component replaces the xlsx file in Google Drive.",
+    component_description="Connects to Google Drive and reads files directly from a user's account, enabling seamless access to documents, spreadsheets, and other stored content.",
     input_types={"file_link": DataType.TEXT, "credentials_json": DataType.TEXT},
     output_type=DataType.TEXT,
     component_group=ComponentGroup.DATA_EXTRACTION,

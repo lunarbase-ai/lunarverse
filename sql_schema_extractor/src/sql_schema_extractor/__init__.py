@@ -12,10 +12,11 @@ from lunarcore.component.lunar_component import LunarComponent
 from lunarcore.component.component_group import ComponentGroup
 from lunarcore.component.data_types import DataType
 
+
 class SQLSchemaExtractor(
     LunarComponent,
     component_name="SQL Schema Extractor",
-    component_description="""Connects to a SQL database and retrieves its schema, i.e., data definition language.
+    component_description="""Extracts the schema of an SQL database, providing a detailed overview of tables, columns, relationships, and constraints. It helps users understand the database structure.
     Output (dict): a json describing the database schema.""",
     input_types={ "tables": DataType.LIST },
     output_type=DataType.TEXT,

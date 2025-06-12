@@ -15,7 +15,7 @@ from langchain_openai import AzureOpenAIEmbeddings
 class AzureOpenAIVectorizer(
     LunarComponent,
     component_name="Azure Open AI vectorizer",
-    component_description="""Encodes inputted texts as numerical vectors (embeddings) using Azure OpenAI models.
+    component_description="""Creates embeddings using a Large Language Model (LLM) hosted on Azure, converting text inputs into dense vector representations.
 Inputs:
   `documents` (List[str]): A list of texts to encode. If needed, the list can be inputted manually by the user.
 Output (List[Dict]): A list of dictionaries -- one for each text in the input. """

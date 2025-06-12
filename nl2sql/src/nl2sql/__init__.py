@@ -21,7 +21,7 @@ from nl2sql.data_access_factory import data_access_factory
 class NL2SQL(
     LunarComponent,
     component_name="NL2SQL",
-    component_description="""Transforms natural language queries into SQL queries.""",
+    component_description="""Converts natural language queries into SQL statements using a language model, enabling intuitive access to database information.""",
     input_types={
         "questions": DataType.LIST,
         "db_type": DataType.TEXT,

@@ -13,7 +13,7 @@ from lunarcore.component.data_types import DataType
 class URLsScraper(
     LunarComponent,
     component_name="URLs Scraper",
-    component_description="""Scrapes URLs.
+    component_description="""Performs URL scraping by extracting content, metadata, and data from web pages based on user-specified URLs.
 Inputs:
   `Urls` (List[str]): A list of URLs (strings) that are to be scraped
 Output (Dict[str, Dict[str, str]]): A dictionary where each key is a URL from the input list. The value for each key is another dictionary with either a key `content` (str) containing the scraped content as a string (if the request was successful), or a key `error` with a descriptive error message (if the request failed).""",
