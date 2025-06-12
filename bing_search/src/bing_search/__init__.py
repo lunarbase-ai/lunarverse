@@ -15,7 +15,7 @@ BING_SEARCH_URL = "https://api.bing.microsoft.com/v7.0/search"
 class BingSearch(
     LunarComponent,
     component_name="Bing Search client",
-    component_description="Searches data using Bing Search API.",
+    component_description="Performs searches on Bing, providing real-time access to web content based on an input query.",
     input_types={"query": DataType.TEXT},
     output_type=DataType.JSON,
     component_group=ComponentGroup.API_TOOLS,

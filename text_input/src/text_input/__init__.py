@@ -17,7 +17,7 @@ from lunarcore.component.data_types import DataType
 class TextInput(
     LunarComponent,
     component_name="Text Input",
-    component_description="""Allows the input of text (potentially with template variables) that can then be used in other downstream components. It can also be used as an output if useful.
+    component_description="""Allows the input of text data that is then be used in other downstream components. It can also be used as an output to show the textual result of a previous component.
 Inputs:
   `input` (str): The text to output.
 Output (str): The inputted text.""",

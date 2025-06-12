@@ -23,7 +23,7 @@ from markupsafe import escape
 class HTMLReportsBuilder(
     LunarComponent,
     component_name="HTML Reports Builder",
-    component_description="""Builds HTML reports.
+    component_description="""Converts HTML content into a downloadable document, such as a PDF, preserving the layout and styling.
 Inputs:
   `Template_j2` (str): A Jinja2 template of the HTML report template as a string, e.g. `<html><head><title>{{ title }}</title></head></html>`
   `Data` (Dict[str, Dict[str, str]]): A dictionary with labels (strings) as keys, where each label is mapped to a dictionary for rendering the template. In this sub-dictionaru, each key-value pair is a template_variable and the template_variable value in the Jinja2 template, e.g {`william`: {`title`: `William is cool`}}

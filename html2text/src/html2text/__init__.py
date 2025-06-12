@@ -20,7 +20,7 @@ from html2text.extractor import HTMLTextExtractor, HTMLContentMapperModel
 class HTML2Text(
     LunarComponent,
     component_name="Htmls2Texts",
-    component_description="""Converts HTMLs to texts.
+    component_description="""Converts HTML content into plain text by stripping out tags and formatting, leaving only the readable text.
     Inputs:
     `html_content_mapper` (Dict[str, Dict[str, str]]): A dictionary with the URLs as keys, mapped to a dictionary with a key `content` mapped to their HTMLs. E.g. `{`https://example.com`: {`content`: `<html><body>Hello World</body></html>`}}`.
     Output ([str, Dict[str, str]]): A dictionary similar to the input, but with an additional key `text` in each URL dictionary, mapped to the extracted from the HTML. E.g. `{`https://example.com`: {`text`: `Hello World`, `content`: `<html><body>Hello World</body></html>`}}`""",

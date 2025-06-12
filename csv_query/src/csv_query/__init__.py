@@ -11,7 +11,7 @@ class CsvQuery(
     LunarComponent,
     component_name="CsvQuery",
     component_group=ComponentGroup.DATA_EXTRACTION,
-    component_description="Query CSV files using SQL",
+    component_description="Enables users to query CSV files using SQL syntax, combining the familiarity of SQL with the flexibility of flat-file data.",
     output_type=DataType.TEXT, 
     description="Query a CSV file using SQL",
     input_types={"query": DataType.TEXT, "csv_files": DataType.JSON},

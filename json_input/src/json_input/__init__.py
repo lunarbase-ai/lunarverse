@@ -20,7 +20,7 @@ import json
 class JSONInput(
     LunarComponent,
     component_name="JSON Input",
-    component_description="""Allows the input of a JSON text (potentially with template variables) that can then be used in other downstream components. It can also be used as an output if useful.
+    component_description="""Allows the input and interaction with textual JSON data, making it easy to structure, validate, and manipulate complex information formats that can then be used in other downstream components. It can also be used as an output if useful.
 Inputs:
   `input` (str): A valid json.
   Output (dict): The input json as a Python dict.""",

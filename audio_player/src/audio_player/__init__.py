@@ -15,7 +15,7 @@ from lunarcore.component.data_types import DataType
 class AudioPlayer(
     LunarComponent,
     component_name="Audio Player",
-    component_description="""Plays audio encoded in base64 format.
+    component_description="""Plays music encoded in base64 format by decoding the audio data and streaming it directly to the user.
 Inputs:
   `audio_data` (str): The audio data in base64 (on format f`data:{mime_type};base64,{base64_string}`).
 Output (str): The same base64 audio string provided as input.""",

@@ -14,7 +14,7 @@ import pubmed_searcher.pubmed_scraper as pubmed_scraper
 class PubmedSearcher(
     LunarComponent,
     component_name="Pubmed Searcher",
-    component_description="""Search article information from Pubmed by keywords
+    component_description="""Performs searches on PubMed, allowing users to access a vast database of biomedical and life sciences literature using by keywords.
 Inputs:
   `Keywords` (str): TODO,
   `From year` (str): TODO,

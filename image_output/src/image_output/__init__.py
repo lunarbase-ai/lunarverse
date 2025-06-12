@@ -13,7 +13,7 @@ from lunarcore.component.lunar_component import LunarComponent
 class ImageOutput(
     LunarComponent,
     component_name="Image Output",
-    component_description="""Receives a base64 encoded image string and shows the image.""",
+    component_description="""Decodes and visualizes base64-encoded images directly in the interface, enabling quick inspection without needing external viewers. """,
     input_types={"base64_string": DataType.TEXT},
     output_type=DataType.IMAGE,
     component_group=ComponentGroup.IO

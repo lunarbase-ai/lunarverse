@@ -15,8 +15,8 @@ from lunarcore.component.data_types import DataType
 class GraphQLQuery(
     LunarComponent,
     component_name="GraphQL",
-    component_description="""Fetches data from a GraphQL endpoint
-    Output (dict): The response for the query""",
+    component_description="""Sends queries to a GraphQL API, enabling precise retrieval of structured data from servers.
+Output (dict): The response for the query""",
     input_types={"query": DataType.TEXT},
     output_type=DataType.JSON,
     component_group=ComponentGroup.DATABASES,

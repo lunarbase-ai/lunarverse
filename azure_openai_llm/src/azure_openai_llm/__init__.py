@@ -16,7 +16,7 @@ SYSTEM_PROMPT = "You are a helpful AI assistant. Your name is AI Rover."
 class AzureOpenAIPrompt(
     LunarComponent,
     component_name="Azure Open AI prompt",
-    component_description="""Connects to Azure OpenAI's API (an LLM), runs an inputted natural language prompt (str), and outputs the result as text (str).
+    component_description="""Sends user-defined textual prompts to the Azure OpenAI API for interacting with LLMs and returns the answers.
 Inputs:
     `user_prompt` (str): The user prompt to provide the LLM with. If needed, the prompt can be inputted manually by the user.
     `system_prompt` (str): The system prompt to provide the LLM with. If needed, the prompt can be inputted manually by the user.

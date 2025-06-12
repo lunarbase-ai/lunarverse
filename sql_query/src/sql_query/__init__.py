@@ -9,7 +9,7 @@ from lunarcore.component.data_types import DataType
 class SQLQuery(
     LunarComponent,
     component_name="SQL Query",
-    component_description="""Connects to a SQL database and returns the result of a query
+    component_description="""Enables users to run SQL queries on relational databases, facilitating data retrieval, manipulation, and analysis through structured commands.
     Output (str): the query result.""",
     input_types={"query": DataType.TEXT},
     output_type=DataType.CSV,

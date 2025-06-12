@@ -16,13 +16,13 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from openai import OpenAI
 
 
+SYSTEM_PROMPT = "You are a helpful AI assistant."
 
-SYSTEM_PROMPT = "You are a helpful AI assistant. Your name is AI Rover."
 
 class OpenAIPrompt(
     LunarComponent,
     component_name="OpenAI prompt",
-    component_description="""Connects to OpenAI's API, runs natural language prompts and outputs the result as text
+    component_description="""Sends user-defined prompts to the OpenAI API to interact with LLMs and returns the generated responses in real time.
     Output (str): The answer provided by the LLM to the prompt.""",
     input_types={"system_prompt": DataType.TEMPLATE, "user_prompt": DataType.TEMPLATE},
     output_type=DataType.TEXT,

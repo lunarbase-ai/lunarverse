@@ -18,7 +18,7 @@ from lunarcore.component.data_types import DataType
 class Xlsx2XlsxGoogleDrive(
     LunarComponent,
     component_name="xlsx2xlsx Google Drive",
-    component_description="This component downloads, updates, and re-uploads files from Google Drive.",
+    component_description="Updates XLSX files in Google Drive by downloading, updating, and re-uploading files from Google Drive.",
     input_types={"file_link": DataType.TEXT, "credentials_json": DataType.TEXT, "excel_file": DataType.TEXT, "sheet_name": DataType.TEXT},
     output_type=DataType.TEXT,
     component_group=ComponentGroup.UTILS,
